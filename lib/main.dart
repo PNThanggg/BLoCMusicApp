@@ -1,12 +1,14 @@
-import 'dart:ui';
-
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 
 import 'presentation/route/routes.dart';
 import 'presentation/theme/app_theme.dart';
 
-void main() {
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  GestureBinding.instance.resamplingEnabled = true;
+
   runApp(const MyApp());
 }
 
