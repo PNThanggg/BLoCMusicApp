@@ -45,6 +45,7 @@ dev_dependencies:
   flutter_launcher_icons: ^0.14.2
   build_runner: ^2.4.13
   isar_generator: ^3.1.0+1
+  analyzer: ^5.13.0
 
 flutter:
   generate: true
