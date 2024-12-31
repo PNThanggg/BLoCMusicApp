@@ -7,8 +7,9 @@ part 'app_settings_bool_database.g.dart';
 @collection
 class AppSettingsBoolDB {
   Id get isarId => fastHash(settingName);
-  String settingName;
-  bool settingValue;
+  final String settingName;
+  final bool settingValue;
+
   AppSettingsBoolDB({
     required this.settingName,
     required this.settingValue,

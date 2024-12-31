@@ -7,10 +7,10 @@ part 'app_settings_str_database.g.dart';
 @collection
 class AppSettingsStrDatabase {
   Id get isarId => fastHash(settingName);
-  String settingName;
-  String settingValue;
-  String? settingValue2;
-  DateTime? lastUpdated;
+  final String settingName;
+  final String settingValue;
+  final String? settingValue2;
+  final DateTime? lastUpdated;
 
   AppSettingsStrDatabase({
     required this.settingName,

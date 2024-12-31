@@ -10,17 +10,17 @@ part 'media_item_database.g.dart';
 class MediaItemDatabase {
   Id? id = Isar.autoIncrement;
   @Index()
-  String title;
-  String album;
-  String artist;
-  String artURL;
-  String genre;
-  int? duration;
-  String mediaID;
-  String streamingURL;
-  String? source;
-  String permaURL;
-  String language;
+  final String title;
+  final String album;
+  final String artist;
+  final String artURL;
+  final String genre;
+  final int? duration;
+  final String mediaID;
+  final String streamingURL;
+  final String? source;
+  final String permaURL;
+  final String language;
   bool isLiked = false;
 
   // @Backlink(to: "mediaItems")

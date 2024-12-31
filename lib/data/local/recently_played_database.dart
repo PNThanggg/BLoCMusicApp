@@ -7,7 +7,7 @@ part 'recently_played_database.g.dart';
 @collection
 class RecentlyPlayedDB {
   Id? id;
-  DateTime lastPlayed;
+  final DateTime lastPlayed;
 
   RecentlyPlayedDB({
     this.id,

@@ -14,10 +14,10 @@ class ChartItemDB {
 @collection
 class ChartsCacheDB {
   Id get isarId => fastHash(chartName);
-  String chartName;
-  DateTime lastUpdated;
-  String? permaURL;
-  List<ChartItemDB> chartItems;
+  final String chartName;
+  final DateTime lastUpdated;
+  final String? permaURL;
+  final List<ChartItemDB> chartItems;
 
   ChartsCacheDB({
     required this.chartName,

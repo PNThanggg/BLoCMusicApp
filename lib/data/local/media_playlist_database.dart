@@ -8,9 +8,10 @@ part 'media_playlist_database.g.dart';
 @collection
 class MediaPlaylistDatabase {
   Id get isarId => fastHash(playlistName);
-  String playlistName;
+  final String playlistName;
+  final DateTime? lastUpdated;
+
   List<int> mediaRanks = List.empty(growable: true);
-  DateTime? lastUpdated;
 
   MediaPlaylistDatabase({
     required this.playlistName,

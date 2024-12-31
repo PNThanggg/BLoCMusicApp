@@ -9,14 +9,14 @@ part 'playlists_info_database.g.dart';
 @collection
 class PlaylistsInfoDatabase {
   Id get isarId => fastHash(playlistName);
-  String playlistName;
-  bool? isAlbum;
-  String? artURL;
-  String? description;
-  String? permaURL;
-  String? source;
-  String? artists;
-  DateTime lastUpdated;
+  final String playlistName;
+  final bool? isAlbum;
+  final String? artURL;
+  final String? description;
+  final String? permaURL;
+  final String? source;
+  final String? artists;
+  final DateTime lastUpdated;
 
   PlaylistsInfoDatabase({
     required this.playlistName,
