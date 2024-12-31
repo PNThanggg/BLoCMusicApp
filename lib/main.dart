@@ -1,3 +1,6 @@
+import 'dart:io' as io;
+
+import 'package:display_mode/display_mode.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:responsive_framework/responsive_framework.dart';
@@ -8,6 +11,10 @@ import 'presentation/theme/app_theme.dart';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   GestureBinding.instance.resamplingEnabled = true;
+
+  if (io.Platform.isAndroid) {
+    await DisplayMode.setHighRefreshRate();
+  }
 
   runApp(const MyApp());
 }
