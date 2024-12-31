@@ -24,6 +24,18 @@ dependencies:
   url_launcher: ^6.3.1
   cached_network_image: ^3.4.1
   palette_generator: ^0.3.3+5
+  image: ^4.5.2
+  audio_service: ^0.18.16
+  permission_handler: ^11.3.1
+  flutter_downloader: ^1.11.8
+  metadata_god: ^1.0.0
+  equatable: ^2.0.7
+  youtube_explode_dart: ^2.3.6
+  rxdart: ^0.28.0
+  async: ^2.11.0
+  package_info_plus: ^8.1.2
+  isar: 3.1.0+1
+
 
 dev_dependencies:
   flutter_test:
@@ -31,6 +43,8 @@ dev_dependencies:
 
   flutter_lints: ^4.0.0
   flutter_launcher_icons: ^0.14.2
+  build_runner: ^2.4.13
+  isar_generator: ^3.1.0+1
 
 flutter:
   generate: true
