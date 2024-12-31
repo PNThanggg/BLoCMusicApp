@@ -2,6 +2,8 @@ import 'package:isar/isar.dart';
 
 import '../fast_hash.dart';
 
+part 'saved_collections_database.g.dart';
+
 @collection
 class SavedCollectionsDB {
   Id get isarId => fastHash(title);
@@ -15,7 +17,7 @@ class SavedCollectionsDB {
   final DateTime lastUpdated;
   final String? extra;
 
- const SavedCollectionsDB({
+  const SavedCollectionsDB({
     required this.title,
     required this.type,
     required this.coverArt,
