@@ -9,13 +9,14 @@ part of 'app_settings_bool_database.dart';
 // coverage:ignore-file
 // ignore_for_file: duplicate_ignore, non_constant_identifier_names, constant_identifier_names, invalid_use_of_protected_member, unnecessary_cast, prefer_const_constructors, lines_longer_than_80_chars, require_trailing_commas, inference_failure_on_function_invocation, unnecessary_parenthesis, unnecessary_raw_strings, unnecessary_null_checks, join_return_with_assignment, prefer_final_locals, avoid_js_rounded_ints, avoid_positional_boolean_parameters, always_specify_types
 
-extension GetAppSettingsBoolDBCollection on Isar {
-  IsarCollection<AppSettingsBoolDB> get appSettingsBoolDBs => this.collection();
+extension GetAppSettingsBoolDatabaseCollection on Isar {
+  IsarCollection<AppSettingsBoolDatabase> get appSettingsBoolDatabases =>
+      this.collection();
 }
 
-const AppSettingsBoolDBSchema = CollectionSchema(
-  name: r'AppSettingsBoolDB',
-  id: -3642544654543208017,
+const AppSettingsBoolDatabaseSchema = CollectionSchema(
+  name: r'AppSettingsBoolDatabase',
+  id: -1588436359218729245,
   properties: {
     r'hashCode': PropertySchema(
       id: 0,
@@ -33,22 +34,22 @@ const AppSettingsBoolDBSchema = CollectionSchema(
       type: IsarType.bool,
     )
   },
-  estimateSize: _appSettingsBoolDBEstimateSize,
-  serialize: _appSettingsBoolDBSerialize,
-  deserialize: _appSettingsBoolDBDeserialize,
-  deserializeProp: _appSettingsBoolDBDeserializeProp,
+  estimateSize: _appSettingsBoolDatabaseEstimateSize,
+  serialize: _appSettingsBoolDatabaseSerialize,
+  deserialize: _appSettingsBoolDatabaseDeserialize,
+  deserializeProp: _appSettingsBoolDatabaseDeserializeProp,
   idName: r'isarId',
   indexes: {},
   links: {},
   embeddedSchemas: {},
-  getId: _appSettingsBoolDBGetId,
-  getLinks: _appSettingsBoolDBGetLinks,
-  attach: _appSettingsBoolDBAttach,
+  getId: _appSettingsBoolDatabaseGetId,
+  getLinks: _appSettingsBoolDatabaseGetLinks,
+  attach: _appSettingsBoolDatabaseAttach,
   version: '3.1.0+1',
 );
 
-int _appSettingsBoolDBEstimateSize(
-  AppSettingsBoolDB object,
+int _appSettingsBoolDatabaseEstimateSize(
+  AppSettingsBoolDatabase object,
   List<int> offsets,
   Map<Type, List<int>> allOffsets,
 ) {
@@ -57,8 +58,8 @@ int _appSettingsBoolDBEstimateSize(
   return bytesCount;
 }
 
-void _appSettingsBoolDBSerialize(
-  AppSettingsBoolDB object,
+void _appSettingsBoolDatabaseSerialize(
+  AppSettingsBoolDatabase object,
   IsarWriter writer,
   List<int> offsets,
   Map<Type, List<int>> allOffsets,
@@ -68,20 +69,20 @@ void _appSettingsBoolDBSerialize(
   writer.writeBool(offsets[2], object.settingValue);
 }
 
-AppSettingsBoolDB _appSettingsBoolDBDeserialize(
+AppSettingsBoolDatabase _appSettingsBoolDatabaseDeserialize(
   Id id,
   IsarReader reader,
   List<int> offsets,
   Map<Type, List<int>> allOffsets,
 ) {
-  final object = AppSettingsBoolDB(
+  final object = AppSettingsBoolDatabase(
     settingName: reader.readString(offsets[1]),
     settingValue: reader.readBool(offsets[2]),
   );
   return object;
 }
 
-P _appSettingsBoolDBDeserializeProp<P>(
+P _appSettingsBoolDatabaseDeserializeProp<P>(
   IsarReader reader,
   int propertyId,
   int offset,
@@ -99,31 +100,32 @@ P _appSettingsBoolDBDeserializeProp<P>(
   }
 }
 
-Id _appSettingsBoolDBGetId(AppSettingsBoolDB object) {
+Id _appSettingsBoolDatabaseGetId(AppSettingsBoolDatabase object) {
   return object.isarId;
 }
 
-List<IsarLinkBase<dynamic>> _appSettingsBoolDBGetLinks(
-    AppSettingsBoolDB object) {
+List<IsarLinkBase<dynamic>> _appSettingsBoolDatabaseGetLinks(
+    AppSettingsBoolDatabase object) {
   return [];
 }
 
-void _appSettingsBoolDBAttach(
-    IsarCollection<dynamic> col, Id id, AppSettingsBoolDB object) {}
+void _appSettingsBoolDatabaseAttach(
+    IsarCollection<dynamic> col, Id id, AppSettingsBoolDatabase object) {}
 
-extension AppSettingsBoolDBQueryWhereSort
-    on QueryBuilder<AppSettingsBoolDB, AppSettingsBoolDB, QWhere> {
-  QueryBuilder<AppSettingsBoolDB, AppSettingsBoolDB, QAfterWhere> anyIsarId() {
+extension AppSettingsBoolDatabaseQueryWhereSort
+    on QueryBuilder<AppSettingsBoolDatabase, AppSettingsBoolDatabase, QWhere> {
+  QueryBuilder<AppSettingsBoolDatabase, AppSettingsBoolDatabase, QAfterWhere>
+      anyIsarId() {
     return QueryBuilder.apply(this, (query) {
       return query.addWhereClause(const IdWhereClause.any());
     });
   }
 }
 
-extension AppSettingsBoolDBQueryWhere
-    on QueryBuilder<AppSettingsBoolDB, AppSettingsBoolDB, QWhereClause> {
-  QueryBuilder<AppSettingsBoolDB, AppSettingsBoolDB, QAfterWhereClause>
-      isarIdEqualTo(Id isarId) {
+extension AppSettingsBoolDatabaseQueryWhere on QueryBuilder<
+    AppSettingsBoolDatabase, AppSettingsBoolDatabase, QWhereClause> {
+  QueryBuilder<AppSettingsBoolDatabase, AppSettingsBoolDatabase,
+      QAfterWhereClause> isarIdEqualTo(Id isarId) {
     return QueryBuilder.apply(this, (query) {
       return query.addWhereClause(IdWhereClause.between(
         lower: isarId,
@@ -132,8 +134,8 @@ extension AppSettingsBoolDBQueryWhere
     });
   }
 
-  QueryBuilder<AppSettingsBoolDB, AppSettingsBoolDB, QAfterWhereClause>
-      isarIdNotEqualTo(Id isarId) {
+  QueryBuilder<AppSettingsBoolDatabase, AppSettingsBoolDatabase,
+      QAfterWhereClause> isarIdNotEqualTo(Id isarId) {
     return QueryBuilder.apply(this, (query) {
       if (query.whereSort == Sort.asc) {
         return query
@@ -155,8 +157,8 @@ extension AppSettingsBoolDBQueryWhere
     });
   }
 
-  QueryBuilder<AppSettingsBoolDB, AppSettingsBoolDB, QAfterWhereClause>
-      isarIdGreaterThan(Id isarId, {bool include = false}) {
+  QueryBuilder<AppSettingsBoolDatabase, AppSettingsBoolDatabase,
+      QAfterWhereClause> isarIdGreaterThan(Id isarId, {bool include = false}) {
     return QueryBuilder.apply(this, (query) {
       return query.addWhereClause(
         IdWhereClause.greaterThan(lower: isarId, includeLower: include),
@@ -164,8 +166,8 @@ extension AppSettingsBoolDBQueryWhere
     });
   }
 
-  QueryBuilder<AppSettingsBoolDB, AppSettingsBoolDB, QAfterWhereClause>
-      isarIdLessThan(Id isarId, {bool include = false}) {
+  QueryBuilder<AppSettingsBoolDatabase, AppSettingsBoolDatabase,
+      QAfterWhereClause> isarIdLessThan(Id isarId, {bool include = false}) {
     return QueryBuilder.apply(this, (query) {
       return query.addWhereClause(
         IdWhereClause.lessThan(upper: isarId, includeUpper: include),
@@ -173,8 +175,8 @@ extension AppSettingsBoolDBQueryWhere
     });
   }
 
-  QueryBuilder<AppSettingsBoolDB, AppSettingsBoolDB, QAfterWhereClause>
-      isarIdBetween(
+  QueryBuilder<AppSettingsBoolDatabase, AppSettingsBoolDatabase,
+      QAfterWhereClause> isarIdBetween(
     Id lowerIsarId,
     Id upperIsarId, {
     bool includeLower = true,
@@ -191,10 +193,10 @@ extension AppSettingsBoolDBQueryWhere
   }
 }
 
-extension AppSettingsBoolDBQueryFilter
-    on QueryBuilder<AppSettingsBoolDB, AppSettingsBoolDB, QFilterCondition> {
-  QueryBuilder<AppSettingsBoolDB, AppSettingsBoolDB, QAfterFilterCondition>
-      hashCodeEqualTo(int value) {
+extension AppSettingsBoolDatabaseQueryFilter on QueryBuilder<
+    AppSettingsBoolDatabase, AppSettingsBoolDatabase, QFilterCondition> {
+  QueryBuilder<AppSettingsBoolDatabase, AppSettingsBoolDatabase,
+      QAfterFilterCondition> hashCodeEqualTo(int value) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
         property: r'hashCode',
@@ -203,8 +205,8 @@ extension AppSettingsBoolDBQueryFilter
     });
   }
 
-  QueryBuilder<AppSettingsBoolDB, AppSettingsBoolDB, QAfterFilterCondition>
-      hashCodeGreaterThan(
+  QueryBuilder<AppSettingsBoolDatabase, AppSettingsBoolDatabase,
+      QAfterFilterCondition> hashCodeGreaterThan(
     int value, {
     bool include = false,
   }) {
@@ -217,8 +219,8 @@ extension AppSettingsBoolDBQueryFilter
     });
   }
 
-  QueryBuilder<AppSettingsBoolDB, AppSettingsBoolDB, QAfterFilterCondition>
-      hashCodeLessThan(
+  QueryBuilder<AppSettingsBoolDatabase, AppSettingsBoolDatabase,
+      QAfterFilterCondition> hashCodeLessThan(
     int value, {
     bool include = false,
   }) {
@@ -231,8 +233,8 @@ extension AppSettingsBoolDBQueryFilter
     });
   }
 
-  QueryBuilder<AppSettingsBoolDB, AppSettingsBoolDB, QAfterFilterCondition>
-      hashCodeBetween(
+  QueryBuilder<AppSettingsBoolDatabase, AppSettingsBoolDatabase,
+      QAfterFilterCondition> hashCodeBetween(
     int lower,
     int upper, {
     bool includeLower = true,
@@ -249,8 +251,8 @@ extension AppSettingsBoolDBQueryFilter
     });
   }
 
-  QueryBuilder<AppSettingsBoolDB, AppSettingsBoolDB, QAfterFilterCondition>
-      isarIdEqualTo(Id value) {
+  QueryBuilder<AppSettingsBoolDatabase, AppSettingsBoolDatabase,
+      QAfterFilterCondition> isarIdEqualTo(Id value) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
         property: r'isarId',
@@ -259,8 +261,8 @@ extension AppSettingsBoolDBQueryFilter
     });
   }
 
-  QueryBuilder<AppSettingsBoolDB, AppSettingsBoolDB, QAfterFilterCondition>
-      isarIdGreaterThan(
+  QueryBuilder<AppSettingsBoolDatabase, AppSettingsBoolDatabase,
+      QAfterFilterCondition> isarIdGreaterThan(
     Id value, {
     bool include = false,
   }) {
@@ -273,8 +275,8 @@ extension AppSettingsBoolDBQueryFilter
     });
   }
 
-  QueryBuilder<AppSettingsBoolDB, AppSettingsBoolDB, QAfterFilterCondition>
-      isarIdLessThan(
+  QueryBuilder<AppSettingsBoolDatabase, AppSettingsBoolDatabase,
+      QAfterFilterCondition> isarIdLessThan(
     Id value, {
     bool include = false,
   }) {
@@ -287,8 +289,8 @@ extension AppSettingsBoolDBQueryFilter
     });
   }
 
-  QueryBuilder<AppSettingsBoolDB, AppSettingsBoolDB, QAfterFilterCondition>
-      isarIdBetween(
+  QueryBuilder<AppSettingsBoolDatabase, AppSettingsBoolDatabase,
+      QAfterFilterCondition> isarIdBetween(
     Id lower,
     Id upper, {
     bool includeLower = true,
@@ -305,8 +307,8 @@ extension AppSettingsBoolDBQueryFilter
     });
   }
 
-  QueryBuilder<AppSettingsBoolDB, AppSettingsBoolDB, QAfterFilterCondition>
-      settingNameEqualTo(
+  QueryBuilder<AppSettingsBoolDatabase, AppSettingsBoolDatabase,
+      QAfterFilterCondition> settingNameEqualTo(
     String value, {
     bool caseSensitive = true,
   }) {
@@ -319,8 +321,8 @@ extension AppSettingsBoolDBQueryFilter
     });
   }
 
-  QueryBuilder<AppSettingsBoolDB, AppSettingsBoolDB, QAfterFilterCondition>
-      settingNameGreaterThan(
+  QueryBuilder<AppSettingsBoolDatabase, AppSettingsBoolDatabase,
+      QAfterFilterCondition> settingNameGreaterThan(
     String value, {
     bool include = false,
     bool caseSensitive = true,
@@ -335,8 +337,8 @@ extension AppSettingsBoolDBQueryFilter
     });
   }
 
-  QueryBuilder<AppSettingsBoolDB, AppSettingsBoolDB, QAfterFilterCondition>
-      settingNameLessThan(
+  QueryBuilder<AppSettingsBoolDatabase, AppSettingsBoolDatabase,
+      QAfterFilterCondition> settingNameLessThan(
     String value, {
     bool include = false,
     bool caseSensitive = true,
@@ -351,8 +353,8 @@ extension AppSettingsBoolDBQueryFilter
     });
   }
 
-  QueryBuilder<AppSettingsBoolDB, AppSettingsBoolDB, QAfterFilterCondition>
-      settingNameBetween(
+  QueryBuilder<AppSettingsBoolDatabase, AppSettingsBoolDatabase,
+      QAfterFilterCondition> settingNameBetween(
     String lower,
     String upper, {
     bool includeLower = true,
@@ -371,8 +373,8 @@ extension AppSettingsBoolDBQueryFilter
     });
   }
 
-  QueryBuilder<AppSettingsBoolDB, AppSettingsBoolDB, QAfterFilterCondition>
-      settingNameStartsWith(
+  QueryBuilder<AppSettingsBoolDatabase, AppSettingsBoolDatabase,
+      QAfterFilterCondition> settingNameStartsWith(
     String value, {
     bool caseSensitive = true,
   }) {
@@ -385,8 +387,8 @@ extension AppSettingsBoolDBQueryFilter
     });
   }
 
-  QueryBuilder<AppSettingsBoolDB, AppSettingsBoolDB, QAfterFilterCondition>
-      settingNameEndsWith(
+  QueryBuilder<AppSettingsBoolDatabase, AppSettingsBoolDatabase,
+      QAfterFilterCondition> settingNameEndsWith(
     String value, {
     bool caseSensitive = true,
   }) {
@@ -399,7 +401,8 @@ extension AppSettingsBoolDBQueryFilter
     });
   }
 
-  QueryBuilder<AppSettingsBoolDB, AppSettingsBoolDB, QAfterFilterCondition>
+  QueryBuilder<AppSettingsBoolDatabase, AppSettingsBoolDatabase,
+          QAfterFilterCondition>
       settingNameContains(String value, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.contains(
@@ -410,7 +413,8 @@ extension AppSettingsBoolDBQueryFilter
     });
   }
 
-  QueryBuilder<AppSettingsBoolDB, AppSettingsBoolDB, QAfterFilterCondition>
+  QueryBuilder<AppSettingsBoolDatabase, AppSettingsBoolDatabase,
+          QAfterFilterCondition>
       settingNameMatches(String pattern, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.matches(
@@ -421,8 +425,8 @@ extension AppSettingsBoolDBQueryFilter
     });
   }
 
-  QueryBuilder<AppSettingsBoolDB, AppSettingsBoolDB, QAfterFilterCondition>
-      settingNameIsEmpty() {
+  QueryBuilder<AppSettingsBoolDatabase, AppSettingsBoolDatabase,
+      QAfterFilterCondition> settingNameIsEmpty() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
         property: r'settingName',
@@ -431,8 +435,8 @@ extension AppSettingsBoolDBQueryFilter
     });
   }
 
-  QueryBuilder<AppSettingsBoolDB, AppSettingsBoolDB, QAfterFilterCondition>
-      settingNameIsNotEmpty() {
+  QueryBuilder<AppSettingsBoolDatabase, AppSettingsBoolDatabase,
+      QAfterFilterCondition> settingNameIsNotEmpty() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.greaterThan(
         property: r'settingName',
@@ -441,8 +445,8 @@ extension AppSettingsBoolDBQueryFilter
     });
   }
 
-  QueryBuilder<AppSettingsBoolDB, AppSettingsBoolDB, QAfterFilterCondition>
-      settingValueEqualTo(bool value) {
+  QueryBuilder<AppSettingsBoolDatabase, AppSettingsBoolDatabase,
+      QAfterFilterCondition> settingValueEqualTo(bool value) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
         property: r'settingValue',
@@ -452,50 +456,50 @@ extension AppSettingsBoolDBQueryFilter
   }
 }
 
-extension AppSettingsBoolDBQueryObject
-    on QueryBuilder<AppSettingsBoolDB, AppSettingsBoolDB, QFilterCondition> {}
+extension AppSettingsBoolDatabaseQueryObject on QueryBuilder<
+    AppSettingsBoolDatabase, AppSettingsBoolDatabase, QFilterCondition> {}
 
-extension AppSettingsBoolDBQueryLinks
-    on QueryBuilder<AppSettingsBoolDB, AppSettingsBoolDB, QFilterCondition> {}
+extension AppSettingsBoolDatabaseQueryLinks on QueryBuilder<
+    AppSettingsBoolDatabase, AppSettingsBoolDatabase, QFilterCondition> {}
 
-extension AppSettingsBoolDBQuerySortBy
-    on QueryBuilder<AppSettingsBoolDB, AppSettingsBoolDB, QSortBy> {
-  QueryBuilder<AppSettingsBoolDB, AppSettingsBoolDB, QAfterSortBy>
+extension AppSettingsBoolDatabaseQuerySortBy
+    on QueryBuilder<AppSettingsBoolDatabase, AppSettingsBoolDatabase, QSortBy> {
+  QueryBuilder<AppSettingsBoolDatabase, AppSettingsBoolDatabase, QAfterSortBy>
       sortByHashCode() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'hashCode', Sort.asc);
     });
   }
 
-  QueryBuilder<AppSettingsBoolDB, AppSettingsBoolDB, QAfterSortBy>
+  QueryBuilder<AppSettingsBoolDatabase, AppSettingsBoolDatabase, QAfterSortBy>
       sortByHashCodeDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'hashCode', Sort.desc);
     });
   }
 
-  QueryBuilder<AppSettingsBoolDB, AppSettingsBoolDB, QAfterSortBy>
+  QueryBuilder<AppSettingsBoolDatabase, AppSettingsBoolDatabase, QAfterSortBy>
       sortBySettingName() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'settingName', Sort.asc);
     });
   }
 
-  QueryBuilder<AppSettingsBoolDB, AppSettingsBoolDB, QAfterSortBy>
+  QueryBuilder<AppSettingsBoolDatabase, AppSettingsBoolDatabase, QAfterSortBy>
       sortBySettingNameDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'settingName', Sort.desc);
     });
   }
 
-  QueryBuilder<AppSettingsBoolDB, AppSettingsBoolDB, QAfterSortBy>
+  QueryBuilder<AppSettingsBoolDatabase, AppSettingsBoolDatabase, QAfterSortBy>
       sortBySettingValue() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'settingValue', Sort.asc);
     });
   }
 
-  QueryBuilder<AppSettingsBoolDB, AppSettingsBoolDB, QAfterSortBy>
+  QueryBuilder<AppSettingsBoolDatabase, AppSettingsBoolDatabase, QAfterSortBy>
       sortBySettingValueDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'settingValue', Sort.desc);
@@ -503,58 +507,58 @@ extension AppSettingsBoolDBQuerySortBy
   }
 }
 
-extension AppSettingsBoolDBQuerySortThenBy
-    on QueryBuilder<AppSettingsBoolDB, AppSettingsBoolDB, QSortThenBy> {
-  QueryBuilder<AppSettingsBoolDB, AppSettingsBoolDB, QAfterSortBy>
+extension AppSettingsBoolDatabaseQuerySortThenBy on QueryBuilder<
+    AppSettingsBoolDatabase, AppSettingsBoolDatabase, QSortThenBy> {
+  QueryBuilder<AppSettingsBoolDatabase, AppSettingsBoolDatabase, QAfterSortBy>
       thenByHashCode() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'hashCode', Sort.asc);
     });
   }
 
-  QueryBuilder<AppSettingsBoolDB, AppSettingsBoolDB, QAfterSortBy>
+  QueryBuilder<AppSettingsBoolDatabase, AppSettingsBoolDatabase, QAfterSortBy>
       thenByHashCodeDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'hashCode', Sort.desc);
     });
   }
 
-  QueryBuilder<AppSettingsBoolDB, AppSettingsBoolDB, QAfterSortBy>
+  QueryBuilder<AppSettingsBoolDatabase, AppSettingsBoolDatabase, QAfterSortBy>
       thenByIsarId() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'isarId', Sort.asc);
     });
   }
 
-  QueryBuilder<AppSettingsBoolDB, AppSettingsBoolDB, QAfterSortBy>
+  QueryBuilder<AppSettingsBoolDatabase, AppSettingsBoolDatabase, QAfterSortBy>
       thenByIsarIdDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'isarId', Sort.desc);
     });
   }
 
-  QueryBuilder<AppSettingsBoolDB, AppSettingsBoolDB, QAfterSortBy>
+  QueryBuilder<AppSettingsBoolDatabase, AppSettingsBoolDatabase, QAfterSortBy>
       thenBySettingName() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'settingName', Sort.asc);
     });
   }
 
-  QueryBuilder<AppSettingsBoolDB, AppSettingsBoolDB, QAfterSortBy>
+  QueryBuilder<AppSettingsBoolDatabase, AppSettingsBoolDatabase, QAfterSortBy>
       thenBySettingNameDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'settingName', Sort.desc);
     });
   }
 
-  QueryBuilder<AppSettingsBoolDB, AppSettingsBoolDB, QAfterSortBy>
+  QueryBuilder<AppSettingsBoolDatabase, AppSettingsBoolDatabase, QAfterSortBy>
       thenBySettingValue() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'settingValue', Sort.asc);
     });
   }
 
-  QueryBuilder<AppSettingsBoolDB, AppSettingsBoolDB, QAfterSortBy>
+  QueryBuilder<AppSettingsBoolDatabase, AppSettingsBoolDatabase, QAfterSortBy>
       thenBySettingValueDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'settingValue', Sort.desc);
@@ -562,23 +566,23 @@ extension AppSettingsBoolDBQuerySortThenBy
   }
 }
 
-extension AppSettingsBoolDBQueryWhereDistinct
-    on QueryBuilder<AppSettingsBoolDB, AppSettingsBoolDB, QDistinct> {
-  QueryBuilder<AppSettingsBoolDB, AppSettingsBoolDB, QDistinct>
+extension AppSettingsBoolDatabaseQueryWhereDistinct on QueryBuilder<
+    AppSettingsBoolDatabase, AppSettingsBoolDatabase, QDistinct> {
+  QueryBuilder<AppSettingsBoolDatabase, AppSettingsBoolDatabase, QDistinct>
       distinctByHashCode() {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'hashCode');
     });
   }
 
-  QueryBuilder<AppSettingsBoolDB, AppSettingsBoolDB, QDistinct>
+  QueryBuilder<AppSettingsBoolDatabase, AppSettingsBoolDatabase, QDistinct>
       distinctBySettingName({bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'settingName', caseSensitive: caseSensitive);
     });
   }
 
-  QueryBuilder<AppSettingsBoolDB, AppSettingsBoolDB, QDistinct>
+  QueryBuilder<AppSettingsBoolDatabase, AppSettingsBoolDatabase, QDistinct>
       distinctBySettingValue() {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'settingValue');
@@ -586,28 +590,30 @@ extension AppSettingsBoolDBQueryWhereDistinct
   }
 }
 
-extension AppSettingsBoolDBQueryProperty
-    on QueryBuilder<AppSettingsBoolDB, AppSettingsBoolDB, QQueryProperty> {
-  QueryBuilder<AppSettingsBoolDB, int, QQueryOperations> isarIdProperty() {
+extension AppSettingsBoolDatabaseQueryProperty on QueryBuilder<
+    AppSettingsBoolDatabase, AppSettingsBoolDatabase, QQueryProperty> {
+  QueryBuilder<AppSettingsBoolDatabase, int, QQueryOperations>
+      isarIdProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'isarId');
     });
   }
 
-  QueryBuilder<AppSettingsBoolDB, int, QQueryOperations> hashCodeProperty() {
+  QueryBuilder<AppSettingsBoolDatabase, int, QQueryOperations>
+      hashCodeProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'hashCode');
     });
   }
 
-  QueryBuilder<AppSettingsBoolDB, String, QQueryOperations>
+  QueryBuilder<AppSettingsBoolDatabase, String, QQueryOperations>
       settingNameProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'settingName');
     });
   }
 
-  QueryBuilder<AppSettingsBoolDB, bool, QQueryOperations>
+  QueryBuilder<AppSettingsBoolDatabase, bool, QQueryOperations>
       settingValueProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'settingValue');

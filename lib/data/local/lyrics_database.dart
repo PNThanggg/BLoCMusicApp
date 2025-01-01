@@ -5,11 +5,11 @@ import '../fast_hash.dart';
 part 'lyrics_database.g.dart';
 
 @collection
-class LyricsDB {
+class LyricsDatabase {
   Id get isarId => fastHash(mediaID);
   final String sourceId;
   final String mediaID;
-  final  String plainLyrics;
+  final String plainLyrics;
   final String title;
   final String artist;
   final String source;
@@ -19,7 +19,7 @@ class LyricsDB {
   final String? url;
   final String? syncedLyrics;
 
-  LyricsDB({
+  LyricsDatabase({
     required this.sourceId,
     required this.mediaID,
     required this.plainLyrics,

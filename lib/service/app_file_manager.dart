@@ -4,28 +4,31 @@ import 'dart:io';
 
 import 'package:path_provider/path_provider.dart';
 
+import '../data/local/media_item_database.dart';
+import 'app_database_service.dart';
+
 abstract class AppFileManager {
   const AppFileManager();
 
   static Future<bool> isPlaylistExists(String playlistName) async {
     // check if playlist exists
-    final list = await BloomeeDBService.getPlaylists4Library();
+    final list = await AppDatabaseService.getPlaylists4Library();
     return list.any((playlist) => playlist.playlistName == playlistName);
   }
 
   static Future<String?> exportPlaylist(String playlistName) async {
     // export playlist to json file
-    final mediaPlaylistDB = await BloomeeDBService.getPlaylist(playlistName);
+    final mediaPlaylistDB = await AppDatabaseService.getPlaylist(playlistName);
     if (mediaPlaylistDB != null) {
       try {
-        List<MediaItemDB>? playlistItems = await BloomeeDBService.getPlaylistItems(mediaPlaylistDB);
+        List<MediaItemDatabase>? playlistItems = await AppDatabaseService.getPlaylistItems(mediaPlaylistDB);
         if (playlistItems != null) {
           final Map<String, dynamic> playlistMap = {
             'playlistName': mediaPlaylistDB.playlistName,
             'mediaRanks': mediaPlaylistDB.mediaRanks,
             'mediaItems': playlistItems.map((e) => e.toMap()).toList(),
           };
-          final path = await writeToJSON('${mediaPlaylistDB.playlistName}_BloomeePlaylist.blm', playlistMap);
+          final path = await writeToJSON('${mediaPlaylistDB.playlistName}_AppPlaylist.blm', playlistMap);
           log("Playlist exported successfully", name: "FileManager");
           return path;
         }
@@ -39,11 +42,11 @@ abstract class AppFileManager {
     return null;
   }
 
-  static Future<String?> exportMediaItem(MediaItemDB mediaItemDB) async {
+  static Future<String?> exportMediaItem(MediaItemDatabase mediaItemDatabase) async {
     // export media item to json file
     try {
-      final Map<String, dynamic> mediaItemMap = mediaItemDB.toMap();
-      final path = await writeToJSON('${mediaItemDB.title}_AppSong.blm', mediaItemMap);
+      final Map<String, dynamic> mediaItemMap = mediaItemDatabase.toMap();
+      final path = await writeToJSON('${mediaItemDatabase.title}_AppSong.blm', mediaItemMap);
       log("Media item exported successfully", name: "FileManager");
       return path;
     } catch (e) {
@@ -74,8 +77,8 @@ abstract class AppFileManager {
           log("Playlist name: $playlistName", name: "FileManager");
 
           for (final mediaItemMap in playlistMap['mediaItems']) {
-            final mediaItemDB = MediaItemDB.fromMap(mediaItemMap);
-            await BloomeeDBService.addMediaItem(mediaItemDB, playlistName);
+            final mediaItemDB = MediaItemDatabase.fromMap(mediaItemMap);
+            await AppDatabaseService.addMediaItem(mediaItemDB, playlistName);
             log("Media item imported successfully - ${mediaItemDB.title}", name: "FileManager");
           }
 
@@ -93,8 +96,8 @@ abstract class AppFileManager {
     try {
       await readFromJSON(filePath).then((mediaItemMap) {
         if (mediaItemMap != null && mediaItemMap.isNotEmpty) {
-          final mediaItemDB = MediaItemDB.fromMap(mediaItemMap);
-          BloomeeDBService.addMediaItem(mediaItemDB, "Imported");
+          final mediaItemDB = MediaItemDatabase.fromMap(mediaItemMap);
+          AppDatabaseService.addMediaItem(mediaItemDB, "Imported");
           log("Media item imported successfully");
         }
       });

@@ -9,13 +9,14 @@ part of 'notification_database.dart';
 // coverage:ignore-file
 // ignore_for_file: duplicate_ignore, non_constant_identifier_names, constant_identifier_names, invalid_use_of_protected_member, unnecessary_cast, prefer_const_constructors, lines_longer_than_80_chars, require_trailing_commas, inference_failure_on_function_invocation, unnecessary_parenthesis, unnecessary_raw_strings, unnecessary_null_checks, join_return_with_assignment, prefer_final_locals, avoid_js_rounded_ints, avoid_positional_boolean_parameters, always_specify_types
 
-extension GetNotificationDBCollection on Isar {
-  IsarCollection<NotificationDB> get notificationDBs => this.collection();
+extension GetNotificationDatabaseCollection on Isar {
+  IsarCollection<NotificationDatabase> get notificationDatabases =>
+      this.collection();
 }
 
-const NotificationDBSchema = CollectionSchema(
-  name: r'NotificationDB',
-  id: 375537289431161249,
+const NotificationDatabaseSchema = CollectionSchema(
+  name: r'NotificationDatabase',
+  id: -7199825309042797267,
   properties: {
     r'body': PropertySchema(
       id: 0,
@@ -48,22 +49,22 @@ const NotificationDBSchema = CollectionSchema(
       type: IsarType.string,
     )
   },
-  estimateSize: _notificationDBEstimateSize,
-  serialize: _notificationDBSerialize,
-  deserialize: _notificationDBDeserialize,
-  deserializeProp: _notificationDBDeserializeProp,
+  estimateSize: _notificationDatabaseEstimateSize,
+  serialize: _notificationDatabaseSerialize,
+  deserialize: _notificationDatabaseDeserialize,
+  deserializeProp: _notificationDatabaseDeserializeProp,
   idName: r'id',
   indexes: {},
   links: {},
   embeddedSchemas: {},
-  getId: _notificationDBGetId,
-  getLinks: _notificationDBGetLinks,
-  attach: _notificationDBAttach,
+  getId: _notificationDatabaseGetId,
+  getLinks: _notificationDatabaseGetLinks,
+  attach: _notificationDatabaseAttach,
   version: '3.1.0+1',
 );
 
-int _notificationDBEstimateSize(
-  NotificationDB object,
+int _notificationDatabaseEstimateSize(
+  NotificationDatabase object,
   List<int> offsets,
   Map<Type, List<int>> allOffsets,
 ) {
@@ -86,8 +87,8 @@ int _notificationDBEstimateSize(
   return bytesCount;
 }
 
-void _notificationDBSerialize(
-  NotificationDB object,
+void _notificationDatabaseSerialize(
+  NotificationDatabase object,
   IsarWriter writer,
   List<int> offsets,
   Map<Type, List<int>> allOffsets,
@@ -100,13 +101,13 @@ void _notificationDBSerialize(
   writer.writeString(offsets[5], object.url);
 }
 
-NotificationDB _notificationDBDeserialize(
+NotificationDatabase _notificationDatabaseDeserialize(
   Id id,
   IsarReader reader,
   List<int> offsets,
   Map<Type, List<int>> allOffsets,
 ) {
-  final object = NotificationDB(
+  final object = NotificationDatabase(
     body: reader.readString(offsets[0]),
     id: id,
     payload: reader.readStringOrNull(offsets[1]),
@@ -118,7 +119,7 @@ NotificationDB _notificationDBDeserialize(
   return object;
 }
 
-P _notificationDBDeserializeProp<P>(
+P _notificationDatabaseDeserializeProp<P>(
   IsarReader reader,
   int propertyId,
   int offset,
@@ -142,32 +143,34 @@ P _notificationDBDeserializeProp<P>(
   }
 }
 
-Id _notificationDBGetId(NotificationDB object) {
+Id _notificationDatabaseGetId(NotificationDatabase object) {
   return object.id ?? Isar.autoIncrement;
 }
 
-List<IsarLinkBase<dynamic>> _notificationDBGetLinks(NotificationDB object) {
+List<IsarLinkBase<dynamic>> _notificationDatabaseGetLinks(
+    NotificationDatabase object) {
   return [];
 }
 
-void _notificationDBAttach(
-    IsarCollection<dynamic> col, Id id, NotificationDB object) {
+void _notificationDatabaseAttach(
+    IsarCollection<dynamic> col, Id id, NotificationDatabase object) {
   object.id = id;
 }
 
-extension NotificationDBQueryWhereSort
-    on QueryBuilder<NotificationDB, NotificationDB, QWhere> {
-  QueryBuilder<NotificationDB, NotificationDB, QAfterWhere> anyId() {
+extension NotificationDatabaseQueryWhereSort
+    on QueryBuilder<NotificationDatabase, NotificationDatabase, QWhere> {
+  QueryBuilder<NotificationDatabase, NotificationDatabase, QAfterWhere>
+      anyId() {
     return QueryBuilder.apply(this, (query) {
       return query.addWhereClause(const IdWhereClause.any());
     });
   }
 }
 
-extension NotificationDBQueryWhere
-    on QueryBuilder<NotificationDB, NotificationDB, QWhereClause> {
-  QueryBuilder<NotificationDB, NotificationDB, QAfterWhereClause> idEqualTo(
-      Id id) {
+extension NotificationDatabaseQueryWhere
+    on QueryBuilder<NotificationDatabase, NotificationDatabase, QWhereClause> {
+  QueryBuilder<NotificationDatabase, NotificationDatabase, QAfterWhereClause>
+      idEqualTo(Id id) {
     return QueryBuilder.apply(this, (query) {
       return query.addWhereClause(IdWhereClause.between(
         lower: id,
@@ -176,8 +179,8 @@ extension NotificationDBQueryWhere
     });
   }
 
-  QueryBuilder<NotificationDB, NotificationDB, QAfterWhereClause> idNotEqualTo(
-      Id id) {
+  QueryBuilder<NotificationDatabase, NotificationDatabase, QAfterWhereClause>
+      idNotEqualTo(Id id) {
     return QueryBuilder.apply(this, (query) {
       if (query.whereSort == Sort.asc) {
         return query
@@ -199,9 +202,8 @@ extension NotificationDBQueryWhere
     });
   }
 
-  QueryBuilder<NotificationDB, NotificationDB, QAfterWhereClause> idGreaterThan(
-      Id id,
-      {bool include = false}) {
+  QueryBuilder<NotificationDatabase, NotificationDatabase, QAfterWhereClause>
+      idGreaterThan(Id id, {bool include = false}) {
     return QueryBuilder.apply(this, (query) {
       return query.addWhereClause(
         IdWhereClause.greaterThan(lower: id, includeLower: include),
@@ -209,9 +211,8 @@ extension NotificationDBQueryWhere
     });
   }
 
-  QueryBuilder<NotificationDB, NotificationDB, QAfterWhereClause> idLessThan(
-      Id id,
-      {bool include = false}) {
+  QueryBuilder<NotificationDatabase, NotificationDatabase, QAfterWhereClause>
+      idLessThan(Id id, {bool include = false}) {
     return QueryBuilder.apply(this, (query) {
       return query.addWhereClause(
         IdWhereClause.lessThan(upper: id, includeUpper: include),
@@ -219,7 +220,8 @@ extension NotificationDBQueryWhere
     });
   }
 
-  QueryBuilder<NotificationDB, NotificationDB, QAfterWhereClause> idBetween(
+  QueryBuilder<NotificationDatabase, NotificationDatabase, QAfterWhereClause>
+      idBetween(
     Id lowerId,
     Id upperId, {
     bool includeLower = true,
@@ -236,10 +238,10 @@ extension NotificationDBQueryWhere
   }
 }
 
-extension NotificationDBQueryFilter
-    on QueryBuilder<NotificationDB, NotificationDB, QFilterCondition> {
-  QueryBuilder<NotificationDB, NotificationDB, QAfterFilterCondition>
-      bodyEqualTo(
+extension NotificationDatabaseQueryFilter on QueryBuilder<NotificationDatabase,
+    NotificationDatabase, QFilterCondition> {
+  QueryBuilder<NotificationDatabase, NotificationDatabase,
+      QAfterFilterCondition> bodyEqualTo(
     String value, {
     bool caseSensitive = true,
   }) {
@@ -252,8 +254,8 @@ extension NotificationDBQueryFilter
     });
   }
 
-  QueryBuilder<NotificationDB, NotificationDB, QAfterFilterCondition>
-      bodyGreaterThan(
+  QueryBuilder<NotificationDatabase, NotificationDatabase,
+      QAfterFilterCondition> bodyGreaterThan(
     String value, {
     bool include = false,
     bool caseSensitive = true,
@@ -268,8 +270,8 @@ extension NotificationDBQueryFilter
     });
   }
 
-  QueryBuilder<NotificationDB, NotificationDB, QAfterFilterCondition>
-      bodyLessThan(
+  QueryBuilder<NotificationDatabase, NotificationDatabase,
+      QAfterFilterCondition> bodyLessThan(
     String value, {
     bool include = false,
     bool caseSensitive = true,
@@ -284,8 +286,8 @@ extension NotificationDBQueryFilter
     });
   }
 
-  QueryBuilder<NotificationDB, NotificationDB, QAfterFilterCondition>
-      bodyBetween(
+  QueryBuilder<NotificationDatabase, NotificationDatabase,
+      QAfterFilterCondition> bodyBetween(
     String lower,
     String upper, {
     bool includeLower = true,
@@ -304,8 +306,8 @@ extension NotificationDBQueryFilter
     });
   }
 
-  QueryBuilder<NotificationDB, NotificationDB, QAfterFilterCondition>
-      bodyStartsWith(
+  QueryBuilder<NotificationDatabase, NotificationDatabase,
+      QAfterFilterCondition> bodyStartsWith(
     String value, {
     bool caseSensitive = true,
   }) {
@@ -318,8 +320,8 @@ extension NotificationDBQueryFilter
     });
   }
 
-  QueryBuilder<NotificationDB, NotificationDB, QAfterFilterCondition>
-      bodyEndsWith(
+  QueryBuilder<NotificationDatabase, NotificationDatabase,
+      QAfterFilterCondition> bodyEndsWith(
     String value, {
     bool caseSensitive = true,
   }) {
@@ -332,7 +334,8 @@ extension NotificationDBQueryFilter
     });
   }
 
-  QueryBuilder<NotificationDB, NotificationDB, QAfterFilterCondition>
+  QueryBuilder<NotificationDatabase, NotificationDatabase,
+          QAfterFilterCondition>
       bodyContains(String value, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.contains(
@@ -343,7 +346,8 @@ extension NotificationDBQueryFilter
     });
   }
 
-  QueryBuilder<NotificationDB, NotificationDB, QAfterFilterCondition>
+  QueryBuilder<NotificationDatabase, NotificationDatabase,
+          QAfterFilterCondition>
       bodyMatches(String pattern, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.matches(
@@ -354,8 +358,8 @@ extension NotificationDBQueryFilter
     });
   }
 
-  QueryBuilder<NotificationDB, NotificationDB, QAfterFilterCondition>
-      bodyIsEmpty() {
+  QueryBuilder<NotificationDatabase, NotificationDatabase,
+      QAfterFilterCondition> bodyIsEmpty() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
         property: r'body',
@@ -364,8 +368,8 @@ extension NotificationDBQueryFilter
     });
   }
 
-  QueryBuilder<NotificationDB, NotificationDB, QAfterFilterCondition>
-      bodyIsNotEmpty() {
+  QueryBuilder<NotificationDatabase, NotificationDatabase,
+      QAfterFilterCondition> bodyIsNotEmpty() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.greaterThan(
         property: r'body',
@@ -374,8 +378,8 @@ extension NotificationDBQueryFilter
     });
   }
 
-  QueryBuilder<NotificationDB, NotificationDB, QAfterFilterCondition>
-      idIsNull() {
+  QueryBuilder<NotificationDatabase, NotificationDatabase,
+      QAfterFilterCondition> idIsNull() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(const FilterCondition.isNull(
         property: r'id',
@@ -383,8 +387,8 @@ extension NotificationDBQueryFilter
     });
   }
 
-  QueryBuilder<NotificationDB, NotificationDB, QAfterFilterCondition>
-      idIsNotNull() {
+  QueryBuilder<NotificationDatabase, NotificationDatabase,
+      QAfterFilterCondition> idIsNotNull() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(const FilterCondition.isNotNull(
         property: r'id',
@@ -392,8 +396,8 @@ extension NotificationDBQueryFilter
     });
   }
 
-  QueryBuilder<NotificationDB, NotificationDB, QAfterFilterCondition> idEqualTo(
-      Id? value) {
+  QueryBuilder<NotificationDatabase, NotificationDatabase,
+      QAfterFilterCondition> idEqualTo(Id? value) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
         property: r'id',
@@ -402,8 +406,8 @@ extension NotificationDBQueryFilter
     });
   }
 
-  QueryBuilder<NotificationDB, NotificationDB, QAfterFilterCondition>
-      idGreaterThan(
+  QueryBuilder<NotificationDatabase, NotificationDatabase,
+      QAfterFilterCondition> idGreaterThan(
     Id? value, {
     bool include = false,
   }) {
@@ -416,8 +420,8 @@ extension NotificationDBQueryFilter
     });
   }
 
-  QueryBuilder<NotificationDB, NotificationDB, QAfterFilterCondition>
-      idLessThan(
+  QueryBuilder<NotificationDatabase, NotificationDatabase,
+      QAfterFilterCondition> idLessThan(
     Id? value, {
     bool include = false,
   }) {
@@ -430,7 +434,8 @@ extension NotificationDBQueryFilter
     });
   }
 
-  QueryBuilder<NotificationDB, NotificationDB, QAfterFilterCondition> idBetween(
+  QueryBuilder<NotificationDatabase, NotificationDatabase,
+      QAfterFilterCondition> idBetween(
     Id? lower,
     Id? upper, {
     bool includeLower = true,
@@ -447,8 +452,8 @@ extension NotificationDBQueryFilter
     });
   }
 
-  QueryBuilder<NotificationDB, NotificationDB, QAfterFilterCondition>
-      payloadIsNull() {
+  QueryBuilder<NotificationDatabase, NotificationDatabase,
+      QAfterFilterCondition> payloadIsNull() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(const FilterCondition.isNull(
         property: r'payload',
@@ -456,8 +461,8 @@ extension NotificationDBQueryFilter
     });
   }
 
-  QueryBuilder<NotificationDB, NotificationDB, QAfterFilterCondition>
-      payloadIsNotNull() {
+  QueryBuilder<NotificationDatabase, NotificationDatabase,
+      QAfterFilterCondition> payloadIsNotNull() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(const FilterCondition.isNotNull(
         property: r'payload',
@@ -465,8 +470,8 @@ extension NotificationDBQueryFilter
     });
   }
 
-  QueryBuilder<NotificationDB, NotificationDB, QAfterFilterCondition>
-      payloadEqualTo(
+  QueryBuilder<NotificationDatabase, NotificationDatabase,
+      QAfterFilterCondition> payloadEqualTo(
     String? value, {
     bool caseSensitive = true,
   }) {
@@ -479,8 +484,8 @@ extension NotificationDBQueryFilter
     });
   }
 
-  QueryBuilder<NotificationDB, NotificationDB, QAfterFilterCondition>
-      payloadGreaterThan(
+  QueryBuilder<NotificationDatabase, NotificationDatabase,
+      QAfterFilterCondition> payloadGreaterThan(
     String? value, {
     bool include = false,
     bool caseSensitive = true,
@@ -495,8 +500,8 @@ extension NotificationDBQueryFilter
     });
   }
 
-  QueryBuilder<NotificationDB, NotificationDB, QAfterFilterCondition>
-      payloadLessThan(
+  QueryBuilder<NotificationDatabase, NotificationDatabase,
+      QAfterFilterCondition> payloadLessThan(
     String? value, {
     bool include = false,
     bool caseSensitive = true,
@@ -511,8 +516,8 @@ extension NotificationDBQueryFilter
     });
   }
 
-  QueryBuilder<NotificationDB, NotificationDB, QAfterFilterCondition>
-      payloadBetween(
+  QueryBuilder<NotificationDatabase, NotificationDatabase,
+      QAfterFilterCondition> payloadBetween(
     String? lower,
     String? upper, {
     bool includeLower = true,
@@ -531,8 +536,8 @@ extension NotificationDBQueryFilter
     });
   }
 
-  QueryBuilder<NotificationDB, NotificationDB, QAfterFilterCondition>
-      payloadStartsWith(
+  QueryBuilder<NotificationDatabase, NotificationDatabase,
+      QAfterFilterCondition> payloadStartsWith(
     String value, {
     bool caseSensitive = true,
   }) {
@@ -545,8 +550,8 @@ extension NotificationDBQueryFilter
     });
   }
 
-  QueryBuilder<NotificationDB, NotificationDB, QAfterFilterCondition>
-      payloadEndsWith(
+  QueryBuilder<NotificationDatabase, NotificationDatabase,
+      QAfterFilterCondition> payloadEndsWith(
     String value, {
     bool caseSensitive = true,
   }) {
@@ -559,7 +564,8 @@ extension NotificationDBQueryFilter
     });
   }
 
-  QueryBuilder<NotificationDB, NotificationDB, QAfterFilterCondition>
+  QueryBuilder<NotificationDatabase, NotificationDatabase,
+          QAfterFilterCondition>
       payloadContains(String value, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.contains(
@@ -570,7 +576,8 @@ extension NotificationDBQueryFilter
     });
   }
 
-  QueryBuilder<NotificationDB, NotificationDB, QAfterFilterCondition>
+  QueryBuilder<NotificationDatabase, NotificationDatabase,
+          QAfterFilterCondition>
       payloadMatches(String pattern, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.matches(
@@ -581,8 +588,8 @@ extension NotificationDBQueryFilter
     });
   }
 
-  QueryBuilder<NotificationDB, NotificationDB, QAfterFilterCondition>
-      payloadIsEmpty() {
+  QueryBuilder<NotificationDatabase, NotificationDatabase,
+      QAfterFilterCondition> payloadIsEmpty() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
         property: r'payload',
@@ -591,8 +598,8 @@ extension NotificationDBQueryFilter
     });
   }
 
-  QueryBuilder<NotificationDB, NotificationDB, QAfterFilterCondition>
-      payloadIsNotEmpty() {
+  QueryBuilder<NotificationDatabase, NotificationDatabase,
+      QAfterFilterCondition> payloadIsNotEmpty() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.greaterThan(
         property: r'payload',
@@ -601,8 +608,8 @@ extension NotificationDBQueryFilter
     });
   }
 
-  QueryBuilder<NotificationDB, NotificationDB, QAfterFilterCondition>
-      timeIsNull() {
+  QueryBuilder<NotificationDatabase, NotificationDatabase,
+      QAfterFilterCondition> timeIsNull() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(const FilterCondition.isNull(
         property: r'time',
@@ -610,8 +617,8 @@ extension NotificationDBQueryFilter
     });
   }
 
-  QueryBuilder<NotificationDB, NotificationDB, QAfterFilterCondition>
-      timeIsNotNull() {
+  QueryBuilder<NotificationDatabase, NotificationDatabase,
+      QAfterFilterCondition> timeIsNotNull() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(const FilterCondition.isNotNull(
         property: r'time',
@@ -619,8 +626,8 @@ extension NotificationDBQueryFilter
     });
   }
 
-  QueryBuilder<NotificationDB, NotificationDB, QAfterFilterCondition>
-      timeEqualTo(DateTime? value) {
+  QueryBuilder<NotificationDatabase, NotificationDatabase,
+      QAfterFilterCondition> timeEqualTo(DateTime? value) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
         property: r'time',
@@ -629,8 +636,8 @@ extension NotificationDBQueryFilter
     });
   }
 
-  QueryBuilder<NotificationDB, NotificationDB, QAfterFilterCondition>
-      timeGreaterThan(
+  QueryBuilder<NotificationDatabase, NotificationDatabase,
+      QAfterFilterCondition> timeGreaterThan(
     DateTime? value, {
     bool include = false,
   }) {
@@ -643,8 +650,8 @@ extension NotificationDBQueryFilter
     });
   }
 
-  QueryBuilder<NotificationDB, NotificationDB, QAfterFilterCondition>
-      timeLessThan(
+  QueryBuilder<NotificationDatabase, NotificationDatabase,
+      QAfterFilterCondition> timeLessThan(
     DateTime? value, {
     bool include = false,
   }) {
@@ -657,8 +664,8 @@ extension NotificationDBQueryFilter
     });
   }
 
-  QueryBuilder<NotificationDB, NotificationDB, QAfterFilterCondition>
-      timeBetween(
+  QueryBuilder<NotificationDatabase, NotificationDatabase,
+      QAfterFilterCondition> timeBetween(
     DateTime? lower,
     DateTime? upper, {
     bool includeLower = true,
@@ -675,8 +682,8 @@ extension NotificationDBQueryFilter
     });
   }
 
-  QueryBuilder<NotificationDB, NotificationDB, QAfterFilterCondition>
-      titleEqualTo(
+  QueryBuilder<NotificationDatabase, NotificationDatabase,
+      QAfterFilterCondition> titleEqualTo(
     String value, {
     bool caseSensitive = true,
   }) {
@@ -689,8 +696,8 @@ extension NotificationDBQueryFilter
     });
   }
 
-  QueryBuilder<NotificationDB, NotificationDB, QAfterFilterCondition>
-      titleGreaterThan(
+  QueryBuilder<NotificationDatabase, NotificationDatabase,
+      QAfterFilterCondition> titleGreaterThan(
     String value, {
     bool include = false,
     bool caseSensitive = true,
@@ -705,8 +712,8 @@ extension NotificationDBQueryFilter
     });
   }
 
-  QueryBuilder<NotificationDB, NotificationDB, QAfterFilterCondition>
-      titleLessThan(
+  QueryBuilder<NotificationDatabase, NotificationDatabase,
+      QAfterFilterCondition> titleLessThan(
     String value, {
     bool include = false,
     bool caseSensitive = true,
@@ -721,8 +728,8 @@ extension NotificationDBQueryFilter
     });
   }
 
-  QueryBuilder<NotificationDB, NotificationDB, QAfterFilterCondition>
-      titleBetween(
+  QueryBuilder<NotificationDatabase, NotificationDatabase,
+      QAfterFilterCondition> titleBetween(
     String lower,
     String upper, {
     bool includeLower = true,
@@ -741,8 +748,8 @@ extension NotificationDBQueryFilter
     });
   }
 
-  QueryBuilder<NotificationDB, NotificationDB, QAfterFilterCondition>
-      titleStartsWith(
+  QueryBuilder<NotificationDatabase, NotificationDatabase,
+      QAfterFilterCondition> titleStartsWith(
     String value, {
     bool caseSensitive = true,
   }) {
@@ -755,8 +762,8 @@ extension NotificationDBQueryFilter
     });
   }
 
-  QueryBuilder<NotificationDB, NotificationDB, QAfterFilterCondition>
-      titleEndsWith(
+  QueryBuilder<NotificationDatabase, NotificationDatabase,
+      QAfterFilterCondition> titleEndsWith(
     String value, {
     bool caseSensitive = true,
   }) {
@@ -769,7 +776,8 @@ extension NotificationDBQueryFilter
     });
   }
 
-  QueryBuilder<NotificationDB, NotificationDB, QAfterFilterCondition>
+  QueryBuilder<NotificationDatabase, NotificationDatabase,
+          QAfterFilterCondition>
       titleContains(String value, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.contains(
@@ -780,7 +788,8 @@ extension NotificationDBQueryFilter
     });
   }
 
-  QueryBuilder<NotificationDB, NotificationDB, QAfterFilterCondition>
+  QueryBuilder<NotificationDatabase, NotificationDatabase,
+          QAfterFilterCondition>
       titleMatches(String pattern, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.matches(
@@ -791,8 +800,8 @@ extension NotificationDBQueryFilter
     });
   }
 
-  QueryBuilder<NotificationDB, NotificationDB, QAfterFilterCondition>
-      titleIsEmpty() {
+  QueryBuilder<NotificationDatabase, NotificationDatabase,
+      QAfterFilterCondition> titleIsEmpty() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
         property: r'title',
@@ -801,8 +810,8 @@ extension NotificationDBQueryFilter
     });
   }
 
-  QueryBuilder<NotificationDB, NotificationDB, QAfterFilterCondition>
-      titleIsNotEmpty() {
+  QueryBuilder<NotificationDatabase, NotificationDatabase,
+      QAfterFilterCondition> titleIsNotEmpty() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.greaterThan(
         property: r'title',
@@ -811,8 +820,8 @@ extension NotificationDBQueryFilter
     });
   }
 
-  QueryBuilder<NotificationDB, NotificationDB, QAfterFilterCondition>
-      typeEqualTo(
+  QueryBuilder<NotificationDatabase, NotificationDatabase,
+      QAfterFilterCondition> typeEqualTo(
     String value, {
     bool caseSensitive = true,
   }) {
@@ -825,8 +834,8 @@ extension NotificationDBQueryFilter
     });
   }
 
-  QueryBuilder<NotificationDB, NotificationDB, QAfterFilterCondition>
-      typeGreaterThan(
+  QueryBuilder<NotificationDatabase, NotificationDatabase,
+      QAfterFilterCondition> typeGreaterThan(
     String value, {
     bool include = false,
     bool caseSensitive = true,
@@ -841,8 +850,8 @@ extension NotificationDBQueryFilter
     });
   }
 
-  QueryBuilder<NotificationDB, NotificationDB, QAfterFilterCondition>
-      typeLessThan(
+  QueryBuilder<NotificationDatabase, NotificationDatabase,
+      QAfterFilterCondition> typeLessThan(
     String value, {
     bool include = false,
     bool caseSensitive = true,
@@ -857,8 +866,8 @@ extension NotificationDBQueryFilter
     });
   }
 
-  QueryBuilder<NotificationDB, NotificationDB, QAfterFilterCondition>
-      typeBetween(
+  QueryBuilder<NotificationDatabase, NotificationDatabase,
+      QAfterFilterCondition> typeBetween(
     String lower,
     String upper, {
     bool includeLower = true,
@@ -877,8 +886,8 @@ extension NotificationDBQueryFilter
     });
   }
 
-  QueryBuilder<NotificationDB, NotificationDB, QAfterFilterCondition>
-      typeStartsWith(
+  QueryBuilder<NotificationDatabase, NotificationDatabase,
+      QAfterFilterCondition> typeStartsWith(
     String value, {
     bool caseSensitive = true,
   }) {
@@ -891,8 +900,8 @@ extension NotificationDBQueryFilter
     });
   }
 
-  QueryBuilder<NotificationDB, NotificationDB, QAfterFilterCondition>
-      typeEndsWith(
+  QueryBuilder<NotificationDatabase, NotificationDatabase,
+      QAfterFilterCondition> typeEndsWith(
     String value, {
     bool caseSensitive = true,
   }) {
@@ -905,7 +914,8 @@ extension NotificationDBQueryFilter
     });
   }
 
-  QueryBuilder<NotificationDB, NotificationDB, QAfterFilterCondition>
+  QueryBuilder<NotificationDatabase, NotificationDatabase,
+          QAfterFilterCondition>
       typeContains(String value, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.contains(
@@ -916,7 +926,8 @@ extension NotificationDBQueryFilter
     });
   }
 
-  QueryBuilder<NotificationDB, NotificationDB, QAfterFilterCondition>
+  QueryBuilder<NotificationDatabase, NotificationDatabase,
+          QAfterFilterCondition>
       typeMatches(String pattern, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.matches(
@@ -927,8 +938,8 @@ extension NotificationDBQueryFilter
     });
   }
 
-  QueryBuilder<NotificationDB, NotificationDB, QAfterFilterCondition>
-      typeIsEmpty() {
+  QueryBuilder<NotificationDatabase, NotificationDatabase,
+      QAfterFilterCondition> typeIsEmpty() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
         property: r'type',
@@ -937,8 +948,8 @@ extension NotificationDBQueryFilter
     });
   }
 
-  QueryBuilder<NotificationDB, NotificationDB, QAfterFilterCondition>
-      typeIsNotEmpty() {
+  QueryBuilder<NotificationDatabase, NotificationDatabase,
+      QAfterFilterCondition> typeIsNotEmpty() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.greaterThan(
         property: r'type',
@@ -947,8 +958,8 @@ extension NotificationDBQueryFilter
     });
   }
 
-  QueryBuilder<NotificationDB, NotificationDB, QAfterFilterCondition>
-      urlIsNull() {
+  QueryBuilder<NotificationDatabase, NotificationDatabase,
+      QAfterFilterCondition> urlIsNull() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(const FilterCondition.isNull(
         property: r'url',
@@ -956,8 +967,8 @@ extension NotificationDBQueryFilter
     });
   }
 
-  QueryBuilder<NotificationDB, NotificationDB, QAfterFilterCondition>
-      urlIsNotNull() {
+  QueryBuilder<NotificationDatabase, NotificationDatabase,
+      QAfterFilterCondition> urlIsNotNull() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(const FilterCondition.isNotNull(
         property: r'url',
@@ -965,8 +976,8 @@ extension NotificationDBQueryFilter
     });
   }
 
-  QueryBuilder<NotificationDB, NotificationDB, QAfterFilterCondition>
-      urlEqualTo(
+  QueryBuilder<NotificationDatabase, NotificationDatabase,
+      QAfterFilterCondition> urlEqualTo(
     String? value, {
     bool caseSensitive = true,
   }) {
@@ -979,8 +990,8 @@ extension NotificationDBQueryFilter
     });
   }
 
-  QueryBuilder<NotificationDB, NotificationDB, QAfterFilterCondition>
-      urlGreaterThan(
+  QueryBuilder<NotificationDatabase, NotificationDatabase,
+      QAfterFilterCondition> urlGreaterThan(
     String? value, {
     bool include = false,
     bool caseSensitive = true,
@@ -995,8 +1006,8 @@ extension NotificationDBQueryFilter
     });
   }
 
-  QueryBuilder<NotificationDB, NotificationDB, QAfterFilterCondition>
-      urlLessThan(
+  QueryBuilder<NotificationDatabase, NotificationDatabase,
+      QAfterFilterCondition> urlLessThan(
     String? value, {
     bool include = false,
     bool caseSensitive = true,
@@ -1011,8 +1022,8 @@ extension NotificationDBQueryFilter
     });
   }
 
-  QueryBuilder<NotificationDB, NotificationDB, QAfterFilterCondition>
-      urlBetween(
+  QueryBuilder<NotificationDatabase, NotificationDatabase,
+      QAfterFilterCondition> urlBetween(
     String? lower,
     String? upper, {
     bool includeLower = true,
@@ -1031,8 +1042,8 @@ extension NotificationDBQueryFilter
     });
   }
 
-  QueryBuilder<NotificationDB, NotificationDB, QAfterFilterCondition>
-      urlStartsWith(
+  QueryBuilder<NotificationDatabase, NotificationDatabase,
+      QAfterFilterCondition> urlStartsWith(
     String value, {
     bool caseSensitive = true,
   }) {
@@ -1045,8 +1056,8 @@ extension NotificationDBQueryFilter
     });
   }
 
-  QueryBuilder<NotificationDB, NotificationDB, QAfterFilterCondition>
-      urlEndsWith(
+  QueryBuilder<NotificationDatabase, NotificationDatabase,
+      QAfterFilterCondition> urlEndsWith(
     String value, {
     bool caseSensitive = true,
   }) {
@@ -1059,7 +1070,8 @@ extension NotificationDBQueryFilter
     });
   }
 
-  QueryBuilder<NotificationDB, NotificationDB, QAfterFilterCondition>
+  QueryBuilder<NotificationDatabase, NotificationDatabase,
+          QAfterFilterCondition>
       urlContains(String value, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.contains(
@@ -1070,7 +1082,8 @@ extension NotificationDBQueryFilter
     });
   }
 
-  QueryBuilder<NotificationDB, NotificationDB, QAfterFilterCondition>
+  QueryBuilder<NotificationDatabase, NotificationDatabase,
+          QAfterFilterCondition>
       urlMatches(String pattern, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.matches(
@@ -1081,8 +1094,8 @@ extension NotificationDBQueryFilter
     });
   }
 
-  QueryBuilder<NotificationDB, NotificationDB, QAfterFilterCondition>
-      urlIsEmpty() {
+  QueryBuilder<NotificationDatabase, NotificationDatabase,
+      QAfterFilterCondition> urlIsEmpty() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
         property: r'url',
@@ -1091,8 +1104,8 @@ extension NotificationDBQueryFilter
     });
   }
 
-  QueryBuilder<NotificationDB, NotificationDB, QAfterFilterCondition>
-      urlIsNotEmpty() {
+  QueryBuilder<NotificationDatabase, NotificationDatabase,
+      QAfterFilterCondition> urlIsNotEmpty() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.greaterThan(
         property: r'url',
@@ -1102,259 +1115,286 @@ extension NotificationDBQueryFilter
   }
 }
 
-extension NotificationDBQueryObject
-    on QueryBuilder<NotificationDB, NotificationDB, QFilterCondition> {}
+extension NotificationDatabaseQueryObject on QueryBuilder<NotificationDatabase,
+    NotificationDatabase, QFilterCondition> {}
 
-extension NotificationDBQueryLinks
-    on QueryBuilder<NotificationDB, NotificationDB, QFilterCondition> {}
+extension NotificationDatabaseQueryLinks on QueryBuilder<NotificationDatabase,
+    NotificationDatabase, QFilterCondition> {}
 
-extension NotificationDBQuerySortBy
-    on QueryBuilder<NotificationDB, NotificationDB, QSortBy> {
-  QueryBuilder<NotificationDB, NotificationDB, QAfterSortBy> sortByBody() {
+extension NotificationDatabaseQuerySortBy
+    on QueryBuilder<NotificationDatabase, NotificationDatabase, QSortBy> {
+  QueryBuilder<NotificationDatabase, NotificationDatabase, QAfterSortBy>
+      sortByBody() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'body', Sort.asc);
     });
   }
 
-  QueryBuilder<NotificationDB, NotificationDB, QAfterSortBy> sortByBodyDesc() {
+  QueryBuilder<NotificationDatabase, NotificationDatabase, QAfterSortBy>
+      sortByBodyDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'body', Sort.desc);
     });
   }
 
-  QueryBuilder<NotificationDB, NotificationDB, QAfterSortBy> sortByPayload() {
+  QueryBuilder<NotificationDatabase, NotificationDatabase, QAfterSortBy>
+      sortByPayload() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'payload', Sort.asc);
     });
   }
 
-  QueryBuilder<NotificationDB, NotificationDB, QAfterSortBy>
+  QueryBuilder<NotificationDatabase, NotificationDatabase, QAfterSortBy>
       sortByPayloadDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'payload', Sort.desc);
     });
   }
 
-  QueryBuilder<NotificationDB, NotificationDB, QAfterSortBy> sortByTime() {
+  QueryBuilder<NotificationDatabase, NotificationDatabase, QAfterSortBy>
+      sortByTime() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'time', Sort.asc);
     });
   }
 
-  QueryBuilder<NotificationDB, NotificationDB, QAfterSortBy> sortByTimeDesc() {
+  QueryBuilder<NotificationDatabase, NotificationDatabase, QAfterSortBy>
+      sortByTimeDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'time', Sort.desc);
     });
   }
 
-  QueryBuilder<NotificationDB, NotificationDB, QAfterSortBy> sortByTitle() {
+  QueryBuilder<NotificationDatabase, NotificationDatabase, QAfterSortBy>
+      sortByTitle() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'title', Sort.asc);
     });
   }
 
-  QueryBuilder<NotificationDB, NotificationDB, QAfterSortBy> sortByTitleDesc() {
+  QueryBuilder<NotificationDatabase, NotificationDatabase, QAfterSortBy>
+      sortByTitleDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'title', Sort.desc);
     });
   }
 
-  QueryBuilder<NotificationDB, NotificationDB, QAfterSortBy> sortByType() {
+  QueryBuilder<NotificationDatabase, NotificationDatabase, QAfterSortBy>
+      sortByType() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'type', Sort.asc);
     });
   }
 
-  QueryBuilder<NotificationDB, NotificationDB, QAfterSortBy> sortByTypeDesc() {
+  QueryBuilder<NotificationDatabase, NotificationDatabase, QAfterSortBy>
+      sortByTypeDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'type', Sort.desc);
     });
   }
 
-  QueryBuilder<NotificationDB, NotificationDB, QAfterSortBy> sortByUrl() {
+  QueryBuilder<NotificationDatabase, NotificationDatabase, QAfterSortBy>
+      sortByUrl() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'url', Sort.asc);
     });
   }
 
-  QueryBuilder<NotificationDB, NotificationDB, QAfterSortBy> sortByUrlDesc() {
+  QueryBuilder<NotificationDatabase, NotificationDatabase, QAfterSortBy>
+      sortByUrlDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'url', Sort.desc);
     });
   }
 }
 
-extension NotificationDBQuerySortThenBy
-    on QueryBuilder<NotificationDB, NotificationDB, QSortThenBy> {
-  QueryBuilder<NotificationDB, NotificationDB, QAfterSortBy> thenByBody() {
+extension NotificationDatabaseQuerySortThenBy
+    on QueryBuilder<NotificationDatabase, NotificationDatabase, QSortThenBy> {
+  QueryBuilder<NotificationDatabase, NotificationDatabase, QAfterSortBy>
+      thenByBody() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'body', Sort.asc);
     });
   }
 
-  QueryBuilder<NotificationDB, NotificationDB, QAfterSortBy> thenByBodyDesc() {
+  QueryBuilder<NotificationDatabase, NotificationDatabase, QAfterSortBy>
+      thenByBodyDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'body', Sort.desc);
     });
   }
 
-  QueryBuilder<NotificationDB, NotificationDB, QAfterSortBy> thenById() {
+  QueryBuilder<NotificationDatabase, NotificationDatabase, QAfterSortBy>
+      thenById() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'id', Sort.asc);
     });
   }
 
-  QueryBuilder<NotificationDB, NotificationDB, QAfterSortBy> thenByIdDesc() {
+  QueryBuilder<NotificationDatabase, NotificationDatabase, QAfterSortBy>
+      thenByIdDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'id', Sort.desc);
     });
   }
 
-  QueryBuilder<NotificationDB, NotificationDB, QAfterSortBy> thenByPayload() {
+  QueryBuilder<NotificationDatabase, NotificationDatabase, QAfterSortBy>
+      thenByPayload() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'payload', Sort.asc);
     });
   }
 
-  QueryBuilder<NotificationDB, NotificationDB, QAfterSortBy>
+  QueryBuilder<NotificationDatabase, NotificationDatabase, QAfterSortBy>
       thenByPayloadDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'payload', Sort.desc);
     });
   }
 
-  QueryBuilder<NotificationDB, NotificationDB, QAfterSortBy> thenByTime() {
+  QueryBuilder<NotificationDatabase, NotificationDatabase, QAfterSortBy>
+      thenByTime() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'time', Sort.asc);
     });
   }
 
-  QueryBuilder<NotificationDB, NotificationDB, QAfterSortBy> thenByTimeDesc() {
+  QueryBuilder<NotificationDatabase, NotificationDatabase, QAfterSortBy>
+      thenByTimeDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'time', Sort.desc);
     });
   }
 
-  QueryBuilder<NotificationDB, NotificationDB, QAfterSortBy> thenByTitle() {
+  QueryBuilder<NotificationDatabase, NotificationDatabase, QAfterSortBy>
+      thenByTitle() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'title', Sort.asc);
     });
   }
 
-  QueryBuilder<NotificationDB, NotificationDB, QAfterSortBy> thenByTitleDesc() {
+  QueryBuilder<NotificationDatabase, NotificationDatabase, QAfterSortBy>
+      thenByTitleDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'title', Sort.desc);
     });
   }
 
-  QueryBuilder<NotificationDB, NotificationDB, QAfterSortBy> thenByType() {
+  QueryBuilder<NotificationDatabase, NotificationDatabase, QAfterSortBy>
+      thenByType() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'type', Sort.asc);
     });
   }
 
-  QueryBuilder<NotificationDB, NotificationDB, QAfterSortBy> thenByTypeDesc() {
+  QueryBuilder<NotificationDatabase, NotificationDatabase, QAfterSortBy>
+      thenByTypeDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'type', Sort.desc);
     });
   }
 
-  QueryBuilder<NotificationDB, NotificationDB, QAfterSortBy> thenByUrl() {
+  QueryBuilder<NotificationDatabase, NotificationDatabase, QAfterSortBy>
+      thenByUrl() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'url', Sort.asc);
     });
   }
 
-  QueryBuilder<NotificationDB, NotificationDB, QAfterSortBy> thenByUrlDesc() {
+  QueryBuilder<NotificationDatabase, NotificationDatabase, QAfterSortBy>
+      thenByUrlDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'url', Sort.desc);
     });
   }
 }
 
-extension NotificationDBQueryWhereDistinct
-    on QueryBuilder<NotificationDB, NotificationDB, QDistinct> {
-  QueryBuilder<NotificationDB, NotificationDB, QDistinct> distinctByBody(
-      {bool caseSensitive = true}) {
+extension NotificationDatabaseQueryWhereDistinct
+    on QueryBuilder<NotificationDatabase, NotificationDatabase, QDistinct> {
+  QueryBuilder<NotificationDatabase, NotificationDatabase, QDistinct>
+      distinctByBody({bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'body', caseSensitive: caseSensitive);
     });
   }
 
-  QueryBuilder<NotificationDB, NotificationDB, QDistinct> distinctByPayload(
-      {bool caseSensitive = true}) {
+  QueryBuilder<NotificationDatabase, NotificationDatabase, QDistinct>
+      distinctByPayload({bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'payload', caseSensitive: caseSensitive);
     });
   }
 
-  QueryBuilder<NotificationDB, NotificationDB, QDistinct> distinctByTime() {
+  QueryBuilder<NotificationDatabase, NotificationDatabase, QDistinct>
+      distinctByTime() {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'time');
     });
   }
 
-  QueryBuilder<NotificationDB, NotificationDB, QDistinct> distinctByTitle(
-      {bool caseSensitive = true}) {
+  QueryBuilder<NotificationDatabase, NotificationDatabase, QDistinct>
+      distinctByTitle({bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'title', caseSensitive: caseSensitive);
     });
   }
 
-  QueryBuilder<NotificationDB, NotificationDB, QDistinct> distinctByType(
-      {bool caseSensitive = true}) {
+  QueryBuilder<NotificationDatabase, NotificationDatabase, QDistinct>
+      distinctByType({bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'type', caseSensitive: caseSensitive);
     });
   }
 
-  QueryBuilder<NotificationDB, NotificationDB, QDistinct> distinctByUrl(
-      {bool caseSensitive = true}) {
+  QueryBuilder<NotificationDatabase, NotificationDatabase, QDistinct>
+      distinctByUrl({bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'url', caseSensitive: caseSensitive);
     });
   }
 }
 
-extension NotificationDBQueryProperty
-    on QueryBuilder<NotificationDB, NotificationDB, QQueryProperty> {
-  QueryBuilder<NotificationDB, int, QQueryOperations> idProperty() {
+extension NotificationDatabaseQueryProperty on QueryBuilder<
+    NotificationDatabase, NotificationDatabase, QQueryProperty> {
+  QueryBuilder<NotificationDatabase, int, QQueryOperations> idProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'id');
     });
   }
 
-  QueryBuilder<NotificationDB, String, QQueryOperations> bodyProperty() {
+  QueryBuilder<NotificationDatabase, String, QQueryOperations> bodyProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'body');
     });
   }
 
-  QueryBuilder<NotificationDB, String?, QQueryOperations> payloadProperty() {
+  QueryBuilder<NotificationDatabase, String?, QQueryOperations>
+      payloadProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'payload');
     });
   }
 
-  QueryBuilder<NotificationDB, DateTime?, QQueryOperations> timeProperty() {
+  QueryBuilder<NotificationDatabase, DateTime?, QQueryOperations>
+      timeProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'time');
     });
   }
 
-  QueryBuilder<NotificationDB, String, QQueryOperations> titleProperty() {
+  QueryBuilder<NotificationDatabase, String, QQueryOperations> titleProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'title');
     });
   }
 
-  QueryBuilder<NotificationDB, String, QQueryOperations> typeProperty() {
+  QueryBuilder<NotificationDatabase, String, QQueryOperations> typeProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'type');
     });
   }
 
-  QueryBuilder<NotificationDB, String?, QQueryOperations> urlProperty() {
+  QueryBuilder<NotificationDatabase, String?, QQueryOperations> urlProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'url');
     });

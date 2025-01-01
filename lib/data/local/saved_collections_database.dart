@@ -5,7 +5,7 @@ import '../fast_hash.dart';
 part 'saved_collections_database.g.dart';
 
 @collection
-class SavedCollectionsDB {
+class SavedCollectionsDatabase {
   Id get isarId => fastHash(title);
   final String title;
   final String sourceId;
@@ -17,7 +17,7 @@ class SavedCollectionsDB {
   final DateTime lastUpdated;
   final String? extra;
 
-  const SavedCollectionsDB({
+  const SavedCollectionsDatabase({
     required this.title,
     required this.type,
     required this.coverArt,

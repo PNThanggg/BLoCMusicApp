@@ -5,11 +5,11 @@ import 'media_item_database.dart';
 part 'recently_played_database.g.dart';
 
 @collection
-class RecentlyPlayedDB {
+class RecentlyPlayedDatabase {
   Id? id;
   final DateTime lastPlayed;
 
-  RecentlyPlayedDB({
+  RecentlyPlayedDatabase({
     this.id,
     required this.lastPlayed,
   });

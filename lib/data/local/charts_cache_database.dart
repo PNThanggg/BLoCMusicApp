@@ -5,21 +5,21 @@ import '../fast_hash.dart';
 part 'charts_cache_database.g.dart';
 
 @embedded
-class ChartItemDB {
+class ChartItemDatabase {
   String? title;
   String? artist;
   String? artURL;
 }
 
 @collection
-class ChartsCacheDB {
+class ChartsCacheDatabase {
   Id get isarId => fastHash(chartName);
   final String chartName;
   final DateTime lastUpdated;
   final String? permaURL;
-  final List<ChartItemDB> chartItems;
+  final List<ChartItemDatabase> chartItems;
 
-  ChartsCacheDB({
+  ChartsCacheDatabase({
     required this.chartName,
     required this.lastUpdated,
     required this.chartItems,

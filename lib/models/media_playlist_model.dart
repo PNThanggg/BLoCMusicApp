@@ -1,4 +1,6 @@
 import 'package:equatable/equatable.dart';
+import 'package:music/data/local/media_playlist_database.dart';
+import 'package:music/data/local/playlists_info_database.dart';
 
 import 'media_item_model.dart';
 
@@ -56,26 +58,33 @@ class MediaPlaylist extends Equatable {
   }
 }
 
-// MediaPlaylist fromPlaylistDB2MediaPlaylist(
-//   MediaPlaylistDB mediaPlaylistDB, {
-//   PlaylistsInfoDB? playlistsInfoDB,
-// }) {
-//   MediaPlaylist mediaPlaylist = MediaPlaylist(mediaItems: [], playlistName: mediaPlaylistDB.playlistName);
-//   if (mediaPlaylistDB.mediaItems.isNotEmpty) {
-//     for (var element in mediaPlaylistDB.mediaItems) {
-//       mediaPlaylist.mediaItems.add(MediaItemDB2MediaItem(element));
-//     }
-//   }
-//   if (playlistsInfoDB != null) {
-//     mediaPlaylist = mediaPlaylist.copyWith(
-//       imgUrl: playlistsInfoDB.artURL,
-//       permaURL: playlistsInfoDB.permaURL,
-//       description: playlistsInfoDB.description,
-//       artists: playlistsInfoDB.artists,
-//       source: playlistsInfoDB.source,
-//       lastUpdated: playlistsInfoDB.lastUpdated,
-//       isAlbum: playlistsInfoDB.isAlbum,
-//     );
-//   }
-//   return mediaPlaylist;
-// }
+MediaPlaylist fromPlaylistDB2MediaPlaylist(
+  MediaPlaylistDatabase mediaPlaylistDB, {
+  PlaylistsInfoDatabase? playlistsInfoDB,
+}) {
+  MediaPlaylist mediaPlaylist = MediaPlaylist(
+    mediaItems: [],
+    playlistName: mediaPlaylistDB.playlistName,
+  );
+
+  if (mediaPlaylistDB.mediaItems.isNotEmpty) {
+    for (var element in mediaPlaylistDB.mediaItems) {
+      mediaPlaylist.mediaItems.add(
+        mediaItemDB2MediaItem(element),
+      );
+    }
+  }
+
+  if (playlistsInfoDB != null) {
+    mediaPlaylist = mediaPlaylist.copyWith(
+      imgUrl: playlistsInfoDB.artURL,
+      permaURL: playlistsInfoDB.permaURL,
+      description: playlistsInfoDB.description,
+      artists: playlistsInfoDB.artists,
+      source: playlistsInfoDB.source,
+      lastUpdated: playlistsInfoDB.lastUpdated,
+      isAlbum: playlistsInfoDB.isAlbum,
+    );
+  }
+  return mediaPlaylist;
+}

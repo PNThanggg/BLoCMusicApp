@@ -13,7 +13,7 @@ import '../models/media_item_model.dart';
 import '../models/media_playlist_model.dart';
 import '../models/saavn_model.dart';
 import '../models/yt_music_model.dart';
-import '../utils/global_conts.dart';
+import '../utils/global_const.dart';
 import 'snack_bar_service.dart';
 import 'ytbg_service.dart';
 

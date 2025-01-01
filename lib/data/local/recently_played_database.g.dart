@@ -9,13 +9,14 @@ part of 'recently_played_database.dart';
 // coverage:ignore-file
 // ignore_for_file: duplicate_ignore, non_constant_identifier_names, constant_identifier_names, invalid_use_of_protected_member, unnecessary_cast, prefer_const_constructors, lines_longer_than_80_chars, require_trailing_commas, inference_failure_on_function_invocation, unnecessary_parenthesis, unnecessary_raw_strings, unnecessary_null_checks, join_return_with_assignment, prefer_final_locals, avoid_js_rounded_ints, avoid_positional_boolean_parameters, always_specify_types
 
-extension GetRecentlyPlayedDBCollection on Isar {
-  IsarCollection<RecentlyPlayedDB> get recentlyPlayedDBs => this.collection();
+extension GetRecentlyPlayedDatabaseCollection on Isar {
+  IsarCollection<RecentlyPlayedDatabase> get recentlyPlayedDatabases =>
+      this.collection();
 }
 
-const RecentlyPlayedDBSchema = CollectionSchema(
-  name: r'RecentlyPlayedDB',
-  id: -815534397388884072,
+const RecentlyPlayedDatabaseSchema = CollectionSchema(
+  name: r'RecentlyPlayedDatabase',
+  id: -1421317723364813089,
   properties: {
     r'lastPlayed': PropertySchema(
       id: 0,
@@ -23,29 +24,29 @@ const RecentlyPlayedDBSchema = CollectionSchema(
       type: IsarType.dateTime,
     )
   },
-  estimateSize: _recentlyPlayedDBEstimateSize,
-  serialize: _recentlyPlayedDBSerialize,
-  deserialize: _recentlyPlayedDBDeserialize,
-  deserializeProp: _recentlyPlayedDBDeserializeProp,
+  estimateSize: _recentlyPlayedDatabaseEstimateSize,
+  serialize: _recentlyPlayedDatabaseSerialize,
+  deserialize: _recentlyPlayedDatabaseDeserialize,
+  deserializeProp: _recentlyPlayedDatabaseDeserializeProp,
   idName: r'id',
   indexes: {},
   links: {
     r'mediaItem': LinkSchema(
-      id: 5428180275953081554,
+      id: 39513132341645175,
       name: r'mediaItem',
       target: r'MediaItemDatabase',
       single: true,
     )
   },
   embeddedSchemas: {},
-  getId: _recentlyPlayedDBGetId,
-  getLinks: _recentlyPlayedDBGetLinks,
-  attach: _recentlyPlayedDBAttach,
+  getId: _recentlyPlayedDatabaseGetId,
+  getLinks: _recentlyPlayedDatabaseGetLinks,
+  attach: _recentlyPlayedDatabaseAttach,
   version: '3.1.0+1',
 );
 
-int _recentlyPlayedDBEstimateSize(
-  RecentlyPlayedDB object,
+int _recentlyPlayedDatabaseEstimateSize(
+  RecentlyPlayedDatabase object,
   List<int> offsets,
   Map<Type, List<int>> allOffsets,
 ) {
@@ -53,8 +54,8 @@ int _recentlyPlayedDBEstimateSize(
   return bytesCount;
 }
 
-void _recentlyPlayedDBSerialize(
-  RecentlyPlayedDB object,
+void _recentlyPlayedDatabaseSerialize(
+  RecentlyPlayedDatabase object,
   IsarWriter writer,
   List<int> offsets,
   Map<Type, List<int>> allOffsets,
@@ -62,20 +63,20 @@ void _recentlyPlayedDBSerialize(
   writer.writeDateTime(offsets[0], object.lastPlayed);
 }
 
-RecentlyPlayedDB _recentlyPlayedDBDeserialize(
+RecentlyPlayedDatabase _recentlyPlayedDatabaseDeserialize(
   Id id,
   IsarReader reader,
   List<int> offsets,
   Map<Type, List<int>> allOffsets,
 ) {
-  final object = RecentlyPlayedDB(
+  final object = RecentlyPlayedDatabase(
     id: id,
     lastPlayed: reader.readDateTime(offsets[0]),
   );
   return object;
 }
 
-P _recentlyPlayedDBDeserializeProp<P>(
+P _recentlyPlayedDatabaseDeserializeProp<P>(
   IsarReader reader,
   int propertyId,
   int offset,
@@ -89,34 +90,36 @@ P _recentlyPlayedDBDeserializeProp<P>(
   }
 }
 
-Id _recentlyPlayedDBGetId(RecentlyPlayedDB object) {
+Id _recentlyPlayedDatabaseGetId(RecentlyPlayedDatabase object) {
   return object.id ?? Isar.autoIncrement;
 }
 
-List<IsarLinkBase<dynamic>> _recentlyPlayedDBGetLinks(RecentlyPlayedDB object) {
+List<IsarLinkBase<dynamic>> _recentlyPlayedDatabaseGetLinks(
+    RecentlyPlayedDatabase object) {
   return [object.mediaItem];
 }
 
-void _recentlyPlayedDBAttach(
-    IsarCollection<dynamic> col, Id id, RecentlyPlayedDB object) {
+void _recentlyPlayedDatabaseAttach(
+    IsarCollection<dynamic> col, Id id, RecentlyPlayedDatabase object) {
   object.id = id;
   object.mediaItem
       .attach(col, col.isar.collection<MediaItemDatabase>(), r'mediaItem', id);
 }
 
-extension RecentlyPlayedDBQueryWhereSort
-    on QueryBuilder<RecentlyPlayedDB, RecentlyPlayedDB, QWhere> {
-  QueryBuilder<RecentlyPlayedDB, RecentlyPlayedDB, QAfterWhere> anyId() {
+extension RecentlyPlayedDatabaseQueryWhereSort
+    on QueryBuilder<RecentlyPlayedDatabase, RecentlyPlayedDatabase, QWhere> {
+  QueryBuilder<RecentlyPlayedDatabase, RecentlyPlayedDatabase, QAfterWhere>
+      anyId() {
     return QueryBuilder.apply(this, (query) {
       return query.addWhereClause(const IdWhereClause.any());
     });
   }
 }
 
-extension RecentlyPlayedDBQueryWhere
-    on QueryBuilder<RecentlyPlayedDB, RecentlyPlayedDB, QWhereClause> {
-  QueryBuilder<RecentlyPlayedDB, RecentlyPlayedDB, QAfterWhereClause> idEqualTo(
-      Id id) {
+extension RecentlyPlayedDatabaseQueryWhere on QueryBuilder<
+    RecentlyPlayedDatabase, RecentlyPlayedDatabase, QWhereClause> {
+  QueryBuilder<RecentlyPlayedDatabase, RecentlyPlayedDatabase,
+      QAfterWhereClause> idEqualTo(Id id) {
     return QueryBuilder.apply(this, (query) {
       return query.addWhereClause(IdWhereClause.between(
         lower: id,
@@ -125,8 +128,8 @@ extension RecentlyPlayedDBQueryWhere
     });
   }
 
-  QueryBuilder<RecentlyPlayedDB, RecentlyPlayedDB, QAfterWhereClause>
-      idNotEqualTo(Id id) {
+  QueryBuilder<RecentlyPlayedDatabase, RecentlyPlayedDatabase,
+      QAfterWhereClause> idNotEqualTo(Id id) {
     return QueryBuilder.apply(this, (query) {
       if (query.whereSort == Sort.asc) {
         return query
@@ -148,8 +151,8 @@ extension RecentlyPlayedDBQueryWhere
     });
   }
 
-  QueryBuilder<RecentlyPlayedDB, RecentlyPlayedDB, QAfterWhereClause>
-      idGreaterThan(Id id, {bool include = false}) {
+  QueryBuilder<RecentlyPlayedDatabase, RecentlyPlayedDatabase,
+      QAfterWhereClause> idGreaterThan(Id id, {bool include = false}) {
     return QueryBuilder.apply(this, (query) {
       return query.addWhereClause(
         IdWhereClause.greaterThan(lower: id, includeLower: include),
@@ -157,8 +160,8 @@ extension RecentlyPlayedDBQueryWhere
     });
   }
 
-  QueryBuilder<RecentlyPlayedDB, RecentlyPlayedDB, QAfterWhereClause>
-      idLessThan(Id id, {bool include = false}) {
+  QueryBuilder<RecentlyPlayedDatabase, RecentlyPlayedDatabase,
+      QAfterWhereClause> idLessThan(Id id, {bool include = false}) {
     return QueryBuilder.apply(this, (query) {
       return query.addWhereClause(
         IdWhereClause.lessThan(upper: id, includeUpper: include),
@@ -166,7 +169,8 @@ extension RecentlyPlayedDBQueryWhere
     });
   }
 
-  QueryBuilder<RecentlyPlayedDB, RecentlyPlayedDB, QAfterWhereClause> idBetween(
+  QueryBuilder<RecentlyPlayedDatabase, RecentlyPlayedDatabase,
+      QAfterWhereClause> idBetween(
     Id lowerId,
     Id upperId, {
     bool includeLower = true,
@@ -183,10 +187,10 @@ extension RecentlyPlayedDBQueryWhere
   }
 }
 
-extension RecentlyPlayedDBQueryFilter
-    on QueryBuilder<RecentlyPlayedDB, RecentlyPlayedDB, QFilterCondition> {
-  QueryBuilder<RecentlyPlayedDB, RecentlyPlayedDB, QAfterFilterCondition>
-      idIsNull() {
+extension RecentlyPlayedDatabaseQueryFilter on QueryBuilder<
+    RecentlyPlayedDatabase, RecentlyPlayedDatabase, QFilterCondition> {
+  QueryBuilder<RecentlyPlayedDatabase, RecentlyPlayedDatabase,
+      QAfterFilterCondition> idIsNull() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(const FilterCondition.isNull(
         property: r'id',
@@ -194,8 +198,8 @@ extension RecentlyPlayedDBQueryFilter
     });
   }
 
-  QueryBuilder<RecentlyPlayedDB, RecentlyPlayedDB, QAfterFilterCondition>
-      idIsNotNull() {
+  QueryBuilder<RecentlyPlayedDatabase, RecentlyPlayedDatabase,
+      QAfterFilterCondition> idIsNotNull() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(const FilterCondition.isNotNull(
         property: r'id',
@@ -203,8 +207,8 @@ extension RecentlyPlayedDBQueryFilter
     });
   }
 
-  QueryBuilder<RecentlyPlayedDB, RecentlyPlayedDB, QAfterFilterCondition>
-      idEqualTo(Id? value) {
+  QueryBuilder<RecentlyPlayedDatabase, RecentlyPlayedDatabase,
+      QAfterFilterCondition> idEqualTo(Id? value) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
         property: r'id',
@@ -213,8 +217,8 @@ extension RecentlyPlayedDBQueryFilter
     });
   }
 
-  QueryBuilder<RecentlyPlayedDB, RecentlyPlayedDB, QAfterFilterCondition>
-      idGreaterThan(
+  QueryBuilder<RecentlyPlayedDatabase, RecentlyPlayedDatabase,
+      QAfterFilterCondition> idGreaterThan(
     Id? value, {
     bool include = false,
   }) {
@@ -227,8 +231,8 @@ extension RecentlyPlayedDBQueryFilter
     });
   }
 
-  QueryBuilder<RecentlyPlayedDB, RecentlyPlayedDB, QAfterFilterCondition>
-      idLessThan(
+  QueryBuilder<RecentlyPlayedDatabase, RecentlyPlayedDatabase,
+      QAfterFilterCondition> idLessThan(
     Id? value, {
     bool include = false,
   }) {
@@ -241,8 +245,8 @@ extension RecentlyPlayedDBQueryFilter
     });
   }
 
-  QueryBuilder<RecentlyPlayedDB, RecentlyPlayedDB, QAfterFilterCondition>
-      idBetween(
+  QueryBuilder<RecentlyPlayedDatabase, RecentlyPlayedDatabase,
+      QAfterFilterCondition> idBetween(
     Id? lower,
     Id? upper, {
     bool includeLower = true,
@@ -259,8 +263,8 @@ extension RecentlyPlayedDBQueryFilter
     });
   }
 
-  QueryBuilder<RecentlyPlayedDB, RecentlyPlayedDB, QAfterFilterCondition>
-      lastPlayedEqualTo(DateTime value) {
+  QueryBuilder<RecentlyPlayedDatabase, RecentlyPlayedDatabase,
+      QAfterFilterCondition> lastPlayedEqualTo(DateTime value) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
         property: r'lastPlayed',
@@ -269,8 +273,8 @@ extension RecentlyPlayedDBQueryFilter
     });
   }
 
-  QueryBuilder<RecentlyPlayedDB, RecentlyPlayedDB, QAfterFilterCondition>
-      lastPlayedGreaterThan(
+  QueryBuilder<RecentlyPlayedDatabase, RecentlyPlayedDatabase,
+      QAfterFilterCondition> lastPlayedGreaterThan(
     DateTime value, {
     bool include = false,
   }) {
@@ -283,8 +287,8 @@ extension RecentlyPlayedDBQueryFilter
     });
   }
 
-  QueryBuilder<RecentlyPlayedDB, RecentlyPlayedDB, QAfterFilterCondition>
-      lastPlayedLessThan(
+  QueryBuilder<RecentlyPlayedDatabase, RecentlyPlayedDatabase,
+      QAfterFilterCondition> lastPlayedLessThan(
     DateTime value, {
     bool include = false,
   }) {
@@ -297,8 +301,8 @@ extension RecentlyPlayedDBQueryFilter
     });
   }
 
-  QueryBuilder<RecentlyPlayedDB, RecentlyPlayedDB, QAfterFilterCondition>
-      lastPlayedBetween(
+  QueryBuilder<RecentlyPlayedDatabase, RecentlyPlayedDatabase,
+      QAfterFilterCondition> lastPlayedBetween(
     DateTime lower,
     DateTime upper, {
     bool includeLower = true,
@@ -316,36 +320,36 @@ extension RecentlyPlayedDBQueryFilter
   }
 }
 
-extension RecentlyPlayedDBQueryObject
-    on QueryBuilder<RecentlyPlayedDB, RecentlyPlayedDB, QFilterCondition> {}
+extension RecentlyPlayedDatabaseQueryObject on QueryBuilder<
+    RecentlyPlayedDatabase, RecentlyPlayedDatabase, QFilterCondition> {}
 
-extension RecentlyPlayedDBQueryLinks
-    on QueryBuilder<RecentlyPlayedDB, RecentlyPlayedDB, QFilterCondition> {
-  QueryBuilder<RecentlyPlayedDB, RecentlyPlayedDB, QAfterFilterCondition>
-      mediaItem(FilterQuery<MediaItemDatabase> q) {
+extension RecentlyPlayedDatabaseQueryLinks on QueryBuilder<
+    RecentlyPlayedDatabase, RecentlyPlayedDatabase, QFilterCondition> {
+  QueryBuilder<RecentlyPlayedDatabase, RecentlyPlayedDatabase,
+      QAfterFilterCondition> mediaItem(FilterQuery<MediaItemDatabase> q) {
     return QueryBuilder.apply(this, (query) {
       return query.link(q, r'mediaItem');
     });
   }
 
-  QueryBuilder<RecentlyPlayedDB, RecentlyPlayedDB, QAfterFilterCondition>
-      mediaItemIsNull() {
+  QueryBuilder<RecentlyPlayedDatabase, RecentlyPlayedDatabase,
+      QAfterFilterCondition> mediaItemIsNull() {
     return QueryBuilder.apply(this, (query) {
       return query.linkLength(r'mediaItem', 0, true, 0, true);
     });
   }
 }
 
-extension RecentlyPlayedDBQuerySortBy
-    on QueryBuilder<RecentlyPlayedDB, RecentlyPlayedDB, QSortBy> {
-  QueryBuilder<RecentlyPlayedDB, RecentlyPlayedDB, QAfterSortBy>
+extension RecentlyPlayedDatabaseQuerySortBy
+    on QueryBuilder<RecentlyPlayedDatabase, RecentlyPlayedDatabase, QSortBy> {
+  QueryBuilder<RecentlyPlayedDatabase, RecentlyPlayedDatabase, QAfterSortBy>
       sortByLastPlayed() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'lastPlayed', Sort.asc);
     });
   }
 
-  QueryBuilder<RecentlyPlayedDB, RecentlyPlayedDB, QAfterSortBy>
+  QueryBuilder<RecentlyPlayedDatabase, RecentlyPlayedDatabase, QAfterSortBy>
       sortByLastPlayedDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'lastPlayed', Sort.desc);
@@ -353,29 +357,30 @@ extension RecentlyPlayedDBQuerySortBy
   }
 }
 
-extension RecentlyPlayedDBQuerySortThenBy
-    on QueryBuilder<RecentlyPlayedDB, RecentlyPlayedDB, QSortThenBy> {
-  QueryBuilder<RecentlyPlayedDB, RecentlyPlayedDB, QAfterSortBy> thenById() {
+extension RecentlyPlayedDatabaseQuerySortThenBy on QueryBuilder<
+    RecentlyPlayedDatabase, RecentlyPlayedDatabase, QSortThenBy> {
+  QueryBuilder<RecentlyPlayedDatabase, RecentlyPlayedDatabase, QAfterSortBy>
+      thenById() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'id', Sort.asc);
     });
   }
 
-  QueryBuilder<RecentlyPlayedDB, RecentlyPlayedDB, QAfterSortBy>
+  QueryBuilder<RecentlyPlayedDatabase, RecentlyPlayedDatabase, QAfterSortBy>
       thenByIdDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'id', Sort.desc);
     });
   }
 
-  QueryBuilder<RecentlyPlayedDB, RecentlyPlayedDB, QAfterSortBy>
+  QueryBuilder<RecentlyPlayedDatabase, RecentlyPlayedDatabase, QAfterSortBy>
       thenByLastPlayed() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'lastPlayed', Sort.asc);
     });
   }
 
-  QueryBuilder<RecentlyPlayedDB, RecentlyPlayedDB, QAfterSortBy>
+  QueryBuilder<RecentlyPlayedDatabase, RecentlyPlayedDatabase, QAfterSortBy>
       thenByLastPlayedDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'lastPlayed', Sort.desc);
@@ -383,9 +388,9 @@ extension RecentlyPlayedDBQuerySortThenBy
   }
 }
 
-extension RecentlyPlayedDBQueryWhereDistinct
-    on QueryBuilder<RecentlyPlayedDB, RecentlyPlayedDB, QDistinct> {
-  QueryBuilder<RecentlyPlayedDB, RecentlyPlayedDB, QDistinct>
+extension RecentlyPlayedDatabaseQueryWhereDistinct
+    on QueryBuilder<RecentlyPlayedDatabase, RecentlyPlayedDatabase, QDistinct> {
+  QueryBuilder<RecentlyPlayedDatabase, RecentlyPlayedDatabase, QDistinct>
       distinctByLastPlayed() {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'lastPlayed');
@@ -393,15 +398,15 @@ extension RecentlyPlayedDBQueryWhereDistinct
   }
 }
 
-extension RecentlyPlayedDBQueryProperty
-    on QueryBuilder<RecentlyPlayedDB, RecentlyPlayedDB, QQueryProperty> {
-  QueryBuilder<RecentlyPlayedDB, int, QQueryOperations> idProperty() {
+extension RecentlyPlayedDatabaseQueryProperty on QueryBuilder<
+    RecentlyPlayedDatabase, RecentlyPlayedDatabase, QQueryProperty> {
+  QueryBuilder<RecentlyPlayedDatabase, int, QQueryOperations> idProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'id');
     });
   }
 
-  QueryBuilder<RecentlyPlayedDB, DateTime, QQueryOperations>
+  QueryBuilder<RecentlyPlayedDatabase, DateTime, QQueryOperations>
       lastPlayedProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'lastPlayed');

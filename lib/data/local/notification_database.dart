@@ -3,7 +3,7 @@ import 'package:isar/isar.dart';
 part 'notification_database.g.dart';
 
 @collection
-class NotificationDB {
+class NotificationDatabase {
   Id? id = Isar.autoIncrement;
   final String title;
   final String body;
@@ -12,7 +12,7 @@ class NotificationDB {
   final String? payload;
   final DateTime? time;
 
-  NotificationDB({
+  NotificationDatabase({
     this.id,
     required this.title,
     required this.body,

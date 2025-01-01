@@ -1,5 +1,6 @@
 import 'package:audio_service/audio_service.dart';
 import 'package:flutter/foundation.dart';
+import 'package:music/data/local/media_item_database.dart';
 
 class MediaItemModel extends MediaItem {
   @override
@@ -77,35 +78,37 @@ MediaItemModel mediaItem2MediaItemModel(MediaItem mediaItem) {
   );
 }
 
-// MediaItemDB MediaItem2MediaItemDB(MediaItem mediaItem) {
-//   return MediaItemDB(
-//       title: mediaItem.title,
-//       album: mediaItem.album ?? "Unknown",
-//       artist: mediaItem.artist ?? "Unknown",
-//       artURL: mediaItem.artUri.toString(),
-//       genre: mediaItem.genre ?? "Unknown",
-//       mediaID: mediaItem.id,
-//       duration: mediaItem.duration?.inSeconds,
-//       streamingURL: mediaItem.extras?["url"],
-//       permaURL: mediaItem.extras?["perma_url"],
-//       language: mediaItem.extras?["language"] ?? "Unknown",
-//       isLiked: false,
-//       source: mediaItem.extras?["source"] ?? "Saavn");
-// }
-//
-// MediaItemModel MediaItemDB2MediaItem(MediaItemDB mediaItemDB) {
-//   return MediaItemModel(
-//       id: mediaItemDB.mediaID,
-//       title: mediaItemDB.title,
-//       album: mediaItemDB.album,
-//       artist: mediaItemDB.artist,
-//       duration: mediaItemDB.duration != null ? Duration(seconds: mediaItemDB.duration!) : const Duration(seconds: 120),
-//       artUri: Uri.parse(mediaItemDB.artURL),
-//       genre: mediaItemDB.genre,
-//       extras: {
-//         "url": mediaItemDB.streamingURL,
-//         "source": mediaItemDB.source ?? "None",
-//         "perma_url": mediaItemDB.permaURL,
-//         "language": mediaItemDB.language,
-//       });
-// }
+MediaItemDatabase mediaItem2MediaItemDB(MediaItem mediaItem) {
+  return MediaItemDatabase(
+    title: mediaItem.title,
+    album: mediaItem.album ?? "Unknown",
+    artist: mediaItem.artist ?? "Unknown",
+    artURL: mediaItem.artUri.toString(),
+    genre: mediaItem.genre ?? "Unknown",
+    mediaID: mediaItem.id,
+    duration: mediaItem.duration?.inSeconds,
+    streamingURL: mediaItem.extras?["url"],
+    permaURL: mediaItem.extras?["perma_url"],
+    language: mediaItem.extras?["language"] ?? "Unknown",
+    isLiked: false,
+    source: mediaItem.extras?["source"] ?? "Saavn",
+  );
+}
+
+MediaItemModel mediaItemDB2MediaItem(MediaItemDatabase mediaItemDB) {
+  return MediaItemModel(
+    id: mediaItemDB.mediaID,
+    title: mediaItemDB.title,
+    album: mediaItemDB.album,
+    artist: mediaItemDB.artist,
+    duration: mediaItemDB.duration != null ? Duration(seconds: mediaItemDB.duration!) : const Duration(seconds: 120),
+    artUri: Uri.parse(mediaItemDB.artURL),
+    genre: mediaItemDB.genre,
+    extras: {
+      "url": mediaItemDB.streamingURL,
+      "source": mediaItemDB.source ?? "None",
+      "perma_url": mediaItemDB.permaURL,
+      "language": mediaItemDB.language,
+    },
+  );
+}

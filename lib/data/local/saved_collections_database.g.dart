@@ -9,14 +9,14 @@ part of 'saved_collections_database.dart';
 // coverage:ignore-file
 // ignore_for_file: duplicate_ignore, non_constant_identifier_names, constant_identifier_names, invalid_use_of_protected_member, unnecessary_cast, prefer_const_constructors, lines_longer_than_80_chars, require_trailing_commas, inference_failure_on_function_invocation, unnecessary_parenthesis, unnecessary_raw_strings, unnecessary_null_checks, join_return_with_assignment, prefer_final_locals, avoid_js_rounded_ints, avoid_positional_boolean_parameters, always_specify_types
 
-extension GetSavedCollectionsDBCollection on Isar {
-  IsarCollection<SavedCollectionsDB> get savedCollectionsDBs =>
+extension GetSavedCollectionsDatabaseCollection on Isar {
+  IsarCollection<SavedCollectionsDatabase> get savedCollectionsDatabases =>
       this.collection();
 }
 
-const SavedCollectionsDBSchema = CollectionSchema(
-  name: r'SavedCollectionsDB',
-  id: -2802148582567515827,
+const SavedCollectionsDatabaseSchema = CollectionSchema(
+  name: r'SavedCollectionsDatabase',
+  id: -5390890192420422378,
   properties: {
     r'coverArt': PropertySchema(
       id: 0,
@@ -64,22 +64,22 @@ const SavedCollectionsDBSchema = CollectionSchema(
       type: IsarType.string,
     )
   },
-  estimateSize: _savedCollectionsDBEstimateSize,
-  serialize: _savedCollectionsDBSerialize,
-  deserialize: _savedCollectionsDBDeserialize,
-  deserializeProp: _savedCollectionsDBDeserializeProp,
+  estimateSize: _savedCollectionsDatabaseEstimateSize,
+  serialize: _savedCollectionsDatabaseSerialize,
+  deserialize: _savedCollectionsDatabaseDeserialize,
+  deserializeProp: _savedCollectionsDatabaseDeserializeProp,
   idName: r'isarId',
   indexes: {},
   links: {},
   embeddedSchemas: {},
-  getId: _savedCollectionsDBGetId,
-  getLinks: _savedCollectionsDBGetLinks,
-  attach: _savedCollectionsDBAttach,
+  getId: _savedCollectionsDatabaseGetId,
+  getLinks: _savedCollectionsDatabaseGetLinks,
+  attach: _savedCollectionsDatabaseAttach,
   version: '3.1.0+1',
 );
 
-int _savedCollectionsDBEstimateSize(
-  SavedCollectionsDB object,
+int _savedCollectionsDatabaseEstimateSize(
+  SavedCollectionsDatabase object,
   List<int> offsets,
   Map<Type, List<int>> allOffsets,
 ) {
@@ -105,8 +105,8 @@ int _savedCollectionsDBEstimateSize(
   return bytesCount;
 }
 
-void _savedCollectionsDBSerialize(
-  SavedCollectionsDB object,
+void _savedCollectionsDatabaseSerialize(
+  SavedCollectionsDatabase object,
   IsarWriter writer,
   List<int> offsets,
   Map<Type, List<int>> allOffsets,
@@ -122,13 +122,13 @@ void _savedCollectionsDBSerialize(
   writer.writeString(offsets[8], object.type);
 }
 
-SavedCollectionsDB _savedCollectionsDBDeserialize(
+SavedCollectionsDatabase _savedCollectionsDatabaseDeserialize(
   Id id,
   IsarReader reader,
   List<int> offsets,
   Map<Type, List<int>> allOffsets,
 ) {
-  final object = SavedCollectionsDB(
+  final object = SavedCollectionsDatabase(
     coverArt: reader.readString(offsets[0]),
     extra: reader.readStringOrNull(offsets[1]),
     lastUpdated: reader.readDateTime(offsets[2]),
@@ -142,7 +142,7 @@ SavedCollectionsDB _savedCollectionsDBDeserialize(
   return object;
 }
 
-P _savedCollectionsDBDeserializeProp<P>(
+P _savedCollectionsDatabaseDeserializeProp<P>(
   IsarReader reader,
   int propertyId,
   int offset,
@@ -172,21 +172,21 @@ P _savedCollectionsDBDeserializeProp<P>(
   }
 }
 
-Id _savedCollectionsDBGetId(SavedCollectionsDB object) {
+Id _savedCollectionsDatabaseGetId(SavedCollectionsDatabase object) {
   return object.isarId;
 }
 
-List<IsarLinkBase<dynamic>> _savedCollectionsDBGetLinks(
-    SavedCollectionsDB object) {
+List<IsarLinkBase<dynamic>> _savedCollectionsDatabaseGetLinks(
+    SavedCollectionsDatabase object) {
   return [];
 }
 
-void _savedCollectionsDBAttach(
-    IsarCollection<dynamic> col, Id id, SavedCollectionsDB object) {}
+void _savedCollectionsDatabaseAttach(
+    IsarCollection<dynamic> col, Id id, SavedCollectionsDatabase object) {}
 
-extension SavedCollectionsDBQueryWhereSort
-    on QueryBuilder<SavedCollectionsDB, SavedCollectionsDB, QWhere> {
-  QueryBuilder<SavedCollectionsDB, SavedCollectionsDB, QAfterWhere>
+extension SavedCollectionsDatabaseQueryWhereSort on QueryBuilder<
+    SavedCollectionsDatabase, SavedCollectionsDatabase, QWhere> {
+  QueryBuilder<SavedCollectionsDatabase, SavedCollectionsDatabase, QAfterWhere>
       anyIsarId() {
     return QueryBuilder.apply(this, (query) {
       return query.addWhereClause(const IdWhereClause.any());
@@ -194,10 +194,10 @@ extension SavedCollectionsDBQueryWhereSort
   }
 }
 
-extension SavedCollectionsDBQueryWhere
-    on QueryBuilder<SavedCollectionsDB, SavedCollectionsDB, QWhereClause> {
-  QueryBuilder<SavedCollectionsDB, SavedCollectionsDB, QAfterWhereClause>
-      isarIdEqualTo(Id isarId) {
+extension SavedCollectionsDatabaseQueryWhere on QueryBuilder<
+    SavedCollectionsDatabase, SavedCollectionsDatabase, QWhereClause> {
+  QueryBuilder<SavedCollectionsDatabase, SavedCollectionsDatabase,
+      QAfterWhereClause> isarIdEqualTo(Id isarId) {
     return QueryBuilder.apply(this, (query) {
       return query.addWhereClause(IdWhereClause.between(
         lower: isarId,
@@ -206,8 +206,8 @@ extension SavedCollectionsDBQueryWhere
     });
   }
 
-  QueryBuilder<SavedCollectionsDB, SavedCollectionsDB, QAfterWhereClause>
-      isarIdNotEqualTo(Id isarId) {
+  QueryBuilder<SavedCollectionsDatabase, SavedCollectionsDatabase,
+      QAfterWhereClause> isarIdNotEqualTo(Id isarId) {
     return QueryBuilder.apply(this, (query) {
       if (query.whereSort == Sort.asc) {
         return query
@@ -229,8 +229,8 @@ extension SavedCollectionsDBQueryWhere
     });
   }
 
-  QueryBuilder<SavedCollectionsDB, SavedCollectionsDB, QAfterWhereClause>
-      isarIdGreaterThan(Id isarId, {bool include = false}) {
+  QueryBuilder<SavedCollectionsDatabase, SavedCollectionsDatabase,
+      QAfterWhereClause> isarIdGreaterThan(Id isarId, {bool include = false}) {
     return QueryBuilder.apply(this, (query) {
       return query.addWhereClause(
         IdWhereClause.greaterThan(lower: isarId, includeLower: include),
@@ -238,8 +238,8 @@ extension SavedCollectionsDBQueryWhere
     });
   }
 
-  QueryBuilder<SavedCollectionsDB, SavedCollectionsDB, QAfterWhereClause>
-      isarIdLessThan(Id isarId, {bool include = false}) {
+  QueryBuilder<SavedCollectionsDatabase, SavedCollectionsDatabase,
+      QAfterWhereClause> isarIdLessThan(Id isarId, {bool include = false}) {
     return QueryBuilder.apply(this, (query) {
       return query.addWhereClause(
         IdWhereClause.lessThan(upper: isarId, includeUpper: include),
@@ -247,8 +247,8 @@ extension SavedCollectionsDBQueryWhere
     });
   }
 
-  QueryBuilder<SavedCollectionsDB, SavedCollectionsDB, QAfterWhereClause>
-      isarIdBetween(
+  QueryBuilder<SavedCollectionsDatabase, SavedCollectionsDatabase,
+      QAfterWhereClause> isarIdBetween(
     Id lowerIsarId,
     Id upperIsarId, {
     bool includeLower = true,
@@ -265,10 +265,10 @@ extension SavedCollectionsDBQueryWhere
   }
 }
 
-extension SavedCollectionsDBQueryFilter
-    on QueryBuilder<SavedCollectionsDB, SavedCollectionsDB, QFilterCondition> {
-  QueryBuilder<SavedCollectionsDB, SavedCollectionsDB, QAfterFilterCondition>
-      coverArtEqualTo(
+extension SavedCollectionsDatabaseQueryFilter on QueryBuilder<
+    SavedCollectionsDatabase, SavedCollectionsDatabase, QFilterCondition> {
+  QueryBuilder<SavedCollectionsDatabase, SavedCollectionsDatabase,
+      QAfterFilterCondition> coverArtEqualTo(
     String value, {
     bool caseSensitive = true,
   }) {
@@ -281,8 +281,8 @@ extension SavedCollectionsDBQueryFilter
     });
   }
 
-  QueryBuilder<SavedCollectionsDB, SavedCollectionsDB, QAfterFilterCondition>
-      coverArtGreaterThan(
+  QueryBuilder<SavedCollectionsDatabase, SavedCollectionsDatabase,
+      QAfterFilterCondition> coverArtGreaterThan(
     String value, {
     bool include = false,
     bool caseSensitive = true,
@@ -297,8 +297,8 @@ extension SavedCollectionsDBQueryFilter
     });
   }
 
-  QueryBuilder<SavedCollectionsDB, SavedCollectionsDB, QAfterFilterCondition>
-      coverArtLessThan(
+  QueryBuilder<SavedCollectionsDatabase, SavedCollectionsDatabase,
+      QAfterFilterCondition> coverArtLessThan(
     String value, {
     bool include = false,
     bool caseSensitive = true,
@@ -313,8 +313,8 @@ extension SavedCollectionsDBQueryFilter
     });
   }
 
-  QueryBuilder<SavedCollectionsDB, SavedCollectionsDB, QAfterFilterCondition>
-      coverArtBetween(
+  QueryBuilder<SavedCollectionsDatabase, SavedCollectionsDatabase,
+      QAfterFilterCondition> coverArtBetween(
     String lower,
     String upper, {
     bool includeLower = true,
@@ -333,8 +333,8 @@ extension SavedCollectionsDBQueryFilter
     });
   }
 
-  QueryBuilder<SavedCollectionsDB, SavedCollectionsDB, QAfterFilterCondition>
-      coverArtStartsWith(
+  QueryBuilder<SavedCollectionsDatabase, SavedCollectionsDatabase,
+      QAfterFilterCondition> coverArtStartsWith(
     String value, {
     bool caseSensitive = true,
   }) {
@@ -347,8 +347,8 @@ extension SavedCollectionsDBQueryFilter
     });
   }
 
-  QueryBuilder<SavedCollectionsDB, SavedCollectionsDB, QAfterFilterCondition>
-      coverArtEndsWith(
+  QueryBuilder<SavedCollectionsDatabase, SavedCollectionsDatabase,
+      QAfterFilterCondition> coverArtEndsWith(
     String value, {
     bool caseSensitive = true,
   }) {
@@ -361,7 +361,8 @@ extension SavedCollectionsDBQueryFilter
     });
   }
 
-  QueryBuilder<SavedCollectionsDB, SavedCollectionsDB, QAfterFilterCondition>
+  QueryBuilder<SavedCollectionsDatabase, SavedCollectionsDatabase,
+          QAfterFilterCondition>
       coverArtContains(String value, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.contains(
@@ -372,7 +373,8 @@ extension SavedCollectionsDBQueryFilter
     });
   }
 
-  QueryBuilder<SavedCollectionsDB, SavedCollectionsDB, QAfterFilterCondition>
+  QueryBuilder<SavedCollectionsDatabase, SavedCollectionsDatabase,
+          QAfterFilterCondition>
       coverArtMatches(String pattern, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.matches(
@@ -383,8 +385,8 @@ extension SavedCollectionsDBQueryFilter
     });
   }
 
-  QueryBuilder<SavedCollectionsDB, SavedCollectionsDB, QAfterFilterCondition>
-      coverArtIsEmpty() {
+  QueryBuilder<SavedCollectionsDatabase, SavedCollectionsDatabase,
+      QAfterFilterCondition> coverArtIsEmpty() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
         property: r'coverArt',
@@ -393,8 +395,8 @@ extension SavedCollectionsDBQueryFilter
     });
   }
 
-  QueryBuilder<SavedCollectionsDB, SavedCollectionsDB, QAfterFilterCondition>
-      coverArtIsNotEmpty() {
+  QueryBuilder<SavedCollectionsDatabase, SavedCollectionsDatabase,
+      QAfterFilterCondition> coverArtIsNotEmpty() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.greaterThan(
         property: r'coverArt',
@@ -403,8 +405,8 @@ extension SavedCollectionsDBQueryFilter
     });
   }
 
-  QueryBuilder<SavedCollectionsDB, SavedCollectionsDB, QAfterFilterCondition>
-      extraIsNull() {
+  QueryBuilder<SavedCollectionsDatabase, SavedCollectionsDatabase,
+      QAfterFilterCondition> extraIsNull() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(const FilterCondition.isNull(
         property: r'extra',
@@ -412,8 +414,8 @@ extension SavedCollectionsDBQueryFilter
     });
   }
 
-  QueryBuilder<SavedCollectionsDB, SavedCollectionsDB, QAfterFilterCondition>
-      extraIsNotNull() {
+  QueryBuilder<SavedCollectionsDatabase, SavedCollectionsDatabase,
+      QAfterFilterCondition> extraIsNotNull() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(const FilterCondition.isNotNull(
         property: r'extra',
@@ -421,8 +423,8 @@ extension SavedCollectionsDBQueryFilter
     });
   }
 
-  QueryBuilder<SavedCollectionsDB, SavedCollectionsDB, QAfterFilterCondition>
-      extraEqualTo(
+  QueryBuilder<SavedCollectionsDatabase, SavedCollectionsDatabase,
+      QAfterFilterCondition> extraEqualTo(
     String? value, {
     bool caseSensitive = true,
   }) {
@@ -435,8 +437,8 @@ extension SavedCollectionsDBQueryFilter
     });
   }
 
-  QueryBuilder<SavedCollectionsDB, SavedCollectionsDB, QAfterFilterCondition>
-      extraGreaterThan(
+  QueryBuilder<SavedCollectionsDatabase, SavedCollectionsDatabase,
+      QAfterFilterCondition> extraGreaterThan(
     String? value, {
     bool include = false,
     bool caseSensitive = true,
@@ -451,8 +453,8 @@ extension SavedCollectionsDBQueryFilter
     });
   }
 
-  QueryBuilder<SavedCollectionsDB, SavedCollectionsDB, QAfterFilterCondition>
-      extraLessThan(
+  QueryBuilder<SavedCollectionsDatabase, SavedCollectionsDatabase,
+      QAfterFilterCondition> extraLessThan(
     String? value, {
     bool include = false,
     bool caseSensitive = true,
@@ -467,8 +469,8 @@ extension SavedCollectionsDBQueryFilter
     });
   }
 
-  QueryBuilder<SavedCollectionsDB, SavedCollectionsDB, QAfterFilterCondition>
-      extraBetween(
+  QueryBuilder<SavedCollectionsDatabase, SavedCollectionsDatabase,
+      QAfterFilterCondition> extraBetween(
     String? lower,
     String? upper, {
     bool includeLower = true,
@@ -487,8 +489,8 @@ extension SavedCollectionsDBQueryFilter
     });
   }
 
-  QueryBuilder<SavedCollectionsDB, SavedCollectionsDB, QAfterFilterCondition>
-      extraStartsWith(
+  QueryBuilder<SavedCollectionsDatabase, SavedCollectionsDatabase,
+      QAfterFilterCondition> extraStartsWith(
     String value, {
     bool caseSensitive = true,
   }) {
@@ -501,8 +503,8 @@ extension SavedCollectionsDBQueryFilter
     });
   }
 
-  QueryBuilder<SavedCollectionsDB, SavedCollectionsDB, QAfterFilterCondition>
-      extraEndsWith(
+  QueryBuilder<SavedCollectionsDatabase, SavedCollectionsDatabase,
+      QAfterFilterCondition> extraEndsWith(
     String value, {
     bool caseSensitive = true,
   }) {
@@ -515,7 +517,8 @@ extension SavedCollectionsDBQueryFilter
     });
   }
 
-  QueryBuilder<SavedCollectionsDB, SavedCollectionsDB, QAfterFilterCondition>
+  QueryBuilder<SavedCollectionsDatabase, SavedCollectionsDatabase,
+          QAfterFilterCondition>
       extraContains(String value, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.contains(
@@ -526,7 +529,8 @@ extension SavedCollectionsDBQueryFilter
     });
   }
 
-  QueryBuilder<SavedCollectionsDB, SavedCollectionsDB, QAfterFilterCondition>
+  QueryBuilder<SavedCollectionsDatabase, SavedCollectionsDatabase,
+          QAfterFilterCondition>
       extraMatches(String pattern, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.matches(
@@ -537,8 +541,8 @@ extension SavedCollectionsDBQueryFilter
     });
   }
 
-  QueryBuilder<SavedCollectionsDB, SavedCollectionsDB, QAfterFilterCondition>
-      extraIsEmpty() {
+  QueryBuilder<SavedCollectionsDatabase, SavedCollectionsDatabase,
+      QAfterFilterCondition> extraIsEmpty() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
         property: r'extra',
@@ -547,8 +551,8 @@ extension SavedCollectionsDBQueryFilter
     });
   }
 
-  QueryBuilder<SavedCollectionsDB, SavedCollectionsDB, QAfterFilterCondition>
-      extraIsNotEmpty() {
+  QueryBuilder<SavedCollectionsDatabase, SavedCollectionsDatabase,
+      QAfterFilterCondition> extraIsNotEmpty() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.greaterThan(
         property: r'extra',
@@ -557,8 +561,8 @@ extension SavedCollectionsDBQueryFilter
     });
   }
 
-  QueryBuilder<SavedCollectionsDB, SavedCollectionsDB, QAfterFilterCondition>
-      isarIdEqualTo(Id value) {
+  QueryBuilder<SavedCollectionsDatabase, SavedCollectionsDatabase,
+      QAfterFilterCondition> isarIdEqualTo(Id value) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
         property: r'isarId',
@@ -567,8 +571,8 @@ extension SavedCollectionsDBQueryFilter
     });
   }
 
-  QueryBuilder<SavedCollectionsDB, SavedCollectionsDB, QAfterFilterCondition>
-      isarIdGreaterThan(
+  QueryBuilder<SavedCollectionsDatabase, SavedCollectionsDatabase,
+      QAfterFilterCondition> isarIdGreaterThan(
     Id value, {
     bool include = false,
   }) {
@@ -581,8 +585,8 @@ extension SavedCollectionsDBQueryFilter
     });
   }
 
-  QueryBuilder<SavedCollectionsDB, SavedCollectionsDB, QAfterFilterCondition>
-      isarIdLessThan(
+  QueryBuilder<SavedCollectionsDatabase, SavedCollectionsDatabase,
+      QAfterFilterCondition> isarIdLessThan(
     Id value, {
     bool include = false,
   }) {
@@ -595,8 +599,8 @@ extension SavedCollectionsDBQueryFilter
     });
   }
 
-  QueryBuilder<SavedCollectionsDB, SavedCollectionsDB, QAfterFilterCondition>
-      isarIdBetween(
+  QueryBuilder<SavedCollectionsDatabase, SavedCollectionsDatabase,
+      QAfterFilterCondition> isarIdBetween(
     Id lower,
     Id upper, {
     bool includeLower = true,
@@ -613,8 +617,8 @@ extension SavedCollectionsDBQueryFilter
     });
   }
 
-  QueryBuilder<SavedCollectionsDB, SavedCollectionsDB, QAfterFilterCondition>
-      lastUpdatedEqualTo(DateTime value) {
+  QueryBuilder<SavedCollectionsDatabase, SavedCollectionsDatabase,
+      QAfterFilterCondition> lastUpdatedEqualTo(DateTime value) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
         property: r'lastUpdated',
@@ -623,8 +627,8 @@ extension SavedCollectionsDBQueryFilter
     });
   }
 
-  QueryBuilder<SavedCollectionsDB, SavedCollectionsDB, QAfterFilterCondition>
-      lastUpdatedGreaterThan(
+  QueryBuilder<SavedCollectionsDatabase, SavedCollectionsDatabase,
+      QAfterFilterCondition> lastUpdatedGreaterThan(
     DateTime value, {
     bool include = false,
   }) {
@@ -637,8 +641,8 @@ extension SavedCollectionsDBQueryFilter
     });
   }
 
-  QueryBuilder<SavedCollectionsDB, SavedCollectionsDB, QAfterFilterCondition>
-      lastUpdatedLessThan(
+  QueryBuilder<SavedCollectionsDatabase, SavedCollectionsDatabase,
+      QAfterFilterCondition> lastUpdatedLessThan(
     DateTime value, {
     bool include = false,
   }) {
@@ -651,8 +655,8 @@ extension SavedCollectionsDBQueryFilter
     });
   }
 
-  QueryBuilder<SavedCollectionsDB, SavedCollectionsDB, QAfterFilterCondition>
-      lastUpdatedBetween(
+  QueryBuilder<SavedCollectionsDatabase, SavedCollectionsDatabase,
+      QAfterFilterCondition> lastUpdatedBetween(
     DateTime lower,
     DateTime upper, {
     bool includeLower = true,
@@ -669,8 +673,8 @@ extension SavedCollectionsDBQueryFilter
     });
   }
 
-  QueryBuilder<SavedCollectionsDB, SavedCollectionsDB, QAfterFilterCondition>
-      sourceEqualTo(
+  QueryBuilder<SavedCollectionsDatabase, SavedCollectionsDatabase,
+      QAfterFilterCondition> sourceEqualTo(
     String value, {
     bool caseSensitive = true,
   }) {
@@ -683,8 +687,8 @@ extension SavedCollectionsDBQueryFilter
     });
   }
 
-  QueryBuilder<SavedCollectionsDB, SavedCollectionsDB, QAfterFilterCondition>
-      sourceGreaterThan(
+  QueryBuilder<SavedCollectionsDatabase, SavedCollectionsDatabase,
+      QAfterFilterCondition> sourceGreaterThan(
     String value, {
     bool include = false,
     bool caseSensitive = true,
@@ -699,8 +703,8 @@ extension SavedCollectionsDBQueryFilter
     });
   }
 
-  QueryBuilder<SavedCollectionsDB, SavedCollectionsDB, QAfterFilterCondition>
-      sourceLessThan(
+  QueryBuilder<SavedCollectionsDatabase, SavedCollectionsDatabase,
+      QAfterFilterCondition> sourceLessThan(
     String value, {
     bool include = false,
     bool caseSensitive = true,
@@ -715,8 +719,8 @@ extension SavedCollectionsDBQueryFilter
     });
   }
 
-  QueryBuilder<SavedCollectionsDB, SavedCollectionsDB, QAfterFilterCondition>
-      sourceBetween(
+  QueryBuilder<SavedCollectionsDatabase, SavedCollectionsDatabase,
+      QAfterFilterCondition> sourceBetween(
     String lower,
     String upper, {
     bool includeLower = true,
@@ -735,8 +739,8 @@ extension SavedCollectionsDBQueryFilter
     });
   }
 
-  QueryBuilder<SavedCollectionsDB, SavedCollectionsDB, QAfterFilterCondition>
-      sourceStartsWith(
+  QueryBuilder<SavedCollectionsDatabase, SavedCollectionsDatabase,
+      QAfterFilterCondition> sourceStartsWith(
     String value, {
     bool caseSensitive = true,
   }) {
@@ -749,8 +753,8 @@ extension SavedCollectionsDBQueryFilter
     });
   }
 
-  QueryBuilder<SavedCollectionsDB, SavedCollectionsDB, QAfterFilterCondition>
-      sourceEndsWith(
+  QueryBuilder<SavedCollectionsDatabase, SavedCollectionsDatabase,
+      QAfterFilterCondition> sourceEndsWith(
     String value, {
     bool caseSensitive = true,
   }) {
@@ -763,7 +767,8 @@ extension SavedCollectionsDBQueryFilter
     });
   }
 
-  QueryBuilder<SavedCollectionsDB, SavedCollectionsDB, QAfterFilterCondition>
+  QueryBuilder<SavedCollectionsDatabase, SavedCollectionsDatabase,
+          QAfterFilterCondition>
       sourceContains(String value, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.contains(
@@ -774,7 +779,8 @@ extension SavedCollectionsDBQueryFilter
     });
   }
 
-  QueryBuilder<SavedCollectionsDB, SavedCollectionsDB, QAfterFilterCondition>
+  QueryBuilder<SavedCollectionsDatabase, SavedCollectionsDatabase,
+          QAfterFilterCondition>
       sourceMatches(String pattern, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.matches(
@@ -785,8 +791,8 @@ extension SavedCollectionsDBQueryFilter
     });
   }
 
-  QueryBuilder<SavedCollectionsDB, SavedCollectionsDB, QAfterFilterCondition>
-      sourceIsEmpty() {
+  QueryBuilder<SavedCollectionsDatabase, SavedCollectionsDatabase,
+      QAfterFilterCondition> sourceIsEmpty() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
         property: r'source',
@@ -795,8 +801,8 @@ extension SavedCollectionsDBQueryFilter
     });
   }
 
-  QueryBuilder<SavedCollectionsDB, SavedCollectionsDB, QAfterFilterCondition>
-      sourceIsNotEmpty() {
+  QueryBuilder<SavedCollectionsDatabase, SavedCollectionsDatabase,
+      QAfterFilterCondition> sourceIsNotEmpty() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.greaterThan(
         property: r'source',
@@ -805,8 +811,8 @@ extension SavedCollectionsDBQueryFilter
     });
   }
 
-  QueryBuilder<SavedCollectionsDB, SavedCollectionsDB, QAfterFilterCondition>
-      sourceIdEqualTo(
+  QueryBuilder<SavedCollectionsDatabase, SavedCollectionsDatabase,
+      QAfterFilterCondition> sourceIdEqualTo(
     String value, {
     bool caseSensitive = true,
   }) {
@@ -819,8 +825,8 @@ extension SavedCollectionsDBQueryFilter
     });
   }
 
-  QueryBuilder<SavedCollectionsDB, SavedCollectionsDB, QAfterFilterCondition>
-      sourceIdGreaterThan(
+  QueryBuilder<SavedCollectionsDatabase, SavedCollectionsDatabase,
+      QAfterFilterCondition> sourceIdGreaterThan(
     String value, {
     bool include = false,
     bool caseSensitive = true,
@@ -835,8 +841,8 @@ extension SavedCollectionsDBQueryFilter
     });
   }
 
-  QueryBuilder<SavedCollectionsDB, SavedCollectionsDB, QAfterFilterCondition>
-      sourceIdLessThan(
+  QueryBuilder<SavedCollectionsDatabase, SavedCollectionsDatabase,
+      QAfterFilterCondition> sourceIdLessThan(
     String value, {
     bool include = false,
     bool caseSensitive = true,
@@ -851,8 +857,8 @@ extension SavedCollectionsDBQueryFilter
     });
   }
 
-  QueryBuilder<SavedCollectionsDB, SavedCollectionsDB, QAfterFilterCondition>
-      sourceIdBetween(
+  QueryBuilder<SavedCollectionsDatabase, SavedCollectionsDatabase,
+      QAfterFilterCondition> sourceIdBetween(
     String lower,
     String upper, {
     bool includeLower = true,
@@ -871,8 +877,8 @@ extension SavedCollectionsDBQueryFilter
     });
   }
 
-  QueryBuilder<SavedCollectionsDB, SavedCollectionsDB, QAfterFilterCondition>
-      sourceIdStartsWith(
+  QueryBuilder<SavedCollectionsDatabase, SavedCollectionsDatabase,
+      QAfterFilterCondition> sourceIdStartsWith(
     String value, {
     bool caseSensitive = true,
   }) {
@@ -885,8 +891,8 @@ extension SavedCollectionsDBQueryFilter
     });
   }
 
-  QueryBuilder<SavedCollectionsDB, SavedCollectionsDB, QAfterFilterCondition>
-      sourceIdEndsWith(
+  QueryBuilder<SavedCollectionsDatabase, SavedCollectionsDatabase,
+      QAfterFilterCondition> sourceIdEndsWith(
     String value, {
     bool caseSensitive = true,
   }) {
@@ -899,7 +905,8 @@ extension SavedCollectionsDBQueryFilter
     });
   }
 
-  QueryBuilder<SavedCollectionsDB, SavedCollectionsDB, QAfterFilterCondition>
+  QueryBuilder<SavedCollectionsDatabase, SavedCollectionsDatabase,
+          QAfterFilterCondition>
       sourceIdContains(String value, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.contains(
@@ -910,7 +917,8 @@ extension SavedCollectionsDBQueryFilter
     });
   }
 
-  QueryBuilder<SavedCollectionsDB, SavedCollectionsDB, QAfterFilterCondition>
+  QueryBuilder<SavedCollectionsDatabase, SavedCollectionsDatabase,
+          QAfterFilterCondition>
       sourceIdMatches(String pattern, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.matches(
@@ -921,8 +929,8 @@ extension SavedCollectionsDBQueryFilter
     });
   }
 
-  QueryBuilder<SavedCollectionsDB, SavedCollectionsDB, QAfterFilterCondition>
-      sourceIdIsEmpty() {
+  QueryBuilder<SavedCollectionsDatabase, SavedCollectionsDatabase,
+      QAfterFilterCondition> sourceIdIsEmpty() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
         property: r'sourceId',
@@ -931,8 +939,8 @@ extension SavedCollectionsDBQueryFilter
     });
   }
 
-  QueryBuilder<SavedCollectionsDB, SavedCollectionsDB, QAfterFilterCondition>
-      sourceIdIsNotEmpty() {
+  QueryBuilder<SavedCollectionsDatabase, SavedCollectionsDatabase,
+      QAfterFilterCondition> sourceIdIsNotEmpty() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.greaterThan(
         property: r'sourceId',
@@ -941,8 +949,8 @@ extension SavedCollectionsDBQueryFilter
     });
   }
 
-  QueryBuilder<SavedCollectionsDB, SavedCollectionsDB, QAfterFilterCondition>
-      sourceURLEqualTo(
+  QueryBuilder<SavedCollectionsDatabase, SavedCollectionsDatabase,
+      QAfterFilterCondition> sourceURLEqualTo(
     String value, {
     bool caseSensitive = true,
   }) {
@@ -955,8 +963,8 @@ extension SavedCollectionsDBQueryFilter
     });
   }
 
-  QueryBuilder<SavedCollectionsDB, SavedCollectionsDB, QAfterFilterCondition>
-      sourceURLGreaterThan(
+  QueryBuilder<SavedCollectionsDatabase, SavedCollectionsDatabase,
+      QAfterFilterCondition> sourceURLGreaterThan(
     String value, {
     bool include = false,
     bool caseSensitive = true,
@@ -971,8 +979,8 @@ extension SavedCollectionsDBQueryFilter
     });
   }
 
-  QueryBuilder<SavedCollectionsDB, SavedCollectionsDB, QAfterFilterCondition>
-      sourceURLLessThan(
+  QueryBuilder<SavedCollectionsDatabase, SavedCollectionsDatabase,
+      QAfterFilterCondition> sourceURLLessThan(
     String value, {
     bool include = false,
     bool caseSensitive = true,
@@ -987,8 +995,8 @@ extension SavedCollectionsDBQueryFilter
     });
   }
 
-  QueryBuilder<SavedCollectionsDB, SavedCollectionsDB, QAfterFilterCondition>
-      sourceURLBetween(
+  QueryBuilder<SavedCollectionsDatabase, SavedCollectionsDatabase,
+      QAfterFilterCondition> sourceURLBetween(
     String lower,
     String upper, {
     bool includeLower = true,
@@ -1007,8 +1015,8 @@ extension SavedCollectionsDBQueryFilter
     });
   }
 
-  QueryBuilder<SavedCollectionsDB, SavedCollectionsDB, QAfterFilterCondition>
-      sourceURLStartsWith(
+  QueryBuilder<SavedCollectionsDatabase, SavedCollectionsDatabase,
+      QAfterFilterCondition> sourceURLStartsWith(
     String value, {
     bool caseSensitive = true,
   }) {
@@ -1021,8 +1029,8 @@ extension SavedCollectionsDBQueryFilter
     });
   }
 
-  QueryBuilder<SavedCollectionsDB, SavedCollectionsDB, QAfterFilterCondition>
-      sourceURLEndsWith(
+  QueryBuilder<SavedCollectionsDatabase, SavedCollectionsDatabase,
+      QAfterFilterCondition> sourceURLEndsWith(
     String value, {
     bool caseSensitive = true,
   }) {
@@ -1035,7 +1043,8 @@ extension SavedCollectionsDBQueryFilter
     });
   }
 
-  QueryBuilder<SavedCollectionsDB, SavedCollectionsDB, QAfterFilterCondition>
+  QueryBuilder<SavedCollectionsDatabase, SavedCollectionsDatabase,
+          QAfterFilterCondition>
       sourceURLContains(String value, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.contains(
@@ -1046,7 +1055,8 @@ extension SavedCollectionsDBQueryFilter
     });
   }
 
-  QueryBuilder<SavedCollectionsDB, SavedCollectionsDB, QAfterFilterCondition>
+  QueryBuilder<SavedCollectionsDatabase, SavedCollectionsDatabase,
+          QAfterFilterCondition>
       sourceURLMatches(String pattern, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.matches(
@@ -1057,8 +1067,8 @@ extension SavedCollectionsDBQueryFilter
     });
   }
 
-  QueryBuilder<SavedCollectionsDB, SavedCollectionsDB, QAfterFilterCondition>
-      sourceURLIsEmpty() {
+  QueryBuilder<SavedCollectionsDatabase, SavedCollectionsDatabase,
+      QAfterFilterCondition> sourceURLIsEmpty() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
         property: r'sourceURL',
@@ -1067,8 +1077,8 @@ extension SavedCollectionsDBQueryFilter
     });
   }
 
-  QueryBuilder<SavedCollectionsDB, SavedCollectionsDB, QAfterFilterCondition>
-      sourceURLIsNotEmpty() {
+  QueryBuilder<SavedCollectionsDatabase, SavedCollectionsDatabase,
+      QAfterFilterCondition> sourceURLIsNotEmpty() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.greaterThan(
         property: r'sourceURL',
@@ -1077,8 +1087,8 @@ extension SavedCollectionsDBQueryFilter
     });
   }
 
-  QueryBuilder<SavedCollectionsDB, SavedCollectionsDB, QAfterFilterCondition>
-      subtitleIsNull() {
+  QueryBuilder<SavedCollectionsDatabase, SavedCollectionsDatabase,
+      QAfterFilterCondition> subtitleIsNull() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(const FilterCondition.isNull(
         property: r'subtitle',
@@ -1086,8 +1096,8 @@ extension SavedCollectionsDBQueryFilter
     });
   }
 
-  QueryBuilder<SavedCollectionsDB, SavedCollectionsDB, QAfterFilterCondition>
-      subtitleIsNotNull() {
+  QueryBuilder<SavedCollectionsDatabase, SavedCollectionsDatabase,
+      QAfterFilterCondition> subtitleIsNotNull() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(const FilterCondition.isNotNull(
         property: r'subtitle',
@@ -1095,8 +1105,8 @@ extension SavedCollectionsDBQueryFilter
     });
   }
 
-  QueryBuilder<SavedCollectionsDB, SavedCollectionsDB, QAfterFilterCondition>
-      subtitleEqualTo(
+  QueryBuilder<SavedCollectionsDatabase, SavedCollectionsDatabase,
+      QAfterFilterCondition> subtitleEqualTo(
     String? value, {
     bool caseSensitive = true,
   }) {
@@ -1109,8 +1119,8 @@ extension SavedCollectionsDBQueryFilter
     });
   }
 
-  QueryBuilder<SavedCollectionsDB, SavedCollectionsDB, QAfterFilterCondition>
-      subtitleGreaterThan(
+  QueryBuilder<SavedCollectionsDatabase, SavedCollectionsDatabase,
+      QAfterFilterCondition> subtitleGreaterThan(
     String? value, {
     bool include = false,
     bool caseSensitive = true,
@@ -1125,8 +1135,8 @@ extension SavedCollectionsDBQueryFilter
     });
   }
 
-  QueryBuilder<SavedCollectionsDB, SavedCollectionsDB, QAfterFilterCondition>
-      subtitleLessThan(
+  QueryBuilder<SavedCollectionsDatabase, SavedCollectionsDatabase,
+      QAfterFilterCondition> subtitleLessThan(
     String? value, {
     bool include = false,
     bool caseSensitive = true,
@@ -1141,8 +1151,8 @@ extension SavedCollectionsDBQueryFilter
     });
   }
 
-  QueryBuilder<SavedCollectionsDB, SavedCollectionsDB, QAfterFilterCondition>
-      subtitleBetween(
+  QueryBuilder<SavedCollectionsDatabase, SavedCollectionsDatabase,
+      QAfterFilterCondition> subtitleBetween(
     String? lower,
     String? upper, {
     bool includeLower = true,
@@ -1161,8 +1171,8 @@ extension SavedCollectionsDBQueryFilter
     });
   }
 
-  QueryBuilder<SavedCollectionsDB, SavedCollectionsDB, QAfterFilterCondition>
-      subtitleStartsWith(
+  QueryBuilder<SavedCollectionsDatabase, SavedCollectionsDatabase,
+      QAfterFilterCondition> subtitleStartsWith(
     String value, {
     bool caseSensitive = true,
   }) {
@@ -1175,8 +1185,8 @@ extension SavedCollectionsDBQueryFilter
     });
   }
 
-  QueryBuilder<SavedCollectionsDB, SavedCollectionsDB, QAfterFilterCondition>
-      subtitleEndsWith(
+  QueryBuilder<SavedCollectionsDatabase, SavedCollectionsDatabase,
+      QAfterFilterCondition> subtitleEndsWith(
     String value, {
     bool caseSensitive = true,
   }) {
@@ -1189,7 +1199,8 @@ extension SavedCollectionsDBQueryFilter
     });
   }
 
-  QueryBuilder<SavedCollectionsDB, SavedCollectionsDB, QAfterFilterCondition>
+  QueryBuilder<SavedCollectionsDatabase, SavedCollectionsDatabase,
+          QAfterFilterCondition>
       subtitleContains(String value, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.contains(
@@ -1200,7 +1211,8 @@ extension SavedCollectionsDBQueryFilter
     });
   }
 
-  QueryBuilder<SavedCollectionsDB, SavedCollectionsDB, QAfterFilterCondition>
+  QueryBuilder<SavedCollectionsDatabase, SavedCollectionsDatabase,
+          QAfterFilterCondition>
       subtitleMatches(String pattern, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.matches(
@@ -1211,8 +1223,8 @@ extension SavedCollectionsDBQueryFilter
     });
   }
 
-  QueryBuilder<SavedCollectionsDB, SavedCollectionsDB, QAfterFilterCondition>
-      subtitleIsEmpty() {
+  QueryBuilder<SavedCollectionsDatabase, SavedCollectionsDatabase,
+      QAfterFilterCondition> subtitleIsEmpty() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
         property: r'subtitle',
@@ -1221,8 +1233,8 @@ extension SavedCollectionsDBQueryFilter
     });
   }
 
-  QueryBuilder<SavedCollectionsDB, SavedCollectionsDB, QAfterFilterCondition>
-      subtitleIsNotEmpty() {
+  QueryBuilder<SavedCollectionsDatabase, SavedCollectionsDatabase,
+      QAfterFilterCondition> subtitleIsNotEmpty() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.greaterThan(
         property: r'subtitle',
@@ -1231,8 +1243,8 @@ extension SavedCollectionsDBQueryFilter
     });
   }
 
-  QueryBuilder<SavedCollectionsDB, SavedCollectionsDB, QAfterFilterCondition>
-      titleEqualTo(
+  QueryBuilder<SavedCollectionsDatabase, SavedCollectionsDatabase,
+      QAfterFilterCondition> titleEqualTo(
     String value, {
     bool caseSensitive = true,
   }) {
@@ -1245,8 +1257,8 @@ extension SavedCollectionsDBQueryFilter
     });
   }
 
-  QueryBuilder<SavedCollectionsDB, SavedCollectionsDB, QAfterFilterCondition>
-      titleGreaterThan(
+  QueryBuilder<SavedCollectionsDatabase, SavedCollectionsDatabase,
+      QAfterFilterCondition> titleGreaterThan(
     String value, {
     bool include = false,
     bool caseSensitive = true,
@@ -1261,8 +1273,8 @@ extension SavedCollectionsDBQueryFilter
     });
   }
 
-  QueryBuilder<SavedCollectionsDB, SavedCollectionsDB, QAfterFilterCondition>
-      titleLessThan(
+  QueryBuilder<SavedCollectionsDatabase, SavedCollectionsDatabase,
+      QAfterFilterCondition> titleLessThan(
     String value, {
     bool include = false,
     bool caseSensitive = true,
@@ -1277,8 +1289,8 @@ extension SavedCollectionsDBQueryFilter
     });
   }
 
-  QueryBuilder<SavedCollectionsDB, SavedCollectionsDB, QAfterFilterCondition>
-      titleBetween(
+  QueryBuilder<SavedCollectionsDatabase, SavedCollectionsDatabase,
+      QAfterFilterCondition> titleBetween(
     String lower,
     String upper, {
     bool includeLower = true,
@@ -1297,8 +1309,8 @@ extension SavedCollectionsDBQueryFilter
     });
   }
 
-  QueryBuilder<SavedCollectionsDB, SavedCollectionsDB, QAfterFilterCondition>
-      titleStartsWith(
+  QueryBuilder<SavedCollectionsDatabase, SavedCollectionsDatabase,
+      QAfterFilterCondition> titleStartsWith(
     String value, {
     bool caseSensitive = true,
   }) {
@@ -1311,8 +1323,8 @@ extension SavedCollectionsDBQueryFilter
     });
   }
 
-  QueryBuilder<SavedCollectionsDB, SavedCollectionsDB, QAfterFilterCondition>
-      titleEndsWith(
+  QueryBuilder<SavedCollectionsDatabase, SavedCollectionsDatabase,
+      QAfterFilterCondition> titleEndsWith(
     String value, {
     bool caseSensitive = true,
   }) {
@@ -1325,7 +1337,8 @@ extension SavedCollectionsDBQueryFilter
     });
   }
 
-  QueryBuilder<SavedCollectionsDB, SavedCollectionsDB, QAfterFilterCondition>
+  QueryBuilder<SavedCollectionsDatabase, SavedCollectionsDatabase,
+          QAfterFilterCondition>
       titleContains(String value, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.contains(
@@ -1336,7 +1349,8 @@ extension SavedCollectionsDBQueryFilter
     });
   }
 
-  QueryBuilder<SavedCollectionsDB, SavedCollectionsDB, QAfterFilterCondition>
+  QueryBuilder<SavedCollectionsDatabase, SavedCollectionsDatabase,
+          QAfterFilterCondition>
       titleMatches(String pattern, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.matches(
@@ -1347,8 +1361,8 @@ extension SavedCollectionsDBQueryFilter
     });
   }
 
-  QueryBuilder<SavedCollectionsDB, SavedCollectionsDB, QAfterFilterCondition>
-      titleIsEmpty() {
+  QueryBuilder<SavedCollectionsDatabase, SavedCollectionsDatabase,
+      QAfterFilterCondition> titleIsEmpty() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
         property: r'title',
@@ -1357,8 +1371,8 @@ extension SavedCollectionsDBQueryFilter
     });
   }
 
-  QueryBuilder<SavedCollectionsDB, SavedCollectionsDB, QAfterFilterCondition>
-      titleIsNotEmpty() {
+  QueryBuilder<SavedCollectionsDatabase, SavedCollectionsDatabase,
+      QAfterFilterCondition> titleIsNotEmpty() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.greaterThan(
         property: r'title',
@@ -1367,8 +1381,8 @@ extension SavedCollectionsDBQueryFilter
     });
   }
 
-  QueryBuilder<SavedCollectionsDB, SavedCollectionsDB, QAfterFilterCondition>
-      typeEqualTo(
+  QueryBuilder<SavedCollectionsDatabase, SavedCollectionsDatabase,
+      QAfterFilterCondition> typeEqualTo(
     String value, {
     bool caseSensitive = true,
   }) {
@@ -1381,8 +1395,8 @@ extension SavedCollectionsDBQueryFilter
     });
   }
 
-  QueryBuilder<SavedCollectionsDB, SavedCollectionsDB, QAfterFilterCondition>
-      typeGreaterThan(
+  QueryBuilder<SavedCollectionsDatabase, SavedCollectionsDatabase,
+      QAfterFilterCondition> typeGreaterThan(
     String value, {
     bool include = false,
     bool caseSensitive = true,
@@ -1397,8 +1411,8 @@ extension SavedCollectionsDBQueryFilter
     });
   }
 
-  QueryBuilder<SavedCollectionsDB, SavedCollectionsDB, QAfterFilterCondition>
-      typeLessThan(
+  QueryBuilder<SavedCollectionsDatabase, SavedCollectionsDatabase,
+      QAfterFilterCondition> typeLessThan(
     String value, {
     bool include = false,
     bool caseSensitive = true,
@@ -1413,8 +1427,8 @@ extension SavedCollectionsDBQueryFilter
     });
   }
 
-  QueryBuilder<SavedCollectionsDB, SavedCollectionsDB, QAfterFilterCondition>
-      typeBetween(
+  QueryBuilder<SavedCollectionsDatabase, SavedCollectionsDatabase,
+      QAfterFilterCondition> typeBetween(
     String lower,
     String upper, {
     bool includeLower = true,
@@ -1433,8 +1447,8 @@ extension SavedCollectionsDBQueryFilter
     });
   }
 
-  QueryBuilder<SavedCollectionsDB, SavedCollectionsDB, QAfterFilterCondition>
-      typeStartsWith(
+  QueryBuilder<SavedCollectionsDatabase, SavedCollectionsDatabase,
+      QAfterFilterCondition> typeStartsWith(
     String value, {
     bool caseSensitive = true,
   }) {
@@ -1447,8 +1461,8 @@ extension SavedCollectionsDBQueryFilter
     });
   }
 
-  QueryBuilder<SavedCollectionsDB, SavedCollectionsDB, QAfterFilterCondition>
-      typeEndsWith(
+  QueryBuilder<SavedCollectionsDatabase, SavedCollectionsDatabase,
+      QAfterFilterCondition> typeEndsWith(
     String value, {
     bool caseSensitive = true,
   }) {
@@ -1461,7 +1475,8 @@ extension SavedCollectionsDBQueryFilter
     });
   }
 
-  QueryBuilder<SavedCollectionsDB, SavedCollectionsDB, QAfterFilterCondition>
+  QueryBuilder<SavedCollectionsDatabase, SavedCollectionsDatabase,
+          QAfterFilterCondition>
       typeContains(String value, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.contains(
@@ -1472,7 +1487,8 @@ extension SavedCollectionsDBQueryFilter
     });
   }
 
-  QueryBuilder<SavedCollectionsDB, SavedCollectionsDB, QAfterFilterCondition>
+  QueryBuilder<SavedCollectionsDatabase, SavedCollectionsDatabase,
+          QAfterFilterCondition>
       typeMatches(String pattern, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.matches(
@@ -1483,8 +1499,8 @@ extension SavedCollectionsDBQueryFilter
     });
   }
 
-  QueryBuilder<SavedCollectionsDB, SavedCollectionsDB, QAfterFilterCondition>
-      typeIsEmpty() {
+  QueryBuilder<SavedCollectionsDatabase, SavedCollectionsDatabase,
+      QAfterFilterCondition> typeIsEmpty() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
         property: r'type',
@@ -1493,8 +1509,8 @@ extension SavedCollectionsDBQueryFilter
     });
   }
 
-  QueryBuilder<SavedCollectionsDB, SavedCollectionsDB, QAfterFilterCondition>
-      typeIsNotEmpty() {
+  QueryBuilder<SavedCollectionsDatabase, SavedCollectionsDatabase,
+      QAfterFilterCondition> typeIsNotEmpty() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.greaterThan(
         property: r'type',
@@ -1504,134 +1520,134 @@ extension SavedCollectionsDBQueryFilter
   }
 }
 
-extension SavedCollectionsDBQueryObject
-    on QueryBuilder<SavedCollectionsDB, SavedCollectionsDB, QFilterCondition> {}
+extension SavedCollectionsDatabaseQueryObject on QueryBuilder<
+    SavedCollectionsDatabase, SavedCollectionsDatabase, QFilterCondition> {}
 
-extension SavedCollectionsDBQueryLinks
-    on QueryBuilder<SavedCollectionsDB, SavedCollectionsDB, QFilterCondition> {}
+extension SavedCollectionsDatabaseQueryLinks on QueryBuilder<
+    SavedCollectionsDatabase, SavedCollectionsDatabase, QFilterCondition> {}
 
-extension SavedCollectionsDBQuerySortBy
-    on QueryBuilder<SavedCollectionsDB, SavedCollectionsDB, QSortBy> {
-  QueryBuilder<SavedCollectionsDB, SavedCollectionsDB, QAfterSortBy>
+extension SavedCollectionsDatabaseQuerySortBy on QueryBuilder<
+    SavedCollectionsDatabase, SavedCollectionsDatabase, QSortBy> {
+  QueryBuilder<SavedCollectionsDatabase, SavedCollectionsDatabase, QAfterSortBy>
       sortByCoverArt() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'coverArt', Sort.asc);
     });
   }
 
-  QueryBuilder<SavedCollectionsDB, SavedCollectionsDB, QAfterSortBy>
+  QueryBuilder<SavedCollectionsDatabase, SavedCollectionsDatabase, QAfterSortBy>
       sortByCoverArtDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'coverArt', Sort.desc);
     });
   }
 
-  QueryBuilder<SavedCollectionsDB, SavedCollectionsDB, QAfterSortBy>
+  QueryBuilder<SavedCollectionsDatabase, SavedCollectionsDatabase, QAfterSortBy>
       sortByExtra() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'extra', Sort.asc);
     });
   }
 
-  QueryBuilder<SavedCollectionsDB, SavedCollectionsDB, QAfterSortBy>
+  QueryBuilder<SavedCollectionsDatabase, SavedCollectionsDatabase, QAfterSortBy>
       sortByExtraDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'extra', Sort.desc);
     });
   }
 
-  QueryBuilder<SavedCollectionsDB, SavedCollectionsDB, QAfterSortBy>
+  QueryBuilder<SavedCollectionsDatabase, SavedCollectionsDatabase, QAfterSortBy>
       sortByLastUpdated() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'lastUpdated', Sort.asc);
     });
   }
 
-  QueryBuilder<SavedCollectionsDB, SavedCollectionsDB, QAfterSortBy>
+  QueryBuilder<SavedCollectionsDatabase, SavedCollectionsDatabase, QAfterSortBy>
       sortByLastUpdatedDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'lastUpdated', Sort.desc);
     });
   }
 
-  QueryBuilder<SavedCollectionsDB, SavedCollectionsDB, QAfterSortBy>
+  QueryBuilder<SavedCollectionsDatabase, SavedCollectionsDatabase, QAfterSortBy>
       sortBySource() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'source', Sort.asc);
     });
   }
 
-  QueryBuilder<SavedCollectionsDB, SavedCollectionsDB, QAfterSortBy>
+  QueryBuilder<SavedCollectionsDatabase, SavedCollectionsDatabase, QAfterSortBy>
       sortBySourceDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'source', Sort.desc);
     });
   }
 
-  QueryBuilder<SavedCollectionsDB, SavedCollectionsDB, QAfterSortBy>
+  QueryBuilder<SavedCollectionsDatabase, SavedCollectionsDatabase, QAfterSortBy>
       sortBySourceId() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'sourceId', Sort.asc);
     });
   }
 
-  QueryBuilder<SavedCollectionsDB, SavedCollectionsDB, QAfterSortBy>
+  QueryBuilder<SavedCollectionsDatabase, SavedCollectionsDatabase, QAfterSortBy>
       sortBySourceIdDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'sourceId', Sort.desc);
     });
   }
 
-  QueryBuilder<SavedCollectionsDB, SavedCollectionsDB, QAfterSortBy>
+  QueryBuilder<SavedCollectionsDatabase, SavedCollectionsDatabase, QAfterSortBy>
       sortBySourceURL() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'sourceURL', Sort.asc);
     });
   }
 
-  QueryBuilder<SavedCollectionsDB, SavedCollectionsDB, QAfterSortBy>
+  QueryBuilder<SavedCollectionsDatabase, SavedCollectionsDatabase, QAfterSortBy>
       sortBySourceURLDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'sourceURL', Sort.desc);
     });
   }
 
-  QueryBuilder<SavedCollectionsDB, SavedCollectionsDB, QAfterSortBy>
+  QueryBuilder<SavedCollectionsDatabase, SavedCollectionsDatabase, QAfterSortBy>
       sortBySubtitle() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'subtitle', Sort.asc);
     });
   }
 
-  QueryBuilder<SavedCollectionsDB, SavedCollectionsDB, QAfterSortBy>
+  QueryBuilder<SavedCollectionsDatabase, SavedCollectionsDatabase, QAfterSortBy>
       sortBySubtitleDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'subtitle', Sort.desc);
     });
   }
 
-  QueryBuilder<SavedCollectionsDB, SavedCollectionsDB, QAfterSortBy>
+  QueryBuilder<SavedCollectionsDatabase, SavedCollectionsDatabase, QAfterSortBy>
       sortByTitle() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'title', Sort.asc);
     });
   }
 
-  QueryBuilder<SavedCollectionsDB, SavedCollectionsDB, QAfterSortBy>
+  QueryBuilder<SavedCollectionsDatabase, SavedCollectionsDatabase, QAfterSortBy>
       sortByTitleDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'title', Sort.desc);
     });
   }
 
-  QueryBuilder<SavedCollectionsDB, SavedCollectionsDB, QAfterSortBy>
+  QueryBuilder<SavedCollectionsDatabase, SavedCollectionsDatabase, QAfterSortBy>
       sortByType() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'type', Sort.asc);
     });
   }
 
-  QueryBuilder<SavedCollectionsDB, SavedCollectionsDB, QAfterSortBy>
+  QueryBuilder<SavedCollectionsDatabase, SavedCollectionsDatabase, QAfterSortBy>
       sortByTypeDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'type', Sort.desc);
@@ -1639,142 +1655,142 @@ extension SavedCollectionsDBQuerySortBy
   }
 }
 
-extension SavedCollectionsDBQuerySortThenBy
-    on QueryBuilder<SavedCollectionsDB, SavedCollectionsDB, QSortThenBy> {
-  QueryBuilder<SavedCollectionsDB, SavedCollectionsDB, QAfterSortBy>
+extension SavedCollectionsDatabaseQuerySortThenBy on QueryBuilder<
+    SavedCollectionsDatabase, SavedCollectionsDatabase, QSortThenBy> {
+  QueryBuilder<SavedCollectionsDatabase, SavedCollectionsDatabase, QAfterSortBy>
       thenByCoverArt() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'coverArt', Sort.asc);
     });
   }
 
-  QueryBuilder<SavedCollectionsDB, SavedCollectionsDB, QAfterSortBy>
+  QueryBuilder<SavedCollectionsDatabase, SavedCollectionsDatabase, QAfterSortBy>
       thenByCoverArtDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'coverArt', Sort.desc);
     });
   }
 
-  QueryBuilder<SavedCollectionsDB, SavedCollectionsDB, QAfterSortBy>
+  QueryBuilder<SavedCollectionsDatabase, SavedCollectionsDatabase, QAfterSortBy>
       thenByExtra() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'extra', Sort.asc);
     });
   }
 
-  QueryBuilder<SavedCollectionsDB, SavedCollectionsDB, QAfterSortBy>
+  QueryBuilder<SavedCollectionsDatabase, SavedCollectionsDatabase, QAfterSortBy>
       thenByExtraDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'extra', Sort.desc);
     });
   }
 
-  QueryBuilder<SavedCollectionsDB, SavedCollectionsDB, QAfterSortBy>
+  QueryBuilder<SavedCollectionsDatabase, SavedCollectionsDatabase, QAfterSortBy>
       thenByIsarId() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'isarId', Sort.asc);
     });
   }
 
-  QueryBuilder<SavedCollectionsDB, SavedCollectionsDB, QAfterSortBy>
+  QueryBuilder<SavedCollectionsDatabase, SavedCollectionsDatabase, QAfterSortBy>
       thenByIsarIdDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'isarId', Sort.desc);
     });
   }
 
-  QueryBuilder<SavedCollectionsDB, SavedCollectionsDB, QAfterSortBy>
+  QueryBuilder<SavedCollectionsDatabase, SavedCollectionsDatabase, QAfterSortBy>
       thenByLastUpdated() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'lastUpdated', Sort.asc);
     });
   }
 
-  QueryBuilder<SavedCollectionsDB, SavedCollectionsDB, QAfterSortBy>
+  QueryBuilder<SavedCollectionsDatabase, SavedCollectionsDatabase, QAfterSortBy>
       thenByLastUpdatedDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'lastUpdated', Sort.desc);
     });
   }
 
-  QueryBuilder<SavedCollectionsDB, SavedCollectionsDB, QAfterSortBy>
+  QueryBuilder<SavedCollectionsDatabase, SavedCollectionsDatabase, QAfterSortBy>
       thenBySource() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'source', Sort.asc);
     });
   }
 
-  QueryBuilder<SavedCollectionsDB, SavedCollectionsDB, QAfterSortBy>
+  QueryBuilder<SavedCollectionsDatabase, SavedCollectionsDatabase, QAfterSortBy>
       thenBySourceDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'source', Sort.desc);
     });
   }
 
-  QueryBuilder<SavedCollectionsDB, SavedCollectionsDB, QAfterSortBy>
+  QueryBuilder<SavedCollectionsDatabase, SavedCollectionsDatabase, QAfterSortBy>
       thenBySourceId() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'sourceId', Sort.asc);
     });
   }
 
-  QueryBuilder<SavedCollectionsDB, SavedCollectionsDB, QAfterSortBy>
+  QueryBuilder<SavedCollectionsDatabase, SavedCollectionsDatabase, QAfterSortBy>
       thenBySourceIdDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'sourceId', Sort.desc);
     });
   }
 
-  QueryBuilder<SavedCollectionsDB, SavedCollectionsDB, QAfterSortBy>
+  QueryBuilder<SavedCollectionsDatabase, SavedCollectionsDatabase, QAfterSortBy>
       thenBySourceURL() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'sourceURL', Sort.asc);
     });
   }
 
-  QueryBuilder<SavedCollectionsDB, SavedCollectionsDB, QAfterSortBy>
+  QueryBuilder<SavedCollectionsDatabase, SavedCollectionsDatabase, QAfterSortBy>
       thenBySourceURLDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'sourceURL', Sort.desc);
     });
   }
 
-  QueryBuilder<SavedCollectionsDB, SavedCollectionsDB, QAfterSortBy>
+  QueryBuilder<SavedCollectionsDatabase, SavedCollectionsDatabase, QAfterSortBy>
       thenBySubtitle() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'subtitle', Sort.asc);
     });
   }
 
-  QueryBuilder<SavedCollectionsDB, SavedCollectionsDB, QAfterSortBy>
+  QueryBuilder<SavedCollectionsDatabase, SavedCollectionsDatabase, QAfterSortBy>
       thenBySubtitleDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'subtitle', Sort.desc);
     });
   }
 
-  QueryBuilder<SavedCollectionsDB, SavedCollectionsDB, QAfterSortBy>
+  QueryBuilder<SavedCollectionsDatabase, SavedCollectionsDatabase, QAfterSortBy>
       thenByTitle() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'title', Sort.asc);
     });
   }
 
-  QueryBuilder<SavedCollectionsDB, SavedCollectionsDB, QAfterSortBy>
+  QueryBuilder<SavedCollectionsDatabase, SavedCollectionsDatabase, QAfterSortBy>
       thenByTitleDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'title', Sort.desc);
     });
   }
 
-  QueryBuilder<SavedCollectionsDB, SavedCollectionsDB, QAfterSortBy>
+  QueryBuilder<SavedCollectionsDatabase, SavedCollectionsDatabase, QAfterSortBy>
       thenByType() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'type', Sort.asc);
     });
   }
 
-  QueryBuilder<SavedCollectionsDB, SavedCollectionsDB, QAfterSortBy>
+  QueryBuilder<SavedCollectionsDatabase, SavedCollectionsDatabase, QAfterSortBy>
       thenByTypeDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'type', Sort.desc);
@@ -1782,65 +1798,65 @@ extension SavedCollectionsDBQuerySortThenBy
   }
 }
 
-extension SavedCollectionsDBQueryWhereDistinct
-    on QueryBuilder<SavedCollectionsDB, SavedCollectionsDB, QDistinct> {
-  QueryBuilder<SavedCollectionsDB, SavedCollectionsDB, QDistinct>
+extension SavedCollectionsDatabaseQueryWhereDistinct on QueryBuilder<
+    SavedCollectionsDatabase, SavedCollectionsDatabase, QDistinct> {
+  QueryBuilder<SavedCollectionsDatabase, SavedCollectionsDatabase, QDistinct>
       distinctByCoverArt({bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'coverArt', caseSensitive: caseSensitive);
     });
   }
 
-  QueryBuilder<SavedCollectionsDB, SavedCollectionsDB, QDistinct>
+  QueryBuilder<SavedCollectionsDatabase, SavedCollectionsDatabase, QDistinct>
       distinctByExtra({bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'extra', caseSensitive: caseSensitive);
     });
   }
 
-  QueryBuilder<SavedCollectionsDB, SavedCollectionsDB, QDistinct>
+  QueryBuilder<SavedCollectionsDatabase, SavedCollectionsDatabase, QDistinct>
       distinctByLastUpdated() {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'lastUpdated');
     });
   }
 
-  QueryBuilder<SavedCollectionsDB, SavedCollectionsDB, QDistinct>
+  QueryBuilder<SavedCollectionsDatabase, SavedCollectionsDatabase, QDistinct>
       distinctBySource({bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'source', caseSensitive: caseSensitive);
     });
   }
 
-  QueryBuilder<SavedCollectionsDB, SavedCollectionsDB, QDistinct>
+  QueryBuilder<SavedCollectionsDatabase, SavedCollectionsDatabase, QDistinct>
       distinctBySourceId({bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'sourceId', caseSensitive: caseSensitive);
     });
   }
 
-  QueryBuilder<SavedCollectionsDB, SavedCollectionsDB, QDistinct>
+  QueryBuilder<SavedCollectionsDatabase, SavedCollectionsDatabase, QDistinct>
       distinctBySourceURL({bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'sourceURL', caseSensitive: caseSensitive);
     });
   }
 
-  QueryBuilder<SavedCollectionsDB, SavedCollectionsDB, QDistinct>
+  QueryBuilder<SavedCollectionsDatabase, SavedCollectionsDatabase, QDistinct>
       distinctBySubtitle({bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'subtitle', caseSensitive: caseSensitive);
     });
   }
 
-  QueryBuilder<SavedCollectionsDB, SavedCollectionsDB, QDistinct>
+  QueryBuilder<SavedCollectionsDatabase, SavedCollectionsDatabase, QDistinct>
       distinctByTitle({bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'title', caseSensitive: caseSensitive);
     });
   }
 
-  QueryBuilder<SavedCollectionsDB, SavedCollectionsDB, QDistinct>
+  QueryBuilder<SavedCollectionsDatabase, SavedCollectionsDatabase, QDistinct>
       distinctByType({bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'type', caseSensitive: caseSensitive);
@@ -1848,68 +1864,73 @@ extension SavedCollectionsDBQueryWhereDistinct
   }
 }
 
-extension SavedCollectionsDBQueryProperty
-    on QueryBuilder<SavedCollectionsDB, SavedCollectionsDB, QQueryProperty> {
-  QueryBuilder<SavedCollectionsDB, int, QQueryOperations> isarIdProperty() {
+extension SavedCollectionsDatabaseQueryProperty on QueryBuilder<
+    SavedCollectionsDatabase, SavedCollectionsDatabase, QQueryProperty> {
+  QueryBuilder<SavedCollectionsDatabase, int, QQueryOperations>
+      isarIdProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'isarId');
     });
   }
 
-  QueryBuilder<SavedCollectionsDB, String, QQueryOperations>
+  QueryBuilder<SavedCollectionsDatabase, String, QQueryOperations>
       coverArtProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'coverArt');
     });
   }
 
-  QueryBuilder<SavedCollectionsDB, String?, QQueryOperations> extraProperty() {
+  QueryBuilder<SavedCollectionsDatabase, String?, QQueryOperations>
+      extraProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'extra');
     });
   }
 
-  QueryBuilder<SavedCollectionsDB, DateTime, QQueryOperations>
+  QueryBuilder<SavedCollectionsDatabase, DateTime, QQueryOperations>
       lastUpdatedProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'lastUpdated');
     });
   }
 
-  QueryBuilder<SavedCollectionsDB, String, QQueryOperations> sourceProperty() {
+  QueryBuilder<SavedCollectionsDatabase, String, QQueryOperations>
+      sourceProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'source');
     });
   }
 
-  QueryBuilder<SavedCollectionsDB, String, QQueryOperations>
+  QueryBuilder<SavedCollectionsDatabase, String, QQueryOperations>
       sourceIdProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'sourceId');
     });
   }
 
-  QueryBuilder<SavedCollectionsDB, String, QQueryOperations>
+  QueryBuilder<SavedCollectionsDatabase, String, QQueryOperations>
       sourceURLProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'sourceURL');
     });
   }
 
-  QueryBuilder<SavedCollectionsDB, String?, QQueryOperations>
+  QueryBuilder<SavedCollectionsDatabase, String?, QQueryOperations>
       subtitleProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'subtitle');
     });
   }
 
-  QueryBuilder<SavedCollectionsDB, String, QQueryOperations> titleProperty() {
+  QueryBuilder<SavedCollectionsDatabase, String, QQueryOperations>
+      titleProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'title');
     });
   }
 
-  QueryBuilder<SavedCollectionsDB, String, QQueryOperations> typeProperty() {
+  QueryBuilder<SavedCollectionsDatabase, String, QQueryOperations>
+      typeProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'type');
     });
