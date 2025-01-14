@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:developer';
 import 'dart:io';
 
@@ -16,9 +17,13 @@ import '../data/local/playlists_info_database.dart';
 import '../data/local/recently_played_database.dart';
 import '../data/local/saved_collections_database.dart';
 import '../data/local/youtube_link_cache_database.dart';
+import '../models/album_model.dart';
+import '../models/artist_model.dart';
 import '../models/chart_model.dart';
+import '../models/lyrics_models.dart';
 import '../models/media_item_model.dart';
 import '../models/media_playlist_model.dart';
+import '../models/playlist_onl_model.dart';
 import '../presentation/route/global_str_consts.dart';
 
 class AppDatabaseService {
@@ -612,4 +617,534 @@ class AppDatabaseService {
       log("Failed to delete file: ${downloadDB!.fileName}", error: e, name: "DB");
     }
   }
+
+  static Future<bool?> getSettingBool(String key, {bool? defaultValue}) async {
+    Isar isarDB = await database;
+    final settingValue = isarDB.appSettingsBoolDatabases.filter().settingNameEqualTo(key).findFirstSync()?.settingValue;
+    if (settingValue != null) {
+      return settingValue;
+    } else {
+      // if (defaultValue != null) {
+      //   putSettingBool(key, defaultValue);
+      // }
+      return defaultValue;
+    }
+  }
+
+  static Future<void> putOnlAlbumModel(AlbumModel albumModel) async {
+    Isar isarDB = await database;
+    Map extra = albumModel.extra;
+    extra.addEntries([MapEntry("country", albumModel.country)]);
+    extra.addEntries([MapEntry("artists", albumModel.artists)]);
+    extra.addEntries([MapEntry("genre", albumModel.genre)]);
+    extra.addEntries([MapEntry("language", albumModel.language)]);
+    extra.addEntries([MapEntry("year", albumModel.year)]);
+
+    await isarDB.writeTxn(
+      () => isarDB.savedCollectionsDatabases.put(
+        SavedCollectionsDatabase(
+          type: "album",
+          coverArt: albumModel.imageURL,
+          title: albumModel.name,
+          subtitle: albumModel.description,
+          source: albumModel.source,
+          sourceId: albumModel.sourceId,
+          sourceURL: albumModel.sourceURL,
+          lastUpdated: DateTime.now(),
+          extra: jsonEncode(extra),
+        ),
+      ),
+    );
+  }
+
+  static Future<void> removeFromSavedCollection(String sourceID) async {
+    Isar isarDB = await database;
+    isarDB.writeTxnSync(
+      () => isarDB.savedCollectionsDatabases.filter().sourceIdEqualTo(sourceID).deleteAllSync(),
+    );
+  }
+
+  static Future<bool> isInSavedCollections(String sourceID) async {
+    bool value = false;
+    Isar isarDB = await database;
+    final item = isarDB.savedCollectionsDatabases.filter().sourceIdEqualTo(sourceID).findFirstSync();
+    if (item != null) {
+      value = true;
+    }
+    return value;
+  }
+
+  static Future<void> putOnlArtistModel(ArtistModel artistModel) async {
+    Isar isarDB = await database;
+    Map extra = Map.from(artistModel.extra);
+    extra["country"] = artistModel.country;
+
+    await isarDB.writeTxn(
+      () => isarDB.savedCollectionsDatabases.put(
+        SavedCollectionsDatabase(
+          type: "artist",
+          coverArt: artistModel.imageUrl,
+          title: artistModel.name,
+          subtitle: artistModel.description,
+          source: artistModel.source,
+          sourceId: artistModel.sourceId,
+          sourceURL: artistModel.sourceURL,
+          lastUpdated: DateTime.now(),
+          extra: jsonEncode(extra),
+        ),
+      ),
+    );
+  }
+
+  static Future<void> putOnlPlaylistModel(PlaylistOnlModel playlistModel) async {
+    Isar isarDB = await database;
+    Map extra = Map.from(playlistModel.extra);
+    extra.addEntries(
+      [
+        MapEntry("artists", playlistModel.artists),
+        MapEntry("language", playlistModel.language),
+        MapEntry("year", playlistModel.year),
+      ],
+    );
+
+    await isarDB.writeTxn(
+      () => isarDB.savedCollectionsDatabases.put(
+        SavedCollectionsDatabase(
+          type: "playlist",
+          coverArt: playlistModel.imageURL,
+          title: playlistModel.name,
+          subtitle: playlistModel.description,
+          source: playlistModel.source,
+          sourceId: playlistModel.sourceId,
+          sourceURL: playlistModel.sourceURL,
+          lastUpdated: DateTime.now(),
+          extra: jsonEncode(extra),
+        ),
+      ),
+    );
+  }
+
+  static Future<List<MediaItemModel>> getDownloadedSongs() async {
+    Isar isarDB = await database;
+    List<DownloadDatabase> downloadedSongs = isarDB.downloadDatabases.where().findAllSync();
+    List<MediaItemModel> mediaItems = List.empty(growable: true);
+    for (DownloadDatabase element in downloadedSongs) {
+      if (File("${element.filePath}/${element.fileName}").existsSync()) {
+        mediaItems.add(
+          mediaItemDB2MediaItem(
+            isarDB.mediaItemDatabases.filter().mediaIDEqualTo(element.mediaId).findFirstSync()!,
+          ),
+        );
+      } else {
+        removeDownloadDB(
+          mediaItemDB2MediaItem(
+            isarDB.mediaItemDatabases.filter().mediaIDEqualTo(element.mediaId).findFirstSync()!,
+          ),
+        );
+      }
+    }
+    return mediaItems;
+  }
+
+  static Future<void> putSettingStr(String key, String value) async {
+    Isar isarDB = await database;
+    if (key.isNotEmpty && value.isNotEmpty) {
+      isarDB.writeTxnSync(
+        () => isarDB.appSettingsStrDatabases.putSync(
+          AppSettingsStrDatabase(
+            settingName: key,
+            settingValue: value,
+          ),
+        ),
+      );
+    }
+  }
+
+  static Future<void> putSettingBool(String key, bool value) async {
+    Isar isarDB = await database;
+    if (key.isNotEmpty) {
+      isarDB.writeTxnSync(
+        () => isarDB.appSettingsBoolDatabases.putSync(
+          AppSettingsBoolDatabase(
+            settingName: key,
+            settingValue: value,
+          ),
+        ),
+      );
+    }
+  }
+
+  static Future<void> putDownloadDB({
+    required String fileName,
+    required String filePath,
+    required DateTime lastDownloaded,
+    required MediaItemModel mediaItem,
+  }) async {
+    DownloadDatabase downloadDB = DownloadDatabase(
+      fileName: fileName,
+      filePath: filePath,
+      lastDownloaded: lastDownloaded,
+      mediaId: mediaItem.id,
+    );
+    Isar isarDB = await database;
+    isarDB.writeTxnSync(() => isarDB.downloadDatabases.putSync(downloadDB));
+    addMediaItem(mediaItem2MediaItemDB(mediaItem), GlobalStrConsts.downloadPlaylist);
+  }
+
+  static Future<MediaPlaylist> getRecentlyPlayed({int limit = 0}) async {
+    List<MediaItemModel> mediaItems = [];
+    Isar isarDB = await database;
+    if (limit == 0) {
+      List<RecentlyPlayedDatabase> recentlyPlayed =
+          isarDB.recentlyPlayedDatabases.where().sortByLastPlayedDesc().findAllSync();
+      for (var element in recentlyPlayed) {
+        if (element.mediaItem.value != null) {
+          mediaItems.add(
+            mediaItemDB2MediaItem(element.mediaItem.value!),
+          );
+        }
+      }
+    } else {
+      List<RecentlyPlayedDatabase> recentlyPlayed =
+          isarDB.recentlyPlayedDatabases.where().sortByLastPlayedDesc().limit(limit).findAllSync();
+      for (var element in recentlyPlayed) {
+        if (element.mediaItem.value != null) {
+          mediaItems.add(mediaItemDB2MediaItem(element.mediaItem.value!));
+        }
+      }
+    }
+    return MediaPlaylist(mediaItems: mediaItems, playlistName: "Recently Played");
+  }
+
+  static Future<Stream<void>> watchRecentlyPlayed() async {
+    Isar isarDB = await database;
+    return isarDB.recentlyPlayedDatabases.watchLazy();
+  }
+
+  static Future<String?> getAPICache(String key) async {
+    Isar isarDB = await database;
+    final AppSettingsStrDatabase? apiCache =
+        isarDB.appSettingsStrDatabases.filter().settingNameEqualTo(key).findFirstSync();
+    if (apiCache != null) {
+      return apiCache.settingValue;
+    }
+    return null;
+  }
+
+  static Future<void> putAPICache(String key, String value) async {
+    Isar isarDB = await database;
+    if (key.isNotEmpty && value.isNotEmpty) {
+      isarDB.writeTxnSync(
+        () => isarDB.appSettingsStrDatabases.putSync(
+          AppSettingsStrDatabase(
+            settingName: key,
+            settingValue: value,
+            settingValue2: "CACHE",
+            lastUpdated: DateTime.now(),
+          ),
+        ),
+      );
+    }
+  }
+
+  static Future<List<NotificationDatabase>> getNotifications() async {
+    Isar isarDB = await database;
+    return isarDB.notificationDatabases.where().sortByTimeDesc().findAllSync();
+  }
+
+  static Future<void> clearNotifications() async {
+    Isar isarDB = await database;
+    isarDB.writeTxnSync(() => isarDB.notificationDatabases.where().deleteAllSync());
+  }
+
+  static Future<Stream<void>> watchNotification() async {
+    Isar isarDB = await database;
+    return isarDB.notificationDatabases.watchLazy();
+  }
+
+  static Future<Lyrics?> getLyrics(String mediaID) async {
+    Isar isarDB = await database;
+    LyricsDatabase? lyricsDB = isarDB.lyricsDatabases.filter().mediaIDEqualTo(mediaID).findFirstSync();
+    if (lyricsDB != null) {
+      return Lyrics(
+        id: lyricsDB.sourceId,
+        title: lyricsDB.title,
+        artist: lyricsDB.artist,
+        album: lyricsDB.album,
+        duration: lyricsDB.duration.toString(),
+        lyricsPlain: lyricsDB.plainLyrics,
+        lyricsSynced: lyricsDB.syncedLyrics,
+        provider: LyricsProvider.lrcnet,
+        url: lyricsDB.url,
+        mediaID: lyricsDB.mediaID,
+      );
+    }
+    return null;
+  }
+
+  static Future<void> putLyrics(Lyrics lyrics, {int? offset}) async {
+    if (lyrics.mediaID != null) {
+      Isar isarDB = await database;
+      isarDB.writeTxnSync(
+        () => isarDB.lyricsDatabases.putSync(
+          LyricsDatabase(
+            mediaID: lyrics.mediaID!,
+            sourceId: lyrics.id,
+            plainLyrics: lyrics.lyricsPlain,
+            syncedLyrics: lyrics.lyricsSynced,
+            title: lyrics.title,
+            source: "lrcnet",
+            artist: lyrics.artist,
+            album: lyrics.album,
+            duration: double.parse(lyrics.duration ?? "0").toInt(),
+            offset: offset,
+            url: lyrics.url,
+          ),
+        ),
+      );
+    }
+  }
+
+  static Future<void> removeLyricsById(String mediaID) async {
+    Isar isarDB = await database;
+    isarDB.writeTxnSync(
+      () => isarDB.lyricsDatabases.filter().mediaIDEqualTo(mediaID).deleteAllSync(),
+    );
+  }
+
+  static Future<List<MediaItemDatabase>?> getPlaylistItemsByName(String playlistName) async {
+    Isar isarDB = await database;
+    MediaPlaylistDatabase? mediaPlaylistDB =
+        isarDB.mediaPlaylistDatabases.filter().playlistNameEqualTo(playlistName).findFirstSync();
+    return mediaPlaylistDB?.mediaItems.toList();
+  }
+
+  static Future<void> purgeUnassociatedMediaFromList(List<MediaItemDatabase> mediaItems) async {
+    for (var element in mediaItems) {
+      await purgeUnassociatedMediaItem(element);
+    }
+  }
+
+  static Future<void> removePlaylistByName(String playlistName) async {
+    Isar isarDB = await database;
+    MediaPlaylistDatabase? mediaPlaylistDB =
+        isarDB.mediaPlaylistDatabases.filter().playlistNameEqualTo(playlistName).findFirstSync();
+    if (mediaPlaylistDB != null) {
+      await removePlaylist(mediaPlaylistDB);
+    }
+  }
+
+  static Future<void> removePlaylist(MediaPlaylistDatabase mediaPlaylistDB) async {
+    Isar isarDB = await database;
+    bool result = false;
+
+    MediaPlaylistDatabase? mediaPlaylistDB0 =
+        isarDB.mediaPlaylistDatabases.filter().isarIdEqualTo(mediaPlaylistDB.isarId).findFirstSync();
+    if (mediaPlaylistDB0 != null) {
+      final mediaItems = mediaPlaylistDB0.mediaItems
+          .map(
+            (e) => e,
+          )
+          .toList();
+      isarDB.writeTxnSync(() => result = isarDB.mediaPlaylistDatabases.deleteSync(mediaPlaylistDB.isarId));
+      if (result) {
+        await purgeUnassociatedMediaFromList(mediaItems);
+        await removePlaylistByName(mediaPlaylistDB.playlistName);
+        log("${mediaPlaylistDB.playlistName} is Deleted!!", name: "DB");
+      }
+    }
+  }
+
+  static Future<List> getSavedCollections() async {
+    Isar isarDB = await database;
+    final savedCollections = isarDB.savedCollectionsDatabases.where().findAllSync();
+    List list = [];
+    for (var element in savedCollections) {
+      switch (element.type) {
+        case "artist":
+          list.add(formatSavedArtistOnl(element));
+          break;
+        case "album":
+          list.add(formatSavedAlbumOnl(element));
+          break;
+        case "playlist":
+          list.add(formatSavedPlaylistOnl(element));
+          break;
+        default:
+          break;
+      }
+    }
+    return list;
+  }
+
+  static Future<Stream<void>> getPlaylistsWatcher() async {
+    Isar isarDB = await database;
+    return isarDB.mediaPlaylistDatabases.watchLazy(fireImmediately: true);
+  }
+
+  static Future<Stream<void>> getSavedCollecsWatcher() async {
+    Isar isarDB = await database;
+    return isarDB.savedCollectionsDatabases.watchLazy(fireImmediately: true);
+  }
+
+  static Future<void> reorderItemPositionInPlaylist(
+    MediaPlaylistDatabase mediaPlaylistDB,
+    int oldIndex,
+    int newIndex,
+  ) async {
+    Isar isarDB = await database;
+    MediaPlaylistDatabase? mediaPlaylistDB0 =
+        isarDB.mediaPlaylistDatabases.where().isarIdEqualTo(mediaPlaylistDB.isarId).findFirstSync();
+
+    if (mediaPlaylistDB0 != null) {
+      if (mediaPlaylistDB0.mediaRanks.length > oldIndex && mediaPlaylistDB0.mediaRanks.length > newIndex) {
+        List<int> rankList = mediaPlaylistDB0.mediaRanks.toList(growable: true);
+        int element = rankList.removeAt(oldIndex);
+        rankList.insert(newIndex, element);
+        mediaPlaylistDB0.mediaRanks = rankList;
+        isarDB.writeTxnSync(
+          () => isarDB.mediaPlaylistDatabases.putSync(mediaPlaylistDB0),
+        );
+      }
+    }
+  }
+
+  static Future<void> likeMediaItem(MediaItemDatabase mediaItemDB, {isLiked = false}) async {
+    Isar isarDB = await database;
+    addPlaylist(MediaPlaylistDatabase(playlistName: "Liked"));
+    MediaItemDatabase? mediaItem = isarDB.mediaItemDatabases
+        .filter()
+        .titleEqualTo(mediaItemDB.title)
+        .and()
+        .permaURLEqualTo(mediaItemDB.permaURL)
+        .findFirstSync();
+    if (isLiked && mediaItem != null) {
+      addMediaItem(mediaItemDB, "Liked");
+    } else if (mediaItem != null) {
+      removeMediaItemFromPlaylist(
+        mediaItemDB,
+        MediaPlaylistDatabase(playlistName: "Liked"),
+      );
+    }
+  }
+
+  static Future<List<int>> getPlaylistItemsRank(MediaPlaylistDatabase mediaPlaylistDB) async {
+    Isar isarDB = await database;
+    return isarDB.mediaPlaylistDatabases.getSync(mediaPlaylistDB.isarId)?.mediaRanks.toList() ?? [];
+  }
+
+  static Future<bool> isMediaLiked(MediaItemDatabase mediaItemDB) async {
+    Isar isarDB = await database;
+    MediaItemDatabase? mediaItemDatabase =
+        isarDB.mediaItemDatabases.filter().permaURLEqualTo(mediaItemDB.permaURL).findFirstSync();
+    if (mediaItemDatabase != null) {
+      return isarDB.mediaPlaylistDatabases
+              .getSync(MediaPlaylistDatabase(playlistName: "Liked").isarId)
+              ?.mediaItems
+              .contains(mediaItemDatabase) ??
+          true;
+    } else {
+      return false;
+    }
+  }
+
+  static Future<void> setPlaylistItemsRank(MediaPlaylistDatabase mediaPlaylistDB, List<int> rankList) async {
+    Isar isarDB = await database;
+    MediaPlaylistDatabase? mediaPlaylistDB0 = isarDB.mediaPlaylistDatabases.getSync(mediaPlaylistDB.isarId);
+    if (mediaPlaylistDB0 != null && mediaPlaylistDB0.mediaItems.length >= rankList.length) {
+      isarDB.writeTxnSync(() {
+        mediaPlaylistDB0.mediaRanks = rankList;
+        isarDB.mediaPlaylistDatabases.putSync(mediaPlaylistDB0);
+      });
+    }
+  }
+
+  static Future<Stream> getStream4MediaList(MediaPlaylistDatabase mediaPlaylistDB) async {
+    Isar isarDB = await database;
+    return isarDB.mediaPlaylistDatabases.watchObject(mediaPlaylistDB.isarId);
+  }
+
+  static Future<Stream<AppSettingsBoolDatabase?>?> getWatcher4SettingBool(String key) async {
+    Isar isarDB = await database;
+    int? id = isarDB.appSettingsBoolDatabases.filter().settingNameEqualTo(key).findFirstSync()?.isarId;
+    if (id != null) {
+      return isarDB.appSettingsBoolDatabases.watchObject(
+        id,
+        fireImmediately: true,
+      );
+    } else {
+      isarDB.writeTxnSync(
+        () => isarDB.appSettingsBoolDatabases.putSync(
+          AppSettingsBoolDatabase(
+            settingName: key,
+            settingValue: false,
+          ),
+        ),
+      );
+      return isarDB.appSettingsBoolDatabases.watchObject(
+        isarDB.appSettingsBoolDatabases.filter().settingNameEqualTo(key).findFirstSync()!.isarId,
+        fireImmediately: true,
+      );
+    }
+  }
+
+  static Future<Stream<AppSettingsStrDatabase?>?> getWatcher4SettingStr(String key) async {
+    Isar isarDB = await database;
+    int? id = isarDB.appSettingsStrDatabases.filter().settingNameEqualTo(key).findFirstSync()?.isarId;
+    if (id != null) {
+      return isarDB.appSettingsStrDatabases.watchObject(
+        id,
+        fireImmediately: true,
+      );
+    } else {
+      return null;
+    }
+  }
+}
+
+ArtistModel formatSavedArtistOnl(SavedCollectionsDatabase savedCollectionsDB) {
+  Map extra = jsonDecode(savedCollectionsDB.extra ?? "{}");
+  return ArtistModel(
+    name: savedCollectionsDB.title,
+    description: savedCollectionsDB.subtitle,
+    imageUrl: savedCollectionsDB.coverArt,
+    source: savedCollectionsDB.source,
+    sourceId: savedCollectionsDB.sourceId,
+    sourceURL: savedCollectionsDB.sourceURL,
+    country: extra["country"],
+  );
+}
+
+AlbumModel formatSavedAlbumOnl(SavedCollectionsDatabase savedCollectionsDB) {
+  Map extra = jsonDecode(savedCollectionsDB.extra ?? "{}");
+  return AlbumModel(
+    name: savedCollectionsDB.title,
+    description: savedCollectionsDB.subtitle,
+    imageURL: savedCollectionsDB.coverArt,
+    source: savedCollectionsDB.source,
+    sourceId: savedCollectionsDB.sourceId,
+    sourceURL: savedCollectionsDB.sourceURL,
+    country: extra["country"],
+    artists: extra["artists"],
+    genre: extra["genre"],
+    year: extra["year"],
+    extra: extra,
+    language: extra["language"],
+  );
+}
+
+PlaylistOnlModel formatSavedPlaylistOnl(SavedCollectionsDatabase savedCollectionsDB) {
+  Map extra = jsonDecode(savedCollectionsDB.extra ?? "{}");
+  return PlaylistOnlModel(
+    name: savedCollectionsDB.title,
+    description: savedCollectionsDB.subtitle,
+    imageURL: savedCollectionsDB.coverArt,
+    source: savedCollectionsDB.source,
+    sourceId: savedCollectionsDB.sourceId,
+    sourceURL: savedCollectionsDB.sourceURL,
+    artists: extra["artists"],
+    language: extra["language"],
+    year: extra["year"],
+    extra: extra,
+  );
 }

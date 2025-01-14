@@ -293,7 +293,7 @@ abstract class SaavnAPI {
     }
   }
 
-  static Future<List> _fetchAlbumResults(String searchQuery) async {
+  static Future<List> fetchAlbumResults(String searchQuery) async {
     final param = '__call=search.getAlbumResults&q=$searchQuery';
     final response = await _getResponse(param);
     if (response.statusCode == 200) {
@@ -306,7 +306,7 @@ abstract class SaavnAPI {
     }
   }
 
-  static Future<List> _fetchArtistResults(String searchQuery) async {
+  static Future<List> fetchArtistResults(String searchQuery) async {
     final param = '${_endpoints['artistResults']!}&q=$searchQuery';
     final response = await _getResponse(param);
     if (response.statusCode == 200) {
@@ -319,7 +319,7 @@ abstract class SaavnAPI {
     }
   }
 
-  static Future<List> _fetchPlaylistResults(String searchQuery) async {
+  static Future<List> fetchPlaylistResults(String searchQuery) async {
     final param = '${_endpoints['playlistResults']!}&q=$searchQuery';
     final response = await _getResponse(param);
     if (response.statusCode == 200) {
@@ -332,7 +332,7 @@ abstract class SaavnAPI {
     }
   }
 
-  static Future<Map<String, dynamic>> _fetchAlbumDetails(String token) async {
+  static Future<Map<String, dynamic>> fetchAlbumDetails(String token) async {
     final param = '${_endpoints['fromToken']!}&token=$token&type=album';
     final response = await _getResponse(param, usev4: true);
     if (response.statusCode == 200) {
@@ -356,12 +356,11 @@ abstract class SaavnAPI {
     }
   }
 
-  static Future<Map<String, dynamic>> _fetchArtistDetails(
+  static Future<Map<String, dynamic>> fetchArtistDetails(
     String token, {
     int ns = 50,
     int na = 50,
     int p = 0,
-    bool loadMore = false,
   }) async {
     final param =
         '${_endpoints['fromToken']!}&token=$token&type=artist&p=$p&n_song=$ns&n_album=$na&sub_type=&category=&sort_order=&includeMetaTags=0';
@@ -389,7 +388,7 @@ abstract class SaavnAPI {
     }
   }
 
-  static Future<Map<String, dynamic>> _fetchPlaylistDetails(
+  static Future<Map<String, dynamic>> fetchPlaylistDetails(
     String token, {
     int n = 100,
     int p = 1,

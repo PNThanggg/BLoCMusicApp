@@ -11,6 +11,26 @@ abstract class AppTextTheme {
   static const String fontFamilyFjalla = "Fjalla";
   static const String fontFamilyFontAwesome = "FontAwesome";
 
+  static const primaryTextStyle = TextStyle(
+    fontFamily: "Fjalla",
+  );
+  static const secondoryTextStyle = TextStyle(
+    fontFamily: "Gilroy",
+  );
+  static const secondoryTextStyleMedium = TextStyle(
+    fontFamily: "Gilroy",
+    fontWeight: FontWeight.w700,
+  );
+  static const tertiaryTextStyle = TextStyle(
+    fontFamily: "CodePro",
+  );
+  static const fontAwesomeRegularFont = TextStyle(
+    fontFamily: "FontAwesome-Regular",
+  );
+  static const fontAwesomeSolidFont = TextStyle(
+    fontFamily: "FontAwesome-Solids",
+  );
+
   static TextTheme get textTheme => const TextTheme(
         displayLarge: TextStyle(
           fontSize: 57.0,

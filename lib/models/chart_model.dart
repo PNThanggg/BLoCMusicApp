@@ -1,17 +1,41 @@
+import 'package:equatable/equatable.dart';
+
 import '../data/local/charts_cache_database.dart';
 
-class ChartModel {
+class ChartModel extends Equatable {
   final String chartName;
   final String? url;
   final List<ChartItemModel> chartItems;
   final DateTime? lastUpdated;
 
-  ChartModel({
+  const ChartModel({
     required this.chartName,
     this.chartItems = const [],
     this.lastUpdated,
     this.url,
   });
+
+  ChartModel copyWith({
+    String? chartName,
+    String? url,
+    List<ChartItemModel>? chartItems,
+    DateTime? lastUpdated,
+  }) {
+    return ChartModel(
+      chartName: chartName ?? this.chartName,
+      url: url ?? this.url,
+      chartItems: chartItems ?? this.chartItems,
+      lastUpdated: lastUpdated ?? this.lastUpdated,
+    );
+  }
+
+  @override
+  List<Object?> get props => [
+        chartName,
+        url,
+        lastUpdated,
+        chartItems,
+      ];
 }
 
 class ChartItemModel {
