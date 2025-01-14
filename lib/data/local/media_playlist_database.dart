@@ -1,6 +1,6 @@
 import 'package:isar/isar.dart';
 
-import '../fast_hash.dart';
+import '../../utils/fast_hash.dart';
 import 'media_item_database.dart';
 
 part 'media_playlist_database.g.dart';

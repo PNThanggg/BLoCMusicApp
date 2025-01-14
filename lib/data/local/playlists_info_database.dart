@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:isar/isar.dart';
 
-import '../fast_hash.dart';
+import '../../utils/fast_hash.dart';
 
 part 'playlists_info_database.g.dart';
 

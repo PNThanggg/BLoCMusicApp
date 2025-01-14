@@ -138,7 +138,7 @@ class AppMusicPlayer extends BaseAudioHandler with SeekHandler, QueueHandler {
   Future<void> check4RelatedSongs() async {
     if (queue.value.isNotEmpty && (queue.value.length - currentPlayingIdx) < 2 && loopMode.value != LoopMode.all) {
       if (currentMedia.extras?["source"] == "saavn") {
-        final songs = await compute(SaavnAPI().getRelated, currentMedia.id);
+        final songs = await compute(SaavnAPI.getRelated, currentMedia.id);
         if (songs['total'] > 0) {
           final List<MediaItem> temp = fromSaavnSongMapList2MediaItemList(songs['songs']);
           relatedSongs.add(temp.sublist(1));

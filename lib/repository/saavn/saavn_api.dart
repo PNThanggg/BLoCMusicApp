@@ -54,7 +54,7 @@ abstract class SaavnAPI {
     });
   }
 
-  static Future<Map> _getRelated(String id) async {
+  static Future<Map> getRelated(String id) async {
     final String params = '${_endpoints['getReco']}&pid=$id';
     final response = await _getResponse(params, usev4: true);
     if (response.statusCode == 200) {
@@ -252,7 +252,7 @@ abstract class SaavnAPI {
     return [result, position];
   }
 
-  static Future<Map> _fetchSongSearchResults({
+  static Future<Map> fetchSongSearchResults({
     required String searchQuery,
     int count = 20,
     int page = 1,

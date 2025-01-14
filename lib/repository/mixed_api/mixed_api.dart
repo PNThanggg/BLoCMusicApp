@@ -82,7 +82,7 @@ class MixedAPI {
   static Future<MediaItemModel?> _getTrackMixed(String songName) async {
     final ytItems = await YtMusicService().search(songName, filter: "songs");
     // log(ytItems.toString());
-    final jsItems = await SaavnAPI().fetchSongSearchResults(searchQuery: songName, count: 2);
+    final jsItems = await SaavnAPI.fetchSongSearchResults(searchQuery: songName, count: 2);
     String? ytTitle;
     String? jsTitle;
 

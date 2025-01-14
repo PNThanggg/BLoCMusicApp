@@ -1,6 +1,6 @@
 import 'package:isar/isar.dart';
 
-import '../fast_hash.dart';
+import '../../utils/fast_hash.dart';
 
 part 'charts_cache_database.g.dart';
 
