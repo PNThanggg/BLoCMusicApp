@@ -1,3 +1,5 @@
+import '../data/local/charts_cache_database.dart';
+
 class ChartModel {
   final String chartName;
   final String? url;
@@ -23,36 +25,40 @@ class ChartItemModel {
     required this.subtitle,
   });
 }
-//
-// ChartsCacheDB chartModelToChartCacheDB(ChartModel chartModel) {
-//   return ChartsCacheDB(
-//     chartItems: chartModel.chartItems.map((e) => chartItemModelToChartItemDB(e)).toList(),
-//     chartName: chartModel.chartName,
-//     lastUpdated: chartModel.lastUpdated ?? DateTime.now(),
-//     permaURL: chartModel.url,
-//   );
-// }
-//
-// ChartModel chartCacheDBToChartModel(ChartsCacheDB chartsCacheDB) {
-//   return ChartModel(
-//     chartItems: chartsCacheDB.chartItems.map((e) => chartItemDBToChartItemModel(e)).toList(),
-//     chartName: chartsCacheDB.chartName,
-//     lastUpdated: chartsCacheDB.lastUpdated,
-//     url: chartsCacheDB.permaURL,
-//   );
-// }
-//
-// ChartItemDB chartItemModelToChartItemDB(ChartItemModel chartItemModel) {
-//   return ChartItemDB()
-//     ..artURL = chartItemModel.imageUrl
-//     ..artist = chartItemModel.subtitle
-//     ..title = chartItemModel.name;
-// }
-//
-// ChartItemModel chartItemDBToChartItemModel(ChartItemDB chartItemDB) {
-//   return ChartItemModel(
-//     imageUrl: chartItemDB.artURL,
-//     name: chartItemDB.title,
-//     subtitle: chartItemDB.artist,
-//   );
-// }
+
+ChartsCacheDatabase chartModelToChartCacheDB(ChartModel chartModel) {
+  return ChartsCacheDatabase(
+    chartItems: chartModel.chartItems
+        .map(
+          (e) => chartItemModelToChartItemDB(e),
+        )
+        .toList(),
+    chartName: chartModel.chartName,
+    lastUpdated: chartModel.lastUpdated ?? DateTime.now(),
+    permaURL: chartModel.url,
+  );
+}
+
+ChartModel chartCacheDBToChartModel(ChartsCacheDatabase chartsCacheDB) {
+  return ChartModel(
+    chartItems: chartsCacheDB.chartItems.map((e) => chartItemDBToChartItemModel(e)).toList(),
+    chartName: chartsCacheDB.chartName,
+    lastUpdated: chartsCacheDB.lastUpdated,
+    url: chartsCacheDB.permaURL,
+  );
+}
+
+ChartItemDatabase chartItemModelToChartItemDB(ChartItemModel chartItemModel) {
+  return ChartItemDatabase()
+    ..artURL = chartItemModel.imageUrl
+    ..artist = chartItemModel.subtitle
+    ..title = chartItemModel.name;
+}
+
+ChartItemModel chartItemDBToChartItemModel(ChartItemDatabase chartItemDB) {
+  return ChartItemModel(
+    imageUrl: chartItemDB.artURL,
+    name: chartItemDB.title,
+    subtitle: chartItemDB.artist,
+  );
+}

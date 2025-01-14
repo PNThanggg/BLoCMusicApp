@@ -5,11 +5,14 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter_downloader/flutter_downloader.dart';
 import 'package:image/image.dart' as img;
 import 'package:metadata_god/metadata_god.dart';
+import 'package:music/service/app_database_service.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 import '../models/media_item_model.dart';
 import '../models/saavn_model.dart';
+import '../presentation/route/global_str_consts.dart';
+import '../repository/Youtube/youtube_api.dart';
 import '../service/snack_bar_service.dart';
 
 Future<Uint8List?> getSquareImg(Uint8List image) async {
@@ -79,16 +82,16 @@ class AppDownloader {
   }
 
   static Future<bool> alreadyDownloaded(MediaItemModel song) async {
-    // final tempDB = await BloomeeDBService.getDownloadDB(song);
-    // if (tempDB != null) {
-    //   final File file = File("${tempDB.filePath}/${tempDB.fileName}");
-    //   final isExist = file.existsSync();
-    //   if (isExist) {
-    //     return true;
-    //   } else {
-    //     await BloomeeDBService.removeDownloadDB(song);
-    //   }
-    // }
+    final tempDB = await AppDatabaseService.getDownloadDB(song);
+    if (tempDB != null) {
+      final File file = File("${tempDB.filePath}/${tempDB.fileName}");
+      final isExist = file.existsSync();
+      if (isExist) {
+        return true;
+      } else {
+        await AppDatabaseService.removeDownloadDB(song);
+      }
+    }
 
     return false;
   }
@@ -180,7 +183,7 @@ class AppDownloader {
   }
 
   static Future<String?> latestYtLink(String id) async {
-    final vidInfo = await BloomeeDBService.getYtLinkCache(id);
+    final vidInfo = await AppDatabaseService.getYtLinkCache(id);
     if (vidInfo != null) {
       if ((DateTime.now().millisecondsSinceEpoch ~/ 1000) + 350 > vidInfo.expireAt) {
         log("Link expired for vidId: $id", name: "AppDownloader");
@@ -188,7 +191,7 @@ class AppDownloader {
       } else {
         log("Link found in cache for vidId: $id", name: "AppDownloader");
         String kurl = vidInfo.lowQURL!;
-        await BloomeeDBService.getSettingStr(GlobalStrConsts.ytDownQuality).then((value) {
+        await AppDatabaseService.getSettingStr(GlobalStrConsts.ytDownQuality).then((value) {
           if (value != null) {
             if (value == "High") {
               kurl = vidInfo.highQURL;
@@ -207,7 +210,7 @@ class AppDownloader {
 
   static Future<String?> refreshYtLink(String id) async {
     String quality = "Low";
-    await BloomeeDBService.getSettingStr(GlobalStrConsts.ytDownQuality).then((value) {
+    await AppDatabaseService.getSettingStr(GlobalStrConsts.ytDownQuality).then((value) {
       if (value != null) {
         if (value == "High") {
           quality = "High";

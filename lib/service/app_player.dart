@@ -13,7 +13,11 @@ import '../models/media_item_model.dart';
 import '../models/media_playlist_model.dart';
 import '../models/saavn_model.dart';
 import '../models/yt_music_model.dart';
+import '../presentation/route/global_str_consts.dart';
+import '../repository/Saavn/saavn_api.dart';
+import '../repository/Youtube/yt_music_api.dart';
 import '../utils/global_const.dart';
+import 'app_database_service.dart';
 import 'snack_bar_service.dart';
 import 'ytbg_service.dart';
 
@@ -115,8 +119,11 @@ class AppMusicPlayer extends BaseAudioHandler with SeekHandler, QueueHandler {
     ));
   }
 
-  MediaItemModel get currentMedia =>
-      queue.value.isNotEmpty ? mediaItem2MediaItemModel(queue.value[currentPlayingIdx]) : mediaItemModelNull;
+  MediaItemModel get currentMedia => queue.value.isNotEmpty
+      ? mediaItem2MediaItemModel(
+          queue.value[currentPlayingIdx],
+        )
+      : mediaItemModelNull;
 
   @override
   Future<void> play() async {
@@ -228,7 +235,7 @@ class AppMusicPlayer extends BaseAudioHandler with SeekHandler, QueueHandler {
   }
 
   Future<String?> latestYtLink({required String id, required String mediaId}) async {
-    final vidInfo = await BloomeeDBService.getYtLinkCache(id);
+    final vidInfo = await AppDatabaseService.getYtLinkCache(id);
     if (vidInfo != null) {
       if ((DateTime.now().millisecondsSinceEpoch ~/ 1000) + 350 > vidInfo.expireAt) {
         log("Link expired for vidId: $id", name: "AppPlayer");
@@ -258,7 +265,7 @@ class AppMusicPlayer extends BaseAudioHandler with SeekHandler, QueueHandler {
 
   Future<void> refreshYtLink({required String id, required String mediaId}) async {
     // String quality = "Low";
-    await BloomeeDBService.getSettingStr(GlobalStrConsts.ytStrmQuality).then((value) {
+    await AppDatabaseService.getSettingStr(GlobalStrConsts.ytStrmQuality).then((value) {
       log('Play quality: $value', name: "AppPlayer");
     });
 
@@ -272,7 +279,7 @@ class AppMusicPlayer extends BaseAudioHandler with SeekHandler, QueueHandler {
   }
 
   Future<AudioSource?> getAudioSource(MediaItem mediaItem) async {
-    final _down = await BloomeeDBService.getDownloadDB(mediaItem2MediaItemModel(mediaItem));
+    final _down = await AppDatabaseService.getDownloadDB(mediaItem2MediaItemModel(mediaItem));
     if (_down != null) {
       log("Playing Offline", name: "AppPlayer");
       SnackBarService.showMessage("Playing Offline", duration: const Duration(seconds: 1));
@@ -350,7 +357,7 @@ class AppMusicPlayer extends BaseAudioHandler with SeekHandler, QueueHandler {
     if (queue.value.isNotEmpty) {
       currentPlayingIdx = idx;
       await playMediaItem(currentMedia, doPlay: doPlay);
-      BloomeeDBService.putRecentlyPlayed(MediaItem2MediaItemDB(currentMedia));
+      AppDatabaseService.putRecentlyPlayed(mediaItem2MediaItemDB(currentMedia));
     }
   }
 

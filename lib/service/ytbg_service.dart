@@ -3,6 +3,10 @@ import 'dart:isolate';
 
 import 'package:async/async.dart';
 
+import '../presentation/route/global_str_consts.dart';
+import '../repository/Youtube/yt_streams.dart';
+import 'app_database_service.dart';
+
 Future<void> cacheYtStreams({
   required String id,
   required String hURL,
@@ -12,7 +16,7 @@ Future<void> cacheYtStreams({
       (DateTime.now().millisecondsSinceEpoch ~/ 1000 + 3600 * 5.5).toString();
 
   try {
-    BloomeeDBService.putYtLinkCache(
+    AppDatabaseService.putYtLinkCache(
       id,
       lURL,
       hURL,
@@ -29,7 +33,7 @@ Future<void> ytbgIsolate(List<dynamic> opts) async {
   final appSupPath = opts[1] as String;
   final SendPort port = opts[2] as SendPort;
 
-  BloomeeDBService(appDocPath: appDocPath, appSuppPath: appSupPath);
+  AppDatabaseService(appDocPath: appDocPath, appSuppPath: appSupPath);
 
   CancelableOperation<YtStreams?> canOprn = CancelableOperation.fromFuture(Future.value(null));
 
@@ -49,7 +53,7 @@ Future<void> ytbgIsolate(List<dynamic> opts) async {
           },
         );
         int quality = 2;
-        await BloomeeDBService.getSettingStr(GlobalStrConsts.ytStrmQuality).then(
+        await AppDatabaseService.getSettingStr(GlobalStrConsts.ytStrmQuality).then(
           (value) {
             if (value != null) {
               switch (value) {

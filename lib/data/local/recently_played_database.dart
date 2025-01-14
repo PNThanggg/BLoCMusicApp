@@ -14,5 +14,12 @@ class RecentlyPlayedDatabase {
     required this.lastPlayed,
   });
 
+  RecentlyPlayedDatabase copyWith({DateTime? dateTime}) {
+    return RecentlyPlayedDatabase(
+      id: id,
+      lastPlayed: dateTime ?? lastPlayed,
+    );
+  }
+
   IsarLink<MediaItemDatabase> mediaItem = IsarLink<MediaItemDatabase>();
 }

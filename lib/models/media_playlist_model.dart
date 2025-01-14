@@ -63,7 +63,7 @@ MediaPlaylist fromPlaylistDB2MediaPlaylist(
   PlaylistsInfoDatabase? playlistsInfoDB,
 }) {
   MediaPlaylist mediaPlaylist = MediaPlaylist(
-    mediaItems: [],
+    mediaItems: const [],
     playlistName: mediaPlaylistDB.playlistName,
   );
 

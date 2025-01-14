@@ -1,10 +1,18 @@
 import 'dart:async';
 import 'dart:developer';
 
+import 'package:music/service/app_database_service.dart';
 import 'package:youtube_explode_dart/youtube_explode_dart.dart';
 
 import '../models/media_item_model.dart';
+import '../models/youtube_vid_model.dart';
+import '../models/yt_music_model.dart';
+import '../repository/Spotify/spotify_api.dart';
+import '../repository/Youtube/youtube_api.dart';
+import '../repository/Youtube/yt_music_api.dart';
+import '../repository/mixed_api/mixed_api.dart';
 import '../service/snack_bar_service.dart';
+import 'url_checker.dart';
 
 class ImporterState {
   int totalItems = 0;
@@ -72,7 +80,7 @@ abstract class ExternalMediaImporter {
         final playlistMeta = await YoutubeExplode().playlists.get(playlistID);
 
         log("Playlist Name: ${playlistMeta.title}", name: "Playlist Importer");
-        BloomeeDBService.createPlaylist(
+        AppDatabaseService.createPlaylist(
           playlistMeta.title,
           source: 'youtube',
           artists: playlistMeta.author,
@@ -96,7 +104,7 @@ abstract class ExternalMediaImporter {
           {
             var itemMap = await YouTubeServices().formatVideo(video: video, quality: "High", getUrl: false);
             var item = fromYtVidSongMap2MediaItem(itemMap!);
-            await BloomeeDBService.addMediaItem(MediaItem2MediaItemDB(item), playlistMeta.title);
+            await AppDatabaseService.addMediaItem(mediaItem2MediaItemDB(item), playlistMeta.title);
             log("Added: ${item.title}", name: "Playlist Importer");
             yield ImporterState(
               totalItems: playlistMeta.videoCount ?? 0,
@@ -153,7 +161,7 @@ abstract class ExternalMediaImporter {
         final playlistMeta = await YtMusicService().getPlaylist(playlistID);
         log("Playlist Name: ${playlistMeta['name']}", name: "Playlist Importer");
 
-        BloomeeDBService.createPlaylist(
+        AppDatabaseService.createPlaylist(
           playlistMeta['name'],
           source: 'ytmusic',
           description: playlistMeta['subtitle'],
@@ -165,7 +173,7 @@ abstract class ExternalMediaImporter {
         log("Total Items: ${mediaItems.first}", name: "Playlist Importer");
 
         for (var item in mediaItems) {
-          BloomeeDBService.addMediaItem(MediaItem2MediaItemDB(item), playlistMeta['name']);
+          AppDatabaseService.addMediaItem(mediaItem2MediaItemDB(item), playlistMeta['name']);
           log("Added: ${item.title}", name: "Playlist Importer");
           yield ImporterState(
             totalItems: mediaItems.length,
@@ -201,7 +209,7 @@ abstract class ExternalMediaImporter {
   static Future<MediaItemModel?> ytMediaImporter(String url) async {
     final videoId = extractVideoId(url);
     SnackBarService.showMessage("Getting Youtube Audio...", loading: true);
-    if (videoId != null) {
+    if (videoId.isNotEmpty) {
       try {
         final video = await YoutubeExplode().videos.get(videoId);
         final itemMap = await YouTubeServices().formatVideo(video: video, quality: "High", getUrl: false);
@@ -222,7 +230,7 @@ abstract class ExternalMediaImporter {
   static Future<MediaItemModel?> ytmMediaImporter(String url) async {
     final videoId = extractYTMusicId(url);
     SnackBarService.showMessage("Getting Youtube Music Audio...", loading: true);
-    if (videoId != null) {
+    if (videoId.isNotEmpty) {
       try {
         final itemMap = await YtMusicService().getSongData(videoId: videoId);
         final item = fromYtSongMap2MediaItem(itemMap);
@@ -241,9 +249,9 @@ abstract class ExternalMediaImporter {
 
   static Stream<ImporterState> sfyPlaylistImporter({required String url, String? playlistID}) async* {
     playlistID ??= extractSpotifyPlaylistId(url);
-    if (playlistID != null) {
+    if (playlistID.isNotEmpty) {
       log("Playlist ID: $playlistID", name: "Playlist Importer");
-      final accessToken = await SpotifyApi().getAccessTokenCC();
+      final accessToken = await SpotifyApi.getAccessTokenCC();
       String title;
       try {
         yield ImporterState(
@@ -254,7 +262,7 @@ abstract class ExternalMediaImporter {
           isFailed: false,
           message: "Getting Spotify playlist...",
         );
-        final data = await SpotifyApi().getAllTracksOfPlaylist(accessToken, playlistID);
+        final data = await SpotifyApi.getAllTracksOfPlaylist(accessToken, playlistID);
         String playlistTitle = data["playlistName"].toString();
         // log(data.toString());
         final tracks = data["tracks"] as List;
@@ -262,7 +270,7 @@ abstract class ExternalMediaImporter {
         String artists;
         int i = 1;
         if (tracks.isNotEmpty) {
-          BloomeeDBService.createPlaylist(
+          AppDatabaseService.createPlaylist(
             playlistTitle,
             source: 'spotify',
             description: data["description"].toString(),
@@ -278,9 +286,9 @@ abstract class ExternalMediaImporter {
               if (title.isNotEmpty) {
                 MediaItemModel? mediaItem;
                 log("Getting from YTM", name: "Playlist Importer");
-                mediaItem = await MixedAPI().getYtTrackByMeta("$title $artists".trim(), useStringMatcher: false);
+                mediaItem = await MixedAPI.getYtTrackByMeta("$title $artists".trim(), useStringMatcher: false);
                 if (mediaItem != null) {
-                  BloomeeDBService.addMediaItem(MediaItem2MediaItemDB(mediaItem), playlistTitle);
+                  AppDatabaseService.addMediaItem(mediaItem2MediaItemDB(mediaItem), playlistTitle);
                   yield ImporterState(
                     totalItems: totalItems,
                     importedItems: i,
@@ -344,7 +352,7 @@ abstract class ExternalMediaImporter {
   }
 
   static Future<MediaItemModel?> sfyMediaImporter(String url) async {
-    final accessToken = await SpotifyApi().getAccessTokenCC();
+    final accessToken = await SpotifyApi.getAccessTokenCC();
 
     SnackBarService.showMessage(
       "Getting Spotify track using MixedAPIs...",
@@ -352,16 +360,16 @@ abstract class ExternalMediaImporter {
     );
 
     final trackId = extractSpotifyTrackId(url);
-    if (trackId != null) {
+    if (trackId.isNotEmpty) {
       try {
-        final data = await SpotifyApi().getTrackDetails(accessToken, trackId);
+        final data = await SpotifyApi.getTrackDetails(accessToken, trackId);
         final artists = (data['artists'] as List).map((e) => e['name']).toList().join(", ");
         final title = "${data['name']} $artists".trim().toLowerCase();
 
         if (title.isNotEmpty) {
           MediaItemModel? mediaItem;
           log("Getting from YTM", name: "Playlist Importer");
-          mediaItem = await MixedAPI().getYtTrackByMeta("$title $artists".trim());
+          mediaItem = await MixedAPI.getYtTrackByMeta("$title $artists".trim());
           if (mediaItem != null) {
             log("Got: ${mediaItem.title}", name: "Spotify Importer");
             SnackBarService.showMessage("Got Spotify track: ${mediaItem.title}");
@@ -383,9 +391,9 @@ abstract class ExternalMediaImporter {
 
   static Stream<ImporterState> sfyAlbumImporter({required String url, String? albumID}) async* {
     albumID ??= extractSpotifyAlbumId(url);
-    if (albumID != null) {
+    if (albumID.isNotEmpty) {
       log("Album ID: $albumID", name: "Album Importer");
-      final accessToken = await SpotifyApi().getAccessTokenCC();
+      final accessToken = await SpotifyApi.getAccessTokenCC();
       String title;
       try {
         yield ImporterState(
@@ -396,10 +404,10 @@ abstract class ExternalMediaImporter {
           isFailed: false,
           message: "Getting Spotify album...",
         );
-        final data = await SpotifyApi().getAllAlbumTracks(accessToken, albumID);
+        final data = await SpotifyApi.getAllAlbumTracks(accessToken, albumID);
         String albumTitle = data["albumName"].toString();
 
-        BloomeeDBService.createPlaylist(
+        AppDatabaseService.createPlaylist(
           albumTitle,
           source: 'spotify',
           description: data["description"]?.toString(),
@@ -421,9 +429,9 @@ abstract class ExternalMediaImporter {
             if (title.isNotEmpty) {
               MediaItemModel? mediaItem;
               log("Getting from YTM", name: "Playlist Importer");
-              mediaItem = await MixedAPI().getYtTrackByMeta("$title $artists".trim());
+              mediaItem = await MixedAPI.getYtTrackByMeta("$title $artists".trim());
               if (mediaItem != null) {
-                BloomeeDBService.addMediaItem(MediaItem2MediaItemDB(mediaItem), albumTitle);
+                AppDatabaseService.addMediaItem(mediaItem2MediaItemDB(mediaItem), albumTitle);
                 yield ImporterState(
                   totalItems: totalItems,
                   importedItems: i,

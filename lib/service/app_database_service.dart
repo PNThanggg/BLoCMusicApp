@@ -16,6 +16,8 @@ import '../data/local/playlists_info_database.dart';
 import '../data/local/recently_played_database.dart';
 import '../data/local/saved_collections_database.dart';
 import '../data/local/youtube_link_cache_database.dart';
+import '../models/chart_model.dart';
+import '../models/media_item_model.dart';
 import '../models/media_playlist_model.dart';
 import '../presentation/route/global_str_consts.dart';
 
@@ -479,5 +481,135 @@ class AppDatabaseService {
       );
     }
     return mediaPlaylists;
+  }
+
+  static Future<YoutubeLinkCacheDatabase?> getYtLinkCache(String id) async {
+    Isar isarDB = await database;
+    return isarDB.youtubeLinkCacheDatabases.filter().videoIdEqualTo(id).findFirstSync();
+  }
+
+  static Future<DownloadDatabase?> getDownloadDB(MediaItemModel mediaItem) async {
+    Isar isarDB = await database;
+    final temp = isarDB.downloadDatabases.filter().mediaIdEqualTo(mediaItem.id).findFirstSync();
+    if (temp != null && File("${temp.filePath}/${temp.fileName}").existsSync()) {
+      return temp;
+    }
+    return null;
+  }
+
+  static Future<void> putRecentlyPlayed(MediaItemDatabase mediaItemDatabase) async {
+    Isar isarDB = await database;
+    int? id = await addMediaItem(mediaItemDatabase, "recently_played");
+
+    MediaItemDatabase? mediaItemDB = isarDB.mediaItemDatabases.filter().idEqualTo(id).findFirstSync();
+
+    if (mediaItemDB != null) {
+      RecentlyPlayedDatabase? recentlyPlayed = isarDB.recentlyPlayedDatabases
+          .filter()
+          .mediaItem(
+            (q) => q.idEqualTo(mediaItemDB.id!),
+          )
+          .findFirstSync();
+      if (recentlyPlayed != null) {
+        isarDB.writeTxnSync(
+          () => isarDB.recentlyPlayedDatabases.putSync(
+            recentlyPlayed.copyWith(
+              dateTime: DateTime.now(),
+            ),
+          ),
+        );
+      } else {
+        isarDB.writeTxnSync(
+          () => isarDB.recentlyPlayedDatabases.putSync(
+            RecentlyPlayedDatabase(lastPlayed: DateTime.now())..mediaItem.value = mediaItemDB,
+          ),
+        );
+      }
+    } else {
+      log("Failed to add in Recently_Played", name: "DB");
+    }
+  }
+
+  static Future<void> putYtLinkCache(String id, String lowUrl, String highUrl, int expireAt) async {
+    Isar isarDB = await database;
+    isarDB.writeTxnSync(
+      () => isarDB.youtubeLinkCacheDatabases.putSync(
+        YoutubeLinkCacheDatabase(
+          videoId: id,
+          lowQURL: lowUrl,
+          highQURL: highUrl,
+          expireAt: expireAt,
+        ),
+      ),
+    );
+  }
+
+  static Future<String?> getApiTokenDB(String apiName) async {
+    Isar isarDB = await database;
+    final apiToken = isarDB.appSettingsStrDatabases.filter().settingNameEqualTo(apiName).findFirstSync();
+    if (apiToken != null) {
+      if ((apiToken.lastUpdated!.difference(DateTime.now()).inSeconds + 30).abs() <
+              int.parse(apiToken.settingValue2!) ||
+          apiToken.settingValue2 == "0") {
+        return apiToken.settingValue;
+      }
+    }
+    return null;
+  }
+
+  static Future<void> putApiTokenDB(String apiName, String token, String expireIn) async {
+    Isar isarDB = await database;
+    isarDB.writeTxnSync(
+      () => isarDB.appSettingsStrDatabases.putSync(
+        AppSettingsStrDatabase(
+          settingName: apiName,
+          settingValue: token,
+          settingValue2: expireIn,
+          lastUpdated: DateTime.now(),
+        ),
+      ),
+    );
+  }
+
+  static Future<void> putChart(ChartModel chartModel) async {
+    Isar isarDB = await database;
+    int? id;
+    isarDB.writeTxnSync(() => id = isarDB.chartsCacheDatabases.putSync(chartModelToChartCacheDB(chartModel)));
+    log("Chart Putted with ID: $id", name: "DB");
+  }
+
+  static Future<ChartModel?> getChart(String chartName) async {
+    Isar isarDB = await database;
+    final chartCacheDB = isarDB.chartsCacheDatabases.filter().chartNameEqualTo(chartName).findFirstSync();
+    if (chartCacheDB != null) {
+      return chartCacheDBToChartModel(chartCacheDB);
+    } else {
+      return null;
+    }
+  }
+
+  static Future<void> removeDownloadDB(MediaItemModel mediaItem) async {
+    Isar isarDB = await database;
+    DownloadDatabase? downloadDB = isarDB.downloadDatabases.filter().mediaIdEqualTo(mediaItem.id).findFirstSync();
+    if (downloadDB != null) {
+      isarDB.writeTxnSync(
+        () => isarDB.downloadDatabases.deleteSync(downloadDB.id!),
+      );
+
+      removeMediaItemFromPlaylist(
+        mediaItem2MediaItemDB(mediaItem),
+        MediaPlaylistDatabase(playlistName: GlobalStrConsts.downloadPlaylist),
+      );
+    }
+
+    try {
+      File file = File("${downloadDB!.filePath}/${downloadDB.fileName}");
+      if (file.existsSync()) {
+        file.deleteSync();
+        log("File Deleted: ${downloadDB.fileName}", name: "DB");
+      }
+    } catch (e) {
+      log("Failed to delete file: ${downloadDB!.fileName}", error: e, name: "DB");
+    }
   }
 }
