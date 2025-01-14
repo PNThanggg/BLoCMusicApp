@@ -13,6 +13,9 @@ dependencies:
 
   wikipedia_api:
     path: wikipedia_api
+  display_mode:
+    path: display_mode
+  window_manager: ^0.4.3
 
 dev_dependencies:
   flutter_test:
