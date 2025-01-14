@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../utils/external_list_importer.dart';
-import '../blocs/media_player/bloomee_player_cubit.dart';
+import '../blocs/media_player/app_player_cubit.dart';
 import '../theme/app_color.dart';
 import '../theme/app_text_theme.dart';
 import 'square_card.dart';
@@ -84,7 +84,7 @@ class HorizontalCardView extends StatelessWidget {
                             'https://youtu.be/${(data["items"][i]["id"] as String).replaceAll("youtube", "")}')
                         .then((value) async {
                       if (value != null) {
-                        await context.read<BloomeePlayerCubit>().bloomeePlayer.addQueueItem(
+                        await context.read<AppPlayerCubit>().appMusicPlayer.addQueueItem(
                               value,
                               doPlay: true,
                             );

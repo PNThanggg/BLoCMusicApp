@@ -15,7 +15,7 @@ import '../../service/snack_bar_service.dart';
 import '../blocs/add_to_playlist/add_to_playlist_cubit.dart';
 import '../blocs/app_database/app_database_cubit.dart';
 import '../blocs/downloader/downloader_cubit.dart';
-import '../blocs/media_player/bloomee_player_cubit.dart';
+import '../blocs/media_player/app_player_cubit.dart';
 import '../route/global_str_consts.dart';
 import '../theme/app_color.dart';
 import 'song_tile.dart';
@@ -100,7 +100,7 @@ void showMoreBottomSheet(
                       ),
                       onTap: () {
                         Navigator.pop(context);
-                        context.read<BloomeePlayerCubit>().bloomeePlayer.addQueueItem(
+                        context.read<AppPlayerCubit>().appMusicPlayer.addQueueItem(
                               song,
                               doPlay: true,
                               single: true,
@@ -129,7 +129,7 @@ void showMoreBottomSheet(
                 ),
                 onTap: () {
                   Navigator.pop(context);
-                  context.read<BloomeePlayerCubit>().bloomeePlayer.addQueueItem(song, doPlay: false);
+                  context.read<AppPlayerCubit>().appMusicPlayer.addQueueItem(song, doPlay: false);
                   SnackBarService.showMessage(
                     "Added to Next in Queue",
                     duration: const Duration(seconds: 2),
@@ -153,7 +153,11 @@ void showMoreBottomSheet(
                 ),
                 onTap: () {
                   Navigator.pop(context);
-                  context.read<BloomeePlayerCubit>().bloomeePlayer.addQueueItem(song, atLast: true, doPlay: false);
+                  context.read<AppPlayerCubit>().appMusicPlayer.addQueueItem(
+                        song,
+                        atLast: true,
+                        doPlay: false,
+                      );
                   SnackBarService.showMessage("Added to Queue", duration: const Duration(seconds: 2));
                 },
               ),

@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:icons_plus/icons_plus.dart';
 
 import '../../utils/imgage_url_formator.dart';
-import '../blocs/media_player/bloomee_player_cubit.dart';
+import '../blocs/media_player/app_player_cubit.dart';
 import '../theme/app_color.dart';
 import '../theme/app_text_theme.dart';
 import 'load_image_cached.dart';
@@ -56,7 +56,7 @@ class LibItemCard extends StatelessWidget {
             children: [
               type == LibItemTypes.userPlaylist
                   ? StreamBuilder<String>(
-                      stream: context.watch<BloomeePlayerCubit>().bloomeePlayer.queueTitle,
+                      stream: context.watch<AppPlayerCubit>().appMusicPlayer.queueTitle,
                       builder: (context, snapshot) {
                         if (snapshot.hasData && snapshot.data == title) {
                           return Padding(

@@ -10,15 +10,15 @@ import '../../../repository/lyrics/lyrics.dart';
 import '../../../service/app_database_service.dart';
 import '../../../utils/global_const.dart';
 import '../../route/global_str_consts.dart';
-import '../media_player/bloomee_player_cubit.dart';
+import '../media_player/app_player_cubit.dart';
 
 part 'lyrics_state.dart';
 
 class LyricsCubit extends Cubit<LyricsState> {
   StreamSubscription? _mediaItemSubscription;
 
-  LyricsCubit(BloomeePlayerCubit playerCubit) : super(LyricsInitial()) {
-    _mediaItemSubscription = playerCubit.bloomeePlayer.mediaItem.stream.listen((v) {
+  LyricsCubit(AppPlayerCubit playerCubit) : super(LyricsInitial()) {
+    _mediaItemSubscription = playerCubit.appMusicPlayer.mediaItem.stream.listen((v) {
       if (v != null) {
         getLyrics(mediaItem2MediaItemModel(v));
       }

@@ -8,7 +8,7 @@ import '../../models/media_item_model.dart';
 import '../../repository/mixed_api/mixed_api.dart';
 import '../../service/snack_bar_service.dart';
 import '../../utils/imgage_url_formator.dart';
-import '../blocs/media_player/bloomee_player_cubit.dart';
+import '../blocs/media_player/app_player_cubit.dart';
 import '../route/global_str_consts.dart';
 import '../theme/app_color.dart';
 import '../theme/app_text_theme.dart';
@@ -51,7 +51,7 @@ class ChartListTile extends StatelessWidget {
                 loading: false,
                 duration: const Duration(seconds: 1),
               );
-              context.read<BloomeePlayerCubit>().bloomeePlayer.addQueueItem(
+              context.read<AppPlayerCubit>().appMusicPlayer.addQueueItem(
                     mediaItem,
                     single: true,
                     doPlay: true,

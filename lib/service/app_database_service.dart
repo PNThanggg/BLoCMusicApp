@@ -1100,6 +1100,25 @@ class AppDatabaseService {
       return null;
     }
   }
+
+  static Future<List<int>> getPlaylistItemsRankByName(String playlistName) async {
+    Isar isarDB = await database;
+    MediaPlaylistDatabase? mediaPlaylistDB =
+        isarDB.mediaPlaylistDatabases.filter().playlistNameEqualTo(playlistName).findFirstSync();
+    return mediaPlaylistDB?.mediaRanks.toList() ?? [];
+  }
+
+  static Future<void> updatePltItemsRankByName(String playlistName, List<int> rankList) async {
+    Isar isarDB = await database;
+    MediaPlaylistDatabase? mediaPlaylistDB =
+        isarDB.mediaPlaylistDatabases.filter().playlistNameEqualTo(playlistName).findFirstSync();
+    if (mediaPlaylistDB != null && mediaPlaylistDB.mediaItems.length >= rankList.length) {
+      isarDB.writeTxnSync(() {
+        mediaPlaylistDB.mediaRanks = rankList;
+        isarDB.mediaPlaylistDatabases.putSync(mediaPlaylistDB);
+      });
+    }
+  }
 }
 
 ArtistModel formatSavedArtistOnl(SavedCollectionsDatabase savedCollectionsDB) {

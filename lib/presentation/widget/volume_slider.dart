@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:icons_plus/icons_plus.dart';
 
-import '../blocs/media_player/bloomee_player_cubit.dart';
+import '../blocs/media_player/app_player_cubit.dart';
 import '../theme/app_color.dart';
 
 class VolumeDragController extends StatefulWidget {
@@ -40,7 +40,7 @@ class _VolumeDragControllerState extends State<VolumeDragController> {
   }
 
   void _volumeStrm() {
-    _volumeSubscription = context.read<BloomeePlayerCubit>().bloomeePlayer.audioPlayer.volumeStream.listen((event) {
+    _volumeSubscription = context.read<AppPlayerCubit>().appMusicPlayer.audioPlayer.volumeStream.listen((event) {
       setState(() {
         _volume = event;
       });
@@ -51,7 +51,7 @@ class _VolumeDragControllerState extends State<VolumeDragController> {
     setState(() {
       _volume = volume;
     });
-    context.read<BloomeePlayerCubit>().bloomeePlayer.audioPlayer.setVolume(volume);
+    context.read<AppPlayerCubit>().appMusicPlayer.audioPlayer.setVolume(volume);
   }
 
   void _onDragStart(DragStartDetails details) {

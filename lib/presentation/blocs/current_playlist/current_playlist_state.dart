@@ -1,9 +1,9 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
 part of 'current_playlist_cubit.dart';
 
 class CurrentPlaylistState extends Equatable {
   final bool isFetched;
   final MediaPlaylist mediaPlaylist;
+
   const CurrentPlaylistState({
     required this.isFetched,
     required this.mediaPlaylist,
@@ -26,21 +26,28 @@ class CurrentPlaylistState extends Equatable {
         isFetched,
         mediaPlaylist,
         mediaPlaylist.playlistName,
-        mediaPlaylist.permaURL
+        mediaPlaylist.permaURL,
       ];
 }
 
 final class CurrentPlaylistInitial extends CurrentPlaylistState {
-  CurrentPlaylistInitial()
+  const CurrentPlaylistInitial()
       : super(
-            isFetched: false,
-            mediaPlaylist: MediaPlaylist(mediaItems: [], playlistName: ""));
+          isFetched: false,
+          mediaPlaylist: const MediaPlaylist(
+            mediaItems: [],
+            playlistName: "",
+          ),
+        );
 }
 
 final class CurrentPlaylistLoading extends CurrentPlaylistState {
-  CurrentPlaylistLoading()
+  const CurrentPlaylistLoading()
       : super(
-            isFetched: false,
-            mediaPlaylist:
-                MediaPlaylist(mediaItems: [], playlistName: "loading"));
+          isFetched: false,
+          mediaPlaylist: const MediaPlaylist(
+            mediaItems: [],
+            playlistName: "loading",
+          ),
+        );
 }

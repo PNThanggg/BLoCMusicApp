@@ -6,7 +6,7 @@ import 'package:equatable/equatable.dart';
 
 import '../../../main.dart';
 import '../../../utils/ticker.dart';
-import '../media_player/bloomee_player_cubit.dart';
+import '../media_player/app_player_cubit.dart';
 
 part 'timer_event.dart';
 part 'timer_state.dart';
@@ -19,7 +19,7 @@ class TimerBloc extends Bloc<TimerEvent, TimerState> {
 
   TimerBloc({
     required Ticker ticker,
-    required BloomeePlayerCubit bloomeePlayer,
+    required AppPlayerCubit appPlayerCubit,
   })  : _ticker = ticker,
         super(const TimerInitial(_duration)) {
     on<TimerStarted>(_onTimerStarted);
@@ -73,7 +73,7 @@ class TimerBloc extends Bloc<TimerEvent, TimerState> {
     } else {
       emit(const TimerRunComplete());
       try {
-        bloomeePlayerCubit.bloomeePlayer.pause();
+        appPlayerCubit.appMusicPlayer.pause();
       } catch (e) {
         log(e.toString(), name: "TimerBloc");
       }

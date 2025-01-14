@@ -7,7 +7,7 @@ import 'package:just_audio/just_audio.dart';
 
 import '../../../models/media_item_model.dart';
 import '../../../utils/global_const.dart';
-import '../media_player/bloomee_player_cubit.dart';
+import '../media_player/app_player_cubit.dart';
 
 part 'mini_player_event.dart';
 part 'mini_player_state.dart';
@@ -15,7 +15,7 @@ part 'mini_player_state.dart';
 class MiniPlayerBloc extends Bloc<MiniPlayerEvent, MiniPlayerState> {
   StreamSubscription<PlayerState>? _playerStateSubscription;
   StreamSubscription<bool>? _linkState;
-  BloomeePlayerCubit playerCubit;
+  AppPlayerCubit playerCubit;
 
   MiniPlayerBloc({
     required this.playerCubit,
@@ -59,10 +59,10 @@ class MiniPlayerBloc extends Bloc<MiniPlayerEvent, MiniPlayerState> {
   }
 
   void listenToPlayer() {
-    _linkState = playerCubit.bloomeePlayer.isLinkProcessing.listen((value) {
+    _linkState = playerCubit.appMusicPlayer.isLinkProcessing.listen((value) {
       if (value) {
         try {
-          add(MiniPlayerProcessingEvent(playerCubit.bloomeePlayer.currentMedia));
+          add(MiniPlayerProcessingEvent(playerCubit.appMusicPlayer.currentMedia));
           log("Processing link.", name: "MiniPlayer");
         } catch (e) {
           log(e.toString(), name: "MiniPlayer");
@@ -70,7 +70,7 @@ class MiniPlayerBloc extends Bloc<MiniPlayerEvent, MiniPlayerState> {
       }
     });
 
-    _playerStateSubscription = playerCubit.bloomeePlayer.audioPlayer.playerStateStream.listen((event) {
+    _playerStateSubscription = playerCubit.appMusicPlayer.audioPlayer.playerStateStream.listen((event) {
       log("${event.processingState}", name: "MiniPlayer");
       switch (event.processingState) {
         case ProcessingState.idle:
@@ -78,14 +78,14 @@ class MiniPlayerBloc extends Bloc<MiniPlayerEvent, MiniPlayerState> {
           break;
         case ProcessingState.loading:
           try {
-            add(MiniPlayerProcessingEvent(playerCubit.bloomeePlayer.currentMedia));
+            add(MiniPlayerProcessingEvent(playerCubit.appMusicPlayer.currentMedia));
           } catch (e) {
             log("$e");
           }
           break;
         case ProcessingState.buffering:
           try {
-            add(MiniPlayerBufferingEvent(playerCubit.bloomeePlayer.currentMedia));
+            add(MiniPlayerBufferingEvent(playerCubit.appMusicPlayer.currentMedia));
           } catch (e) {
             log("$e");
           }
@@ -93,11 +93,23 @@ class MiniPlayerBloc extends Bloc<MiniPlayerEvent, MiniPlayerState> {
         case ProcessingState.ready:
           try {
             if (event.playing) {
-              add(MiniPlayerPlayedEvent(playerCubit.bloomeePlayer.currentMedia));
-            } else if (playerCubit.bloomeePlayer.isLinkProcessing.value == true) {
-              add(MiniPlayerProcessingEvent(playerCubit.bloomeePlayer.currentMedia));
+              add(
+                MiniPlayerPlayedEvent(
+                  playerCubit.appMusicPlayer.currentMedia,
+                ),
+              );
+            } else if (playerCubit.appMusicPlayer.isLinkProcessing.value == true) {
+              add(
+                MiniPlayerProcessingEvent(
+                  playerCubit.appMusicPlayer.currentMedia,
+                ),
+              );
             } else {
-              add(MiniPlayerPausedEvent(playerCubit.bloomeePlayer.currentMedia));
+              add(
+                MiniPlayerPausedEvent(
+                  playerCubit.appMusicPlayer.currentMedia,
+                ),
+              );
             }
           } catch (e) {
             log("$e");
@@ -105,7 +117,11 @@ class MiniPlayerBloc extends Bloc<MiniPlayerEvent, MiniPlayerState> {
           break;
         case ProcessingState.completed:
           try {
-            add(MiniPlayerCompletedEvent(playerCubit.bloomeePlayer.currentMedia));
+            add(
+              MiniPlayerCompletedEvent(
+                playerCubit.appMusicPlayer.currentMedia,
+              ),
+            );
           } catch (e) {
             log("$e");
           }

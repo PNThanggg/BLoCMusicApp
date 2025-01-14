@@ -183,3 +183,4 @@ enum UrlType {
     return UrlType.other;
   }
 }
+

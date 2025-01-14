@@ -11,7 +11,7 @@ import 'package:responsive_framework/responsive_framework.dart';
 import '../../models/media_item_model.dart';
 import '../../utils/imgage_url_formator.dart';
 import '../blocs/add_to_playlist/add_to_playlist_cubit.dart';
-import '../blocs/media_player/bloomee_player_cubit.dart';
+import '../blocs/media_player/app_player_cubit.dart';
 import '../blocs/mini_player/mini_player_bloc.dart';
 import '../route/global_str_consts.dart';
 import '../theme/app_color.dart';
@@ -83,10 +83,10 @@ class MiniPlayerCard extends StatelessWidget {
       },
       onHorizontalDragEnd: (details) {
         if (details.primaryVelocity! < -10) {
-          context.read<BloomeePlayerCubit>().bloomeePlayer.skipToNext();
+          context.read<AppPlayerCubit>().appMusicPlayer.skipToNext();
         }
         if (details.primaryVelocity! > 10) {
-          context.read<BloomeePlayerCubit>().bloomeePlayer.skipToPrevious();
+          context.read<AppPlayerCubit>().appMusicPlayer.skipToPrevious();
         }
       },
       onVerticalDragEnd: (details) {
@@ -189,7 +189,7 @@ class MiniPlayerCard extends StatelessWidget {
                             size: 28,
                           ),
                           onPressed: () {
-                            context.read<BloomeePlayerCubit>().bloomeePlayer.skipToPrevious();
+                            context.read<AppPlayerCubit>().appMusicPlayer.skipToPrevious();
                           },
                         )
                       : const SizedBox.shrink(),
@@ -206,7 +206,7 @@ class MiniPlayerCard extends StatelessWidget {
                       : (isCompleted
                           ? IconButton(
                               onPressed: () {
-                                context.read<BloomeePlayerCubit>().bloomeePlayer.rewind();
+                                context.read<AppPlayerCubit>().appMusicPlayer.rewind();
                               },
                               icon: const Icon(FontAwesome.rotate_right_solid, size: 25))
                           : IconButton(
@@ -216,8 +216,8 @@ class MiniPlayerCard extends StatelessWidget {
                               ),
                               onPressed: () {
                                 state.isPlaying
-                                    ? context.read<BloomeePlayerCubit>().bloomeePlayer.pause()
-                                    : context.read<BloomeePlayerCubit>().bloomeePlayer.play();
+                                    ? context.read<AppPlayerCubit>().appMusicPlayer.pause()
+                                    : context.read<AppPlayerCubit>().appMusicPlayer.play();
                               },
                             )),
                   ResponsiveBreakpoints.of(context).isDesktop
@@ -227,7 +227,7 @@ class MiniPlayerCard extends StatelessWidget {
                             size: 28,
                           ),
                           onPressed: () {
-                            context.read<BloomeePlayerCubit>().bloomeePlayer.skipToNext();
+                            context.read<AppPlayerCubit>().appMusicPlayer.skipToNext();
                           },
                         )
                       : const SizedBox.shrink(),
@@ -251,7 +251,7 @@ class MiniPlayerCard extends StatelessWidget {
                       right: 8,
                       top: 68,
                       child: StreamBuilder<ProgressBarStreams>(
-                          stream: context.watch<BloomeePlayerCubit>().progressStreams,
+                          stream: context.watch<AppPlayerCubit>().progressStreams,
                           builder: (context, snapshot) {
                             try {
                               if (snapshot.hasData) {

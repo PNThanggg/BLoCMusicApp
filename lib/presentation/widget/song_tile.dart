@@ -3,12 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:icons_plus/icons_plus.dart';
+import 'package:music/presentation/blocs/media_player/app_player_cubit.dart';
 
 import '../../models/media_item_model.dart';
 import '../../service/app_database_service.dart';
 import '../../service/snack_bar_service.dart';
 import '../../utils/imgage_url_formator.dart';
-import '../blocs/media_player/bloomee_player_cubit.dart';
 import '../theme/app_color.dart';
 import '../theme/app_text_theme.dart';
 import 'load_image_cached.dart';
@@ -67,7 +67,7 @@ class SongCardWidget extends StatelessWidget {
               AnimatedSwitcher(
                 duration: const Duration(milliseconds: 500),
                 child: StreamBuilder<MediaItem?>(
-                    stream: context.read<BloomeePlayerCubit>().bloomeePlayer.mediaItem,
+                    stream: context.read<AppPlayerCubit>().appMusicPlayer.mediaItem,
                     builder: (context, snapshot) {
                       return (snapshot.data != null && snapshot.data?.id == song.id)
                           ? const Icon(
@@ -221,7 +221,7 @@ class SongCardWidget extends StatelessWidget {
                         ),
                         onPressed: () {
                           try {
-                            if (context.read<BloomeePlayerCubit>().bloomeePlayer.currentMedia.id != song.id) {
+                            if (context.read<AppPlayerCubit>().appMusicPlayer.currentMedia.id != song.id) {
                               AppDatabaseService.removeDownloadDB(song);
                               SnackBarService.showMessage("Removed ${song.title}");
                             } else {

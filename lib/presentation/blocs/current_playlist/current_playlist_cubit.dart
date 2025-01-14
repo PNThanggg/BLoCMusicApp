@@ -3,35 +3,49 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter/foundation.dart';
 import 'package:palette_generator/palette_generator.dart';
 
+import '../../../data/local/media_playlist_database.dart';
+import '../../../models/media_item_model.dart';
+import '../../../models/media_playlist_model.dart';
+import '../../../service/app_database_service.dart';
+import '../../../utils/pallete_generator.dart';
+import '../app_database/app_database_cubit.dart';
+
 part 'current_playlist_state.dart';
 
 class CurrentPlaylistCubit extends Cubit<CurrentPlaylistState> {
   MediaPlaylist? mediaPlaylist;
   PaletteGenerator? paletteGenerator;
-  late BloomeeDBCubit bloomeeDBCubit;
+  late AppDatabaseCubit appDatabaseCubit;
 
   CurrentPlaylistCubit({
     this.mediaPlaylist,
-    required this.bloomeeDBCubit,
-  }) : super(CurrentPlaylistInitial()) {}
+    required this.appDatabaseCubit,
+  }) : super(const CurrentPlaylistInitial());
 
   Future<void> setupPlaylist(String playlistName) async {
-    emit(CurrentPlaylistLoading());
-    mediaPlaylist = await bloomeeDBCubit.getPlaylistItems(MediaPlaylistDB(playlistName: playlistName));
+    emit(const CurrentPlaylistLoading());
+    mediaPlaylist = await appDatabaseCubit.getPlaylistItems(
+      MediaPlaylistDatabase(playlistName: playlistName),
+    );
 
     if (mediaPlaylist?.mediaItems.isNotEmpty ?? false) {
-      paletteGenerator = await getPalleteFromImage(mediaPlaylist!.mediaItems[0].artUri.toString());
+      paletteGenerator = await getPaletteFromImage(
+        mediaPlaylist!.mediaItems[0].artUri.toString(),
+      );
     }
-    // log(paletteGenerator.toString());
-    emit(state.copyWith(
+
+    emit(
+      state.copyWith(
         playlistName: mediaPlaylist?.playlistName,
         isFetched: true,
         mediaPlaylist: mediaPlaylist,
-        mediaItem: List<MediaItemModel>.from(mediaPlaylist!.mediaItems)));
+        mediaItem: List<MediaItemModel>.from(mediaPlaylist!.mediaItems),
+      ),
+    );
   }
 
   Future<List<int>> getItemOrder() async {
-    return await BloomeeDBService.getPlaylistItemsRankByName(mediaPlaylist!.playlistName);
+    return await AppDatabaseService.getPlaylistItemsRankByName(mediaPlaylist!.playlistName);
   }
 
   String getTitle() {
@@ -43,9 +57,10 @@ class CurrentPlaylistCubit extends Cubit<CurrentPlaylistState> {
     if (!listEquals(newOrder, oldOrder) &&
         mediaPlaylist != null &&
         newOrder.length >= mediaPlaylist!.mediaItems.length) {
-      await BloomeeDBService.updatePltItemsRankByName(mediaPlaylist!.playlistName, newOrder);
-      final playlist =
-          await bloomeeDBCubit.getPlaylistItems(MediaPlaylistDB(playlistName: mediaPlaylist!.playlistName));
+      await AppDatabaseService.updatePltItemsRankByName(mediaPlaylist!.playlistName, newOrder);
+      final playlist = await appDatabaseCubit.getPlaylistItems(
+        MediaPlaylistDatabase(playlistName: mediaPlaylist!.playlistName),
+      );
       setupPlaylist(playlist.playlistName);
     }
   }
@@ -66,7 +81,5 @@ class CurrentPlaylistCubit extends Cubit<CurrentPlaylistState> {
     }
   }
 
-  PaletteGenerator? getCurrentPlaylistPallete() {
-    return paletteGenerator;
-  }
+  PaletteGenerator? getCurrentPlaylistPalette() => paletteGenerator;
 }
